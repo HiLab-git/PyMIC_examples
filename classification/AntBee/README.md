@@ -1,5 +1,8 @@
 # Toy example of image classification
 
+![ant_example](./picture/5650366_e22b7e1065.jpg)
+![bee_example](./picture/16838648_415acd9e3f.jpg)
+
 In this example, we finetune a pretrained resnet18 for classification of images with two categries: Ant and Bee. This example is a PyMIC implementation of pytorch's "transfer learning for computer vision tutorial". The orginal tutorial can be found [here][torch_tutorial]. In PyMIC's implementation, we only need to edit the configure file to run the code. 
 
 ## Data and preprocessing
