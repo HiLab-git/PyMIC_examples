@@ -6,8 +6,10 @@
 In this example, we finetune a pretrained resnet18 and vgg16 for classification of X-Ray images with two categries: normal and tuberculosis. 
 
 ## Data and preprocessing
-1. We use the Shenzhen Hospital X-Ray Set for this experiment. This dataset contains images in JPEG format. There are 326 normal x-raysand 336 abnormal x-rays showing various manifestations of tuberculosis.  Download the dataset from [here][data_link] and extract it, and the folder name will be "ChinaSet_AllFiles/CXR_png".
+1. We use the Shenzhen Hospital X-ray Set for this experiment. This dataset contains images in JPEG format. There are 326 normal x-rays and 336 abnormal x-rays showing various manifestations of tuberculosis.  Download the dataset from [here][data_link] and extract it, and the folder name will be "ChinaSet_AllFiles/CXR_png".
+
 [data_link]:https://lhncbc.nlm.nih.gov/publication/pub9931
+
 2. Set `image_dir` according to your computer in `write_csv_files.py`, where `image_dir` should be the path of "CXR_png" based on the dataset you extracted. 
 3. Run `python write_csv_files.py` to randomly split the entire dataset into 70% for training, 10% for validation and 20% for testing. The output files are `cxr_train.csv`, `cxr_valid.csv` and `cxr_test.csv` under folder `./config`.
 
@@ -18,7 +20,7 @@ In this example, we finetune a pretrained resnet18 and vgg16 for classification 
 pymic_net_run_cls train config/net_resnet18.cfg
 ```
 
-2. During training or after training, run `tensorboard --logdir model/net_resnet18` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average loss and accuracy during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. The iteration number obtained the highest accuracy on the validation set was 1800, and may be different based on the hardware environment. After training, you can find the trained models in `./model/resnet18`. 
+2. During training or after training, run `tensorboard --logdir model/resnet18` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average loss and accuracy during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. The iteration number obtained the highest accuracy on the validation set was 1800, and may be different based on the hardware environment. After training, you can find the trained models in `./model/resnet18`. 
 
 ![avg_loss](./picture/loss.png)
 ![avg_acc](./picture/acc.png)
