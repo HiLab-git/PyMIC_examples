@@ -26,7 +26,7 @@ pymic_net_run_cls train config/train_test_ce1.cfg
 ![avg_acc](./picture/acc.png)
 
 ## Testing and evaluation
-1. Run the following command to obtain segmentation results of testing images (they are the same as validation images in this toy example). You may need to edit `checkpoint_name` in `config/train_test_ce1.cfg` to select a different checkpoint for inference.
+1. Run the following command to obtain classification results of testing images (they are the same as validation images in this toy example). You may need to edit `checkpoint_name` in `config/train_test_ce1.cfg` to select a different checkpoint for inference.
 
 ```bash
 mkdir result
@@ -42,4 +42,4 @@ pymic_evaluate_cls config/evaluation.cfg
 The obtained accuracy by default setting should be around 0.9412. 
 
 ## Finetuning the last layer of resnet18
-Similarly to the above example, we further try to only finetune the last layer of resnet18 for the same classification task. Use a different configure file `config/train_test_ce2.cfg` for training and testing, where `update_layers = -1` in the `network` section means updating the last layer only. Edit the `checkpoint_name` accordingly in `config/train_test_ce2.cfg` for testing, and edit `config/evaluation.cfg` accordinly for evaluation. They obtained accuracy will be around 0.9542. 
+Similarly to the above example, we further try to only finetune the last layer of resnet18 for the same classification task. Use a different configure file `config/train_test_ce2.cfg` for training and testing, where `update_layers = -1` in the `network` section means updating the last layer only. Edit the `checkpoint_name` accordingly in `config/train_test_ce2.cfg` for testing, and edit `config/evaluation.cfg` accordinly for evaluation. The iteration number obtained the highest accuracy on the validation set was 400, and the accuracy will be around 0.9542. 
