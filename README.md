@@ -1,5 +1,5 @@
 # PyMIC_examples
-[PyMIC][PyMIC_link] is an Pytorch-based medical image computing toolkit with deep learning. Here we provide a set of examples to show how it can be used for image classification and segmentation tasks. For beginners, you can follow the examples by just editting the configure files for model training, testing and evaluation. For advanced users, you can develop your own modules, such as customized network and loss functions.  
+[PyMIC][PyMIC_link] is an Pytorch-based medical image computing toolkit with deep learning. Here we provide a set of examples to show how it can be used for image classification and segmentation tasks. For beginners, you can follow the examples by just editting the configure files for model training, testing and evaluation. For advanced users, you can develop your own modules, such as customized networks and loss functions.  
 
 [PyMIC_link]: https://github.com/HiLab-git/PyMIC
  
@@ -23,9 +23,9 @@ Currently we provide two examples for image classification, and four examples fo
 
 4, `segmentation/JSRT2`: defining a customized network for heart segmentation from chest X-ray images.
 
-5, `segmentation/fetal_hc`: using a 2D UNet for fetal head from 2D ultrasound images.
+5, `segmentation/fetal_hc`: using a 2D UNet for fetal head segmentation from 2D ultrasound images.
 
-6, `segmentation\prostate`: using a 3D UNet for prostate segmentation from 3D MRI.
+6, `segmentation/prostate`: using a 3D UNet for prostate segmentation from 3D MRI.
 
 
 
