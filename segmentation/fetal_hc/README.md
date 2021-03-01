@@ -33,11 +33,11 @@ mkdir result
 pymic_net_run_seg test config/train_test.cfg
 ```
 
-2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `HC_root`, and run the following command to obtain quantitative evaluation results in terms of dice. 
+2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `HC_root`, and run the following command to obtain quantitative evaluation results in terms of Dice. 
 
 ```bash
 pymic_evaluate_seg config/evaluation.cfg
 ```
 
-The obtained dice score by default setting should be close to 97.02+/-3.24%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again. You will get average symmetric surface distance (assd) evaluation results. By default setting, the assd is close to 6.54+/-8.48 pixels. You can try your efforts to improve the performance with different networks or training strategies by changing the configuration file `config/train_test.cfg`.
+The obtained Dice score by default setting should be close to 97.02+/-3.24%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again. You will get Average Symmetric Surface Distance (ASSD) evaluation results. By default setting, the ASSD is close to 6.54+/-8.48 pixels. You can try your efforts to improve the performance with different networks or training strategies by changing the configuration file `config/train_test.cfg`.
 
