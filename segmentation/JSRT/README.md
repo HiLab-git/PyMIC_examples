@@ -44,4 +44,4 @@ pymic_net_run_seg test config/train_test.cfg
 pymic_evaluate_seg config/evaluation.cfg
 ```
 
-The obtained average dice score by default setting should be close to 94.15. If setting `ckpt_mode` to 1 during testing, the average dice would be around 94.34. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get average symmetric surface distance (assd) evaluation results.
+The obtained average dice score by default setting should be close to 94.15%. If setting `ckpt_mode` to 1 during testing, the average dice would be around 94.34. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get average symmetric surface distance (assd) evaluation results.
