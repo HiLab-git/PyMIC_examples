@@ -28,7 +28,6 @@ pymic_net_run_cls train config/train_test_ce1.cfg
 ## Testing and evaluation
 1. Run the following command to obtain classification results of testing images. By default we use the best performing checkpoint based on the validation set. You can set `ckpt_mode` to 0 in `config/train_test.cfg` to use the latest checkpoint.
 
-
 ```bash
 mkdir result
 pymic_net_run_cls test config/train_test_ce1.cfg

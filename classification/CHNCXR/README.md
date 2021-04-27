@@ -26,7 +26,7 @@ pymic_net_run_cls train config/net_resnet18.cfg
 ![avg_acc](./picture/acc.png)
 
 ## Testing and evaluation
-1. Run the following command to obtain classification results of testing images. You may need to edit `checkpoint_name` in `config/net_resnet18.cfg` to select a different checkpoint for inference.
+1. Run the following command to obtain classification results of testing images. By default we use the best performing checkpoint based on the validation set. You can set `ckpt_mode` to 0 in `config/train_test.cfg` to use the latest checkpoint.
 
 ```bash
 mkdir result
@@ -39,7 +39,7 @@ pymic_net_run_cls test config/net_resnet18.cfg
 pymic_evaluate_cls config/evaluation.cfg
 ```
 
-The obtained accuracy by default setting should be around 0.8571. 
+The obtained accuracy by default setting should be around 0.8571, and the AUC is 0.94.
 
 ## Finetuning vgg16
-Similarly to the above example, we further try to finetune vgg16  for the same classification task. Use a different configure file `config/net_vg16.cfg` for training and testing. Edit the `checkpoint_name` accordingly in `config/net_vg16.cfg` for testing, and edit `config/evaluation.cfg` accordinly for evaluation. The iteration number obtained the highest accuracy on the validation set was 2300, and the accuracy will be around 0.8797. 
+Similarly to the above example, we further try to finetune vgg16  for the same classification task. Use a different configure file `config/net_vg16.cfg` for training and testing. Edit `config/evaluation.cfg` accordinly for evaluation. The iteration number obtained the highest accuracy on the validation set was 2300, and the accuracy will be around 0.8797. 
