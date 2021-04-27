@@ -23,7 +23,7 @@ pymic_net_run_seg train config/train_test.cfg
 ![avg_loss](./picture/train_avg_loss.png)
 
 ## Testing and evaluation
-1. Run the following command to obtain segmentation results of testing images. You may need to edit `checkpoint_name` in `config/train_test.cfg` to select a different checkpoint.
+1. Run the following command to obtain segmentation results of testing images. By default we use the latest checkpoint. You can set `ckpt_mode` to 1 in `config/train_test.cfg` to use the best performing checkpoint based on the validation set.
 
 ```bash
 mkdir result
@@ -36,5 +36,5 @@ pymic_net_run_seg test config/train_test.cfg
 pymic_evaluate_seg config/evaluation.cfg
 ```
 
-The obtained Dice score by default setting should be close to 87.63+/-3.20%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again. You will get Average Symmetric Surface Distance (ASSD) evaluation results. By default setting, the ASSD is close to 2.55+/-1.80 pixels. You can try your efforts to improve the performance with different networks or training strategies by changing the configuration file `config/train_test.cfg`.
+The obtained average Dice score by default setting should be close to 87.63%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again. You will get Average Symmetric Surface Distance (ASSD) evaluation results. You can try your efforts to improve the performance with different networks or training strategies by changing the configuration file `config/train_test.cfg`.
 
