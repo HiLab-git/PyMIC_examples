@@ -31,7 +31,7 @@ pymic_net_run_seg train config/train_test.cfg
 ![avg_loss](./picture/jsrt_avg_loss.png)
 
 ## Testing and evaluation
-1. Run the following command to obtain segmentation results of testing images. If you use [the pretrained model][model_link], you need to edit `checkpoint_name` in `config/train_test.cfg`.
+1. Run the following command to obtain segmentation results of testing images. By default we use the latest checkpoint. You can set `ckpt_mode` to 1 in `config/train_test.cfg` to use the best performing checkpoint based on the validation set.
 
 ```bash
 mkdir result
@@ -44,5 +44,4 @@ pymic_net_run_seg test config/train_test.cfg
 pymic_evaluate_seg config/evaluation.cfg
 ```
 
-The obtained dice score by default setting should be close to 94.88+/-2.72%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again. You will get average symmetric surface distance (assd) evaluation results. By default setting, the assd is close to 2.13+/-1.09 pixels.
-
+The obtained average dice score by default setting should be close to 94.15. If setting `ckpt_mode` to 1 during testing, the average dice would be around 94.34. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get average symmetric surface distance (assd) evaluation results.
