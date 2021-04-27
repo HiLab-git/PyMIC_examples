@@ -41,5 +41,10 @@ pymic_evaluate_cls config/evaluation.cfg
 
 The obtained accuracy by default setting should be around 0.8571, and the AUC is 0.94.
 
+3. Run `python show_roc.py` to show the receiver operating characteristic curve. 
+
+![roc](./picture/roc.png)
+
+
 ## Finetuning vgg16
 Similarly to the above example, we further try to finetune vgg16  for the same classification task. Use a different configure file `config/net_vg16.cfg` for training and testing. Edit `config/evaluation.cfg` accordinly for evaluation. The iteration number obtained the highest accuracy on the validation set was 2300, and the accuracy will be around 0.8797. 
