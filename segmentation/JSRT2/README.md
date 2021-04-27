@@ -37,4 +37,4 @@ python net_run_jsrt.py test config/train_test.cfg
 pymic_evaluate_seg config/evaluation.cfg
 ```
 
-The obtained dice score by default setting should be close to 94.61+/-2.84%. 
+The obtained dice score by default setting should be close to 93.90%. 
