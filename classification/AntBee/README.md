@@ -41,5 +41,9 @@ pymic_evaluate_cls config/evaluation.cfg
 
 The obtained accuracy by default setting should be around 0.9412, and the AUC will be 0.973.
 
+3. Run `python show_roc.py` to show the receiver operating characteristic curve. 
+
+![roc](./picture/roc.png)
+
 ## Finetuning the last layer of resnet18
 Similarly to the above example, we further try to only finetune the last layer of resnet18 for the same classification task. Use a different configure file `config/train_test_ce2.cfg` for training and testing, where `update_layers = -1` in the `network` section means updating the last layer only. Edit `config/evaluation.cfg` accordinly for evaluation. The iteration number obtained the highest accuracy on the validation set was 400, and the accuracy will be around 0.9543. The AUC will be 0.981
