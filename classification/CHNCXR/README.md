@@ -17,7 +17,7 @@ In this example, we finetune a pretrained resnet18 and vgg16 for classification 
 1. First, we use resnet18 for finetuning, and update all the layers. Open the configure file `config/net_resnet18.cfg`. In the `dataset` section, set the value of `root_dir` as your path of "CXR_png". Then start to train by running:
  
 ```bash
-pymic_net_run_cls train config/net_resnet18.cfg
+pymic_net_run train config/net_resnet18.cfg
 ```
 
 2. During training or after training, run `tensorboard --logdir model/resnet18` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average loss and accuracy during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. The iteration number obtained the highest accuracy on the validation set was 1800, and may be different based on the hardware environment. After training, you can find the trained models in `./model/resnet18`. 
@@ -30,7 +30,7 @@ pymic_net_run_cls train config/net_resnet18.cfg
 
 ```bash
 mkdir result
-pymic_net_run_cls test config/net_resnet18.cfg
+pymic_net_run test config/net_resnet18.cfg
 ```
 
 2. Then run the following command to obtain quantitative evaluation results in terms of accuracy. 
@@ -47,4 +47,4 @@ The obtained accuracy by default setting should be around 0.8571, and the AUC is
 
 
 ## Finetuning vgg16
-Similarly to the above example, we further try to finetune vgg16  for the same classification task. Use a different configure file `config/net_vg16.cfg` for training and testing. Edit `config/evaluation.cfg` accordinly for evaluation. The iteration number obtained the highest accuracy on the validation set was 2300, and the accuracy will be around 0.8797. 
+Similarly to the above example, we further try to finetune vgg16  for the same classification task. Use a different configure file `config/net_vg16.cfg` for training and testing. Edit `config/evaluation.cfg` accordinly for evaluation. The iteration number for the highest accuracy on the validation set was 2300, and the accuracy will be around 0.8797. 
