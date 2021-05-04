@@ -17,7 +17,7 @@ In this example, we finetune a pretrained resnet18 for classification of images 
 1. Here we use resnet18 for finetuning, and update all the layers. Open the configure file `config/train_test_ce1.cfg`. In  the `network` section we can find details for the network. In the `dataset` section, set the value of `root_dir` as your `AntBee_root`. Then start to train by running:
  
 ```bash
-pymic_net_run_cls train config/train_test_ce1.cfg
+pymic_net_run train config/train_test_ce1.cfg
 ```
 
 2. During training or after training, run `tensorboard --logdir model/resnet18_ce1` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average loss and accuracy during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. The iteration number obtained the highest accuracy on the validation set was 400, and may be different based on the hardware environment. After training, you can find the trained models in `./model/resnet18_ce1`. 
@@ -30,7 +30,7 @@ pymic_net_run_cls train config/train_test_ce1.cfg
 
 ```bash
 mkdir result
-pymic_net_run_cls test config/train_test_ce1.cfg
+pymic_net_run test config/train_test_ce1.cfg
 ```
 
 2. Then run the following command to obtain quantitative evaluation results in terms of accuracy. 
