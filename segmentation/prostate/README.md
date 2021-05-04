@@ -14,7 +14,7 @@ In this example, we use 3D U-Net to segment the prostate from 3D MRI. First we d
 1. Edit `config/train_test.cfg` by setting the value of `root_dir` as your `data/promise12/preprocess`. Then start to train by running:
  
 ```bash
-pymic_net_run_seg train config/train_test.cfg
+pymic_net_run train config/train_test.cfg
 ```
 
 2. During training or after training, run `tensorboard --logdir model` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. 
@@ -27,7 +27,7 @@ pymic_net_run_seg train config/train_test.cfg
 
 ```bash
 mkdir result
-pymic_net_run_seg test config/train_test.cfg
+pymic_net_run test config/train_test.cfg
 ```
 
 2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `data/promise12/preprocess`, and run the following command to obtain quantitative evaluation results in terms of Dice. 
