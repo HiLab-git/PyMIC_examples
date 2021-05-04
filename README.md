@@ -7,7 +7,7 @@
 To start, you can install the latest released version of PyMIC by:
 
 ```bash
-pip install PYMIC
+pip install PYMIC==0.2.2
 ```
 
 To use the latest development version, you can download the source code [here][PyMIC_link] and compile it. 
