@@ -5,9 +5,9 @@
 
 In this example, we show how to use a customized CNN and a customized loss function to segment the heart from X-Ray images. The configurations are the same as those in the `JSRT` example except the network structure and loss function. 
 
-The customized CNN is detailed in `my_net2d.py`, which is a modification of the 2D UNet. In this new network, we use a residual connection in each block. The customized loss is detailed in `my_loss.py`, where we define a focal dice loss. 
+The customized CNN is detailed in `my_net2d.py`, which is a modification of the 2D UNet. In this new network, we use a residual connection in each block. The customized loss is detailed in `my_loss.py`, where we define a focal dice loss named as MyFocalDiceLoss. We use it `MyFocalDiceLoss + CrossEntropyLoss` to train the custermized network.
 
-We also write a customized main function in `jsrt_net_run.py` so that we can combine NetRunAgent from PyMIC with our customized CNN and loss function.
+We also write a customized main function in `jsrt_net_run.py` so that we can combine SegmentationAgent from PyMIC with our customized CNN and loss function.
 
 ## Data and preprocessing
 1. Data preprocessing is the same as that in the the `JSRT` example. Please follow that example for details.
@@ -37,4 +37,4 @@ python net_run_jsrt.py test config/train_test.cfg
 pymic_evaluate_seg config/evaluation.cfg
 ```
 
-The obtained dice score by default setting should be close to 93.90%. 
+The obtained dice score by default setting should be close to 94.35%. 
