@@ -26,7 +26,7 @@ pymic_net_run train config/train_test.cfg
 ![avg_loss](./picture/train_avg_loss.png)
 
 ## Testing and evaluation
-1. Run the following command to obtain segmentation results of testing images based on the best-performing checkpoint on the validation set. By default we use test time augmentation and sliding window inference to get better results. You can also edit the `testing` section of `config/train_test.cfg` to use other inference strategies.
+1. Run the following command to obtain segmentation results of testing images based on the best-performing checkpoint on the validation set. By default we use sliding window inference to get better results. You can also edit the `testing` section of `config/train_test.cfg` to use other inference strategies.
 
 ```bash
 mkdir result
@@ -39,6 +39,6 @@ pymic_net_run test config/train_test.cfg
 pymic_evaluate_seg config/evaluation.cfg
 ```
 
-The obtained average Dice score by default setting should be close to 97.12%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get Average Symmetric Surface Distance (ASSD) evaluation results. 
+The obtained average Dice score by default setting should be close to 97.10%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get Average Symmetric Surface Distance (ASSD) evaluation results. 
 
-3. Set `tta_mode = 0` and `infer_sliding_window  = False` in `config/train_test.cfg`, and run the testing and evaluation code again, we find that the average Dice will be decreased to around 96.86%.
+3. Set `tta_mode = 1` in `config/train_test.cfg` to enable test time augmentation, and run the testing and evaluation code again, we find that the average Dice will be increased to around 97.22%.
