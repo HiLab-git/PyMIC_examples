@@ -2,13 +2,17 @@
 [PyMIC][PyMIC_link] is an Pytorch-based medical image computing toolkit with deep learning. Here we provide a set of examples to show how it can be used for image classification and segmentation tasks. For beginners, you can follow the examples by just editting the configure files for model training, testing and evaluation. For advanced users, you can develop your own modules, such as customized networks and loss functions.  
 
 ## Install PyMIC
-To start, you can install the latest released version of PyMIC by:
+The latest released version of PyMIC can be installed by:
 
 ```bash
 pip install PYMIC==0.2.3
 ```
 
-To use the latest development version, you can download the source code [here][PyMIC_link] and compile it. 
+To use the latest development version, you can download the source code [here][PyMIC_link], and install it by:
+
+```bash
+python setup.py install
+``` 
 
 ## List of Examples
 Currently we provide two examples for image classification, and four examples for 2D/3D image segmentation. These examples include:
