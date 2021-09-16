@@ -29,7 +29,6 @@ pymic_net_run train config/train_test.cfg
 1. Run the following command to obtain segmentation results of testing images based on the best-performing checkpoint on the validation set. By default we use sliding window inference to get better results. You can also edit the `testing` section of `config/train_test.cfg` to use other inference strategies.
 
 ```bash
-mkdir result
 pymic_net_run test config/train_test.cfg
 ```
 

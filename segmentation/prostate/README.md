@@ -26,7 +26,6 @@ pymic_net_run train config/train_test.cfg
 1. Run the following command to obtain segmentation results of testing images. By default we use the latest checkpoint. You can set `ckpt_mode` to 1 in `config/train_test.cfg` to use the best performing checkpoint based on the validation set.
 
 ```bash
-mkdir result
 pymic_net_run test config/train_test.cfg
 ```
 
