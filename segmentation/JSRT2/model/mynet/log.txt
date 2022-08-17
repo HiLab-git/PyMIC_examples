@@ -1,0 +1,505 @@
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/JSRT
+dataset train_csv = ../JSRT/config/jsrt_train.csv
+dataset valid_csv = ../JSRT/config/jsrt_valid.csv
+dataset test_csv = ../JSRT/config/jsrt_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['NormalizeWithMeanStd', 'RandomCrop', 'LabelConvert', 'LabelToProbability']
+dataset valid_transform = ['NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset test_transform = ['NormalizeWithMeanStd']
+dataset normalizewithmeanstd_channels = [0]
+dataset randomcrop_output_size = [240, 240]
+dataset labelconvert_source_list = [0, 255]
+dataset labelconvert_target_list = [0, 1]
+dataset labeltoprobability_class_num = 2
+network net_type = MyUNet2D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [4, 16, 24, 32, 48]
+network dropout = [0.0, 0.0, 0.3, 0.4, 0.5]
+network bilinear = True
+training gpus = [0]
+training loss_type = ['MyFocalDiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training myfocaldiceloss_beta = 1.5
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_gamma = 0.5
+training lr_milestones = 2000
+training ckpt_save_dir = model/mynet
+training iter_start = 0
+training iter_max = 8000
+training iter_valid = 200
+training iter_save = 8000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing label_source = [0, 1]
+testing label_target = [0, 255]
+deterministric is true
+parameter number 117034
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/JSRT
+dataset train_csv = ../JSRT/config/jsrt_train.csv
+dataset valid_csv = ../JSRT/config/jsrt_valid.csv
+dataset test_csv = ../JSRT/config/jsrt_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['NormalizeWithMeanStd', 'RandomCrop', 'LabelConvert', 'LabelToProbability']
+dataset valid_transform = ['NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset test_transform = ['NormalizeWithMeanStd']
+dataset normalizewithmeanstd_channels = [0]
+dataset randomcrop_output_size = [240, 240]
+dataset labelconvert_source_list = [0, 255]
+dataset labelconvert_target_list = [0, 1]
+dataset labeltoprobability_class_num = 2
+network net_type = MyUNet2D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [4, 16, 24, 32, 48]
+network dropout = [0.0, 0.0, 0.3, 0.4, 0.5]
+network bilinear = True
+training gpus = [0]
+training loss_type = ['MyFocalDiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training myfocaldiceloss_beta = 1.5
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_gamma = 0.5
+training lr_milestones = 2000
+training ckpt_save_dir = model/mynet
+training iter_start = 0
+training iter_max = 8000
+training iter_valid = 200
+training iter_save = 8000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing label_source = [0, 1]
+testing label_target = [0, 255]
+deterministric is true
+parameter number 117034
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/JSRT
+dataset train_csv = ../JSRT/config/jsrt_train.csv
+dataset valid_csv = ../JSRT/config/jsrt_valid.csv
+dataset test_csv = ../JSRT/config/jsrt_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['NormalizeWithMeanStd', 'RandomCrop', 'LabelConvert', 'LabelToProbability']
+dataset valid_transform = ['NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset test_transform = ['NormalizeWithMeanStd']
+dataset normalizewithmeanstd_channels = [0]
+dataset randomcrop_output_size = [240, 240]
+dataset labelconvert_source_list = [0, 255]
+dataset labelconvert_target_list = [0, 1]
+dataset labeltoprobability_class_num = 2
+network net_type = MyUNet2D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [4, 16, 24, 32, 48]
+network dropout = [0.0, 0.0, 0.3, 0.4, 0.5]
+network bilinear = True
+training gpus = [0]
+training loss_type = ['MyFocalDiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training myfocaldiceloss_beta = 1.5
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_scheduler = MultiStepLR
+training lr_gamma = 0.5
+training lr_milestones = 2000
+training ckpt_save_dir = model/mynet
+training iter_start = 0
+training iter_max = 8000
+training iter_valid = 200
+training iter_save = 8000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing label_source = [0, 1]
+testing label_target = [0, 255]
+deterministric is true
+parameter number 117034
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/JSRT
+dataset train_csv = ../JSRT/config/jsrt_train.csv
+dataset valid_csv = ../JSRT/config/jsrt_valid.csv
+dataset test_csv = ../JSRT/config/jsrt_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['NormalizeWithMeanStd', 'RandomCrop', 'LabelConvert', 'LabelToProbability']
+dataset valid_transform = ['NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset test_transform = ['NormalizeWithMeanStd']
+dataset normalizewithmeanstd_channels = [0]
+dataset randomcrop_output_size = [240, 240]
+dataset labelconvert_source_list = [0, 255]
+dataset labelconvert_target_list = [0, 1]
+dataset labeltoprobability_class_num = 2
+network net_type = MyUNet2D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [4, 16, 24, 32, 48]
+network dropout = [0.0, 0.0, 0.3, 0.4, 0.5]
+network bilinear = True
+training gpus = [0]
+training loss_type = ['MyFocalDiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training myfocaldiceloss_beta = 1.5
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_scheduler = MultiStepLR
+training lr_gamma = 0.5
+training lr_milestones = 2000
+training ckpt_save_dir = model/mynet
+training iter_start = 0
+training iter_max = 8000
+training iter_valid = 200
+training iter_save = 8000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing label_source = [0, 1]
+testing label_target = [0, 255]
+deterministric is true
+parameter number 117034
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/JSRT
+dataset train_csv = ../JSRT/config/jsrt_train.csv
+dataset valid_csv = ../JSRT/config/jsrt_valid.csv
+dataset test_csv = ../JSRT/config/jsrt_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['NormalizeWithMeanStd', 'RandomCrop', 'LabelConvert', 'LabelToProbability']
+dataset valid_transform = ['NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset test_transform = ['NormalizeWithMeanStd']
+dataset normalizewithmeanstd_channels = [0]
+dataset randomcrop_output_size = [240, 240]
+dataset labelconvert_source_list = [0, 255]
+dataset labelconvert_target_list = [0, 1]
+dataset labeltoprobability_class_num = 2
+network net_type = MyUNet2D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [4, 16, 24, 32, 48]
+network dropout = [0.0, 0.0, 0.3, 0.4, 0.5]
+network bilinear = True
+training gpus = [0]
+training loss_type = ['MyFocalDiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training myfocaldiceloss_beta = 1.5
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_scheduler = MultiStepLR
+training lr_gamma = 0.5
+training lr_milestones = [2000, 4000, 6000]
+training ckpt_save_dir = model/mynet
+training iter_start = 0
+training iter_max = 8000
+training iter_valid = 200
+training iter_save = 8000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing label_source = [0, 1]
+testing label_target = [0, 255]
+deterministric is true
+parameter number 117034
+2022-08-17 20:25:45 training start
+
+2022-08-17 20:25:56 it 200
+learning rate 0.001
+training/validation time: 9.85s/0.77s
+train loss 0.4515, avg dice 0.9336 [0.9586 0.9085]
+valid loss 0.3084, avg dice 0.9685 [0.9812 0.9558]
+
+2022-08-17 20:26:07 it 400
+learning rate 0.001
+training/validation time: 9.85s/0.89s
+train loss 0.2853, avg dice 0.9750 [0.9826 0.9675]
+valid loss 0.2168, avg dice 0.9786 [0.9872 0.9699]
+
+2022-08-17 20:26:18 it 600
+learning rate 0.001
+training/validation time: 10.65s/0.76s
+train loss 0.2098, avg dice 0.9805 [0.9864 0.9745]
+valid loss 0.1643, avg dice 0.9810 [0.9888 0.9732]
+
+2022-08-17 20:26:28 it 800
+learning rate 0.001
+training/validation time: 9.55s/0.78s
+train loss 0.1623, avg dice 0.9821 [0.9875 0.9767]
+valid loss 0.1295, avg dice 0.9811 [0.9888 0.9733]
+
+2022-08-17 20:26:40 it 1000
+learning rate 0.001
+training/validation time: 10.36s/0.79s
+train loss 0.1306, avg dice 0.9824 [0.9878 0.9771]
+valid loss 0.1110, avg dice 0.9804 [0.9884 0.9725]
+
+2022-08-17 20:26:50 it 1200
+learning rate 0.001
+training/validation time: 9.86s/0.78s
+train loss 0.1087, avg dice 0.9831 [0.9882 0.9780]
+valid loss 0.0950, avg dice 0.9828 [0.9899 0.9758]
+
+2022-08-17 20:27:01 it 1400
+learning rate 0.001
+training/validation time: 10.43s/0.78s
+train loss 0.0899, avg dice 0.9848 [0.9894 0.9801]
+valid loss 0.0852, avg dice 0.9825 [0.9897 0.9752]
+
+2022-08-17 20:27:12 it 1600
+learning rate 0.001
+training/validation time: 9.90s/0.78s
+train loss 0.0782, avg dice 0.9854 [0.9898 0.9811]
+valid loss 0.0770, avg dice 0.9831 [0.9901 0.9761]
+
+2022-08-17 20:27:23 it 1800
+learning rate 0.001
+training/validation time: 9.85s/0.79s
+train loss 0.0710, avg dice 0.9854 [0.9899 0.9810]
+valid loss 0.0725, avg dice 0.9831 [0.9900 0.9761]
+
+2022-08-17 20:27:34 it 2000
+learning rate 0.001
+training/validation time: 10.26s/0.75s
+train loss 0.0646, avg dice 0.9859 [0.9902 0.9817]
+valid loss 0.0712, avg dice 0.9811 [0.9888 0.9734]
+
+2022-08-17 20:27:44 it 2200
+learning rate 0.0005
+training/validation time: 9.87s/0.78s
+train loss 0.0585, avg dice 0.9869 [0.9909 0.9829]
+valid loss 0.0661, avg dice 0.9832 [0.9901 0.9763]
+
+2022-08-17 20:27:56 it 2400
+learning rate 0.0005
+training/validation time: 10.62s/0.77s
+train loss 0.0563, avg dice 0.9871 [0.9910 0.9832]
+valid loss 0.0657, avg dice 0.9831 [0.9901 0.9762]
+
+2022-08-17 20:28:06 it 2600
+learning rate 0.0005
+training/validation time: 9.78s/0.77s
+train loss 0.0540, avg dice 0.9873 [0.9912 0.9835]
+valid loss 0.0642, avg dice 0.9830 [0.9900 0.9760]
+
+2022-08-17 20:28:18 it 2800
+learning rate 0.0005
+training/validation time: 10.50s/0.78s
+train loss 0.0525, avg dice 0.9873 [0.9912 0.9835]
+valid loss 0.0622, avg dice 0.9836 [0.9903 0.9768]
+
+2022-08-17 20:28:28 it 3000
+learning rate 0.0005
+training/validation time: 9.77s/0.79s
+train loss 0.0509, avg dice 0.9875 [0.9913 0.9838]
+valid loss 0.0622, avg dice 0.9834 [0.9903 0.9765]
+
+2022-08-17 20:28:39 it 3200
+learning rate 0.0005
+training/validation time: 10.31s/0.77s
+train loss 0.0513, avg dice 0.9870 [0.9910 0.9831]
+valid loss 0.0620, avg dice 0.9832 [0.9901 0.9764]
+
+2022-08-17 20:28:50 it 3400
+learning rate 0.0005
+training/validation time: 9.82s/0.78s
+train loss 0.0488, avg dice 0.9875 [0.9913 0.9837]
+valid loss 0.0591, avg dice 0.9838 [0.9905 0.9772]
+
+2022-08-17 20:29:01 it 3600
+learning rate 0.0005
+training/validation time: 9.74s/0.79s
+train loss 0.0470, avg dice 0.9878 [0.9915 0.9841]
+valid loss 0.0599, avg dice 0.9839 [0.9905 0.9773]
+
+2022-08-17 20:29:12 it 3800
+learning rate 0.0005
+training/validation time: 10.45s/0.79s
+train loss 0.0464, avg dice 0.9878 [0.9915 0.9841]
+valid loss 0.0588, avg dice 0.9840 [0.9906 0.9775]
+
+2022-08-17 20:29:22 it 4000
+learning rate 0.0005
+training/validation time: 9.67s/0.79s
+train loss 0.0452, avg dice 0.9880 [0.9916 0.9844]
+valid loss 0.0593, avg dice 0.9831 [0.9901 0.9762]
+
+2022-08-17 20:29:33 it 4200
+learning rate 0.00025
+training/validation time: 10.20s/0.78s
+train loss 0.0436, avg dice 0.9884 [0.9919 0.9848]
+valid loss 0.0578, avg dice 0.9838 [0.9905 0.9772]
+
+2022-08-17 20:29:44 it 4400
+learning rate 0.00025
+training/validation time: 9.75s/0.79s
+train loss 0.0425, avg dice 0.9886 [0.9920 0.9851]
+valid loss 0.0578, avg dice 0.9840 [0.9906 0.9774]
+
+2022-08-17 20:29:55 it 4600
+learning rate 0.00025
+training/validation time: 10.41s/0.77s
+train loss 0.0421, avg dice 0.9886 [0.9921 0.9852]
+valid loss 0.0582, avg dice 0.9838 [0.9905 0.9772]
+
+2022-08-17 20:30:06 it 4800
+learning rate 0.00025
+training/validation time: 9.83s/0.78s
+train loss 0.0417, avg dice 0.9886 [0.9921 0.9852]
+valid loss 0.0564, avg dice 0.9845 [0.9909 0.9781]
+
+2022-08-17 20:30:17 it 5000
+learning rate 0.00025
+training/validation time: 10.28s/0.77s
+train loss 0.0412, avg dice 0.9887 [0.9922 0.9853]
+valid loss 0.0570, avg dice 0.9842 [0.9907 0.9778]
+
+2022-08-17 20:30:27 it 5200
+learning rate 0.00025
+training/validation time: 9.86s/0.78s
+train loss 0.0409, avg dice 0.9888 [0.9922 0.9854]
+valid loss 0.0570, avg dice 0.9843 [0.9907 0.9778]
+
+2022-08-17 20:30:38 it 5400
+learning rate 0.00025
+training/validation time: 9.79s/0.78s
+train loss 0.0403, avg dice 0.9889 [0.9922 0.9855]
+valid loss 0.0567, avg dice 0.9843 [0.9908 0.9779]
+
+2022-08-17 20:30:49 it 5600
+learning rate 0.00025
+training/validation time: 10.52s/0.78s
+train loss 0.0399, avg dice 0.9889 [0.9923 0.9856]
+valid loss 0.0565, avg dice 0.9842 [0.9908 0.9777]
+
+2022-08-17 20:30:59 it 5800
+learning rate 0.00025
+training/validation time: 9.49s/0.77s
+train loss 0.0396, avg dice 0.9890 [0.9923 0.9856]
+valid loss 0.0565, avg dice 0.9842 [0.9907 0.9777]
+
+2022-08-17 20:31:11 it 6000
+learning rate 0.00025
+training/validation time: 10.39s/0.84s
+train loss 0.0394, avg dice 0.9889 [0.9923 0.9856]
+valid loss 0.0565, avg dice 0.9843 [0.9908 0.9778]
+
+2022-08-17 20:31:21 it 6200
+learning rate 0.000125
+training/validation time: 9.97s/0.77s
+train loss 0.0383, avg dice 0.9893 [0.9925 0.9860]
+valid loss 0.0567, avg dice 0.9842 [0.9908 0.9776]
+
+2022-08-17 20:31:33 it 6400
+learning rate 0.000125
+training/validation time: 10.41s/0.77s
+train loss 0.0380, avg dice 0.9893 [0.9926 0.9861]
+valid loss 0.0569, avg dice 0.9841 [0.9907 0.9775]
+
+2022-08-17 20:31:43 it 6600
+learning rate 0.000125
+training/validation time: 9.88s/0.80s
+train loss 0.0379, avg dice 0.9894 [0.9926 0.9861]
+valid loss 0.0557, avg dice 0.9843 [0.9908 0.9779]
+
+2022-08-17 20:31:55 it 6800
+learning rate 0.000125
+training/validation time: 10.56s/0.76s
+train loss 0.0378, avg dice 0.9894 [0.9926 0.9862]
+valid loss 0.0567, avg dice 0.9843 [0.9908 0.9777]
+
+2022-08-17 20:32:05 it 7000
+learning rate 0.000125
+training/validation time: 9.71s/0.79s
+train loss 0.0376, avg dice 0.9894 [0.9926 0.9861]
+valid loss 0.0565, avg dice 0.9843 [0.9908 0.9778]
+
+2022-08-17 20:32:15 it 7200
+learning rate 0.000125
+training/validation time: 9.42s/0.78s
+train loss 0.0374, avg dice 0.9895 [0.9927 0.9863]
+valid loss 0.0567, avg dice 0.9841 [0.9907 0.9775]
+
+2022-08-17 20:32:26 it 7400
+learning rate 0.000125
+training/validation time: 10.00s/0.79s
+train loss 0.0372, avg dice 0.9895 [0.9927 0.9863]
+valid loss 0.0563, avg dice 0.9845 [0.9909 0.9782]
+
+2022-08-17 20:32:37 it 7600
+learning rate 0.000125
+training/validation time: 9.74s/0.77s
+train loss 0.0370, avg dice 0.9895 [0.9927 0.9863]
+valid loss 0.0564, avg dice 0.9843 [0.9908 0.9778]
+
+2022-08-17 20:32:48 it 7800
+learning rate 0.000125
+training/validation time: 10.35s/0.78s
+train loss 0.0368, avg dice 0.9895 [0.9927 0.9863]
+valid loss 0.0573, avg dice 0.9841 [0.9907 0.9775]
+
+2022-08-17 20:32:58 it 8000
+learning rate 0.000125
+training/validation time: 9.27s/0.79s
+train loss 0.0367, avg dice 0.9896 [0.9928 0.9864]
+valid loss 0.0567, avg dice 0.9844 [0.9908 0.9779]
+The best performing iter is 7400, valid dice 0.9845452308654785
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/JSRT
+dataset train_csv = ../JSRT/config/jsrt_train.csv
+dataset valid_csv = ../JSRT/config/jsrt_valid.csv
+dataset test_csv = ../JSRT/config/jsrt_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['NormalizeWithMeanStd', 'RandomCrop', 'LabelConvert', 'LabelToProbability']
+dataset valid_transform = ['NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset test_transform = ['NormalizeWithMeanStd']
+dataset normalizewithmeanstd_channels = [0]
+dataset randomcrop_output_size = [240, 240]
+dataset labelconvert_source_list = [0, 255]
+dataset labelconvert_target_list = [0, 1]
+dataset labeltoprobability_class_num = 2
+network net_type = MyUNet2D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [4, 16, 24, 32, 48]
+network dropout = [0.0, 0.0, 0.3, 0.4, 0.5]
+network bilinear = True
+training gpus = [0]
+training loss_type = ['MyFocalDiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training myfocaldiceloss_beta = 1.5
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_scheduler = MultiStepLR
+training lr_gamma = 0.5
+training lr_milestones = [2000, 4000, 6000]
+training ckpt_save_dir = model/mynet
+training iter_start = 0
+training iter_max = 8000
+training iter_valid = 200
+training iter_save = 8000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing label_source = [0, 1]
+testing label_target = [0, 255]
+deterministric is true
+parameter number 117034
+testing time 0.0074816054486213845 +/- 0.023400877922399452
