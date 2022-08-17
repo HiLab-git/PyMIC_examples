@@ -19,7 +19,7 @@ In this example, we use 2D U-Net to segment the lung from X-Ray images. First we
 pymic_run  train config/unet.cfg
 ```
 
-2. During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. We can observe some over-fitting on the training set. 
+2. During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where red and blue curves are for training set and validation set respectively. We can observe some over-fitting on the training set. 
 
 ![avg_dice](./picture/jsrt_avg_dice.png)
 ![avg_loss](./picture/jsrt_avg_loss.png)
@@ -34,7 +34,7 @@ pymic_run test config/unet.cfg
 2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `JSRT_root`, and run the following command to obtain quantitative evaluation results in terms of dice. 
 
 ```bash
-pymic_evaluate_seg config/evaluation.cfg
+pymic_eval_seg config/evaluation.cfg
 ```
 
-The obtained average dice score by default setting should be close to 97.989%. If setting `ckpt_mode` to 1 during testing, the average dice would be around 97.997%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get average symmetric surface distance (assd) evaluation results.
+The obtained average Dice score by default setting should be close to 97.989%. If setting `ckpt_mode` to 1 during testing, the average Dice would be around 97.997%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get average symmetric surface distance (assd) evaluation results.
