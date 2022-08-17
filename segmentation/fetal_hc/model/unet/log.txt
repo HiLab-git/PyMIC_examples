@@ -1,0 +1,1063 @@
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/Fetal_HC
+dataset train_csv = config/fetal_hc_train.csv
+dataset valid_csv = config/fetal_hc_valid.csv
+dataset test_csv = config/fetal_hc_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['Rescale', 'RandomCrop', 'RandomFlip', 'NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset valid_transform = ['Rescale', 'NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset test_transform = ['Rescale', 'NormalizeWithMeanStd']
+dataset rescale_output_size = [256, 384]
+dataset randomcrop_output_size = [224, 320]
+dataset randomflip_flip_depth = False
+dataset randomflip_flip_height = True
+dataset randomflip_flip_width = True
+dataset normalizewithmeanstd_channels = [0]
+dataset labelconvert_source_list = [0, 255]
+dataset labelconvert_target_list = [0, 1]
+dataset labeltoprobability_class_num = 2
+network net_type = UNet2D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [4, 16, 32, 64, 128]
+network dropout = [0, 0, 0.3, 0.4, 0.5]
+network bilinear = True
+network deep_supervise = False
+training gpus = [0]
+training loss_type = ['DiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_scheduler = ReduceLROnPlateau
+training lr_gamma = 0.5
+training reducelronplateau_patience = 2000
+training early_stop_patience = 5000
+training ckpt_save_dir = model/unet
+training iter_start = 0
+training iter_max = 15000
+training iter_valid = 100
+training iter_save = 5000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing tta_mode = 0
+testing sliding_window_enable = True
+testing sliding_window_size = [224, 320]
+testing sliding_window_stride = [224, 320]
+testing label_source = [0, 1]
+testing label_target = [0, 255]
+deterministric is true
+parameter number 452050
+2022-08-17 20:59:54 training start
+
+2022-08-17 21:00:00 it 100
+learning rate 0.001
+training/validation time: 3.99s/2.46s
+train loss 0.8924, avg dice 0.4986 [0.7701 0.2271]
+valid loss 0.6427, avg dice 0.8169 [0.9154 0.7185]
+
+2022-08-17 21:00:07 it 200
+learning rate 0.001
+training/validation time: 4.39s/2.43s
+train loss 0.6295, avg dice 0.8844 [0.9116 0.8572]
+valid loss 0.4629, avg dice 0.8944 [0.9498 0.8390]
+
+2022-08-17 21:00:13 it 300
+learning rate 0.001
+training/validation time: 3.78s/2.41s
+train loss 0.4354, avg dice 0.9263 [0.9419 0.9107]
+valid loss 0.5565, avg dice 0.8137 [0.9143 0.7131]
+
+2022-08-17 21:00:20 it 400
+learning rate 0.001
+training/validation time: 4.52s/2.39s
+train loss 0.3445, avg dice 0.9327 [0.9463 0.9192]
+valid loss 0.2260, avg dice 0.9378 [0.9668 0.9089]
+
+2022-08-17 21:00:26 it 500
+learning rate 0.001
+training/validation time: 3.66s/2.54s
+train loss 0.2772, avg dice 0.9430 [0.9529 0.9331]
+valid loss 0.1788, avg dice 0.9557 [0.9781 0.9334]
+
+2022-08-17 21:00:33 it 600
+learning rate 0.001
+training/validation time: 4.45s/2.47s
+train loss 0.2221, avg dice 0.9519 [0.9617 0.9421]
+valid loss 0.1774, avg dice 0.9506 [0.9757 0.9254]
+
+2022-08-17 21:00:40 it 700
+learning rate 0.001
+training/validation time: 3.71s/2.51s
+train loss 0.2043, avg dice 0.9524 [0.9617 0.9430]
+valid loss 0.2966, avg dice 0.9059 [0.9545 0.8573]
+
+2022-08-17 21:00:46 it 800
+learning rate 0.001
+training/validation time: 4.30s/2.40s
+train loss 0.1873, avg dice 0.9555 [0.9634 0.9476]
+valid loss 0.1548, avg dice 0.9564 [0.9759 0.9369]
+
+2022-08-17 21:00:53 it 900
+learning rate 0.001
+training/validation time: 3.71s/2.55s
+train loss 0.1664, avg dice 0.9599 [0.9676 0.9522]
+valid loss 0.2415, avg dice 0.9257 [0.9609 0.8904]
+
+2022-08-17 21:01:00 it 1000
+learning rate 0.001
+training/validation time: 4.52s/2.47s
+train loss 0.1652, avg dice 0.9592 [0.9666 0.9518]
+valid loss 0.1458, avg dice 0.9608 [0.9795 0.9422]
+
+2022-08-17 21:01:06 it 1100
+learning rate 0.001
+training/validation time: 3.70s/2.60s
+train loss 0.1422, avg dice 0.9648 [0.9712 0.9584]
+valid loss 0.1088, avg dice 0.9713 [0.9836 0.9590]
+
+2022-08-17 21:01:13 it 1200
+learning rate 0.001
+training/validation time: 4.34s/2.43s
+train loss 0.1558, avg dice 0.9607 [0.9688 0.9525]
+valid loss 0.1103, avg dice 0.9709 [0.9834 0.9585]
+
+2022-08-17 21:01:19 it 1300
+learning rate 0.001
+training/validation time: 3.51s/2.40s
+train loss 0.1515, avg dice 0.9611 [0.9697 0.9525]
+valid loss 0.1078, avg dice 0.9680 [0.9823 0.9536]
+
+2022-08-17 21:01:26 it 1400
+learning rate 0.001
+training/validation time: 4.48s/2.49s
+train loss 0.1424, avg dice 0.9638 [0.9702 0.9575]
+valid loss 0.1269, avg dice 0.9602 [0.9798 0.9406]
+
+2022-08-17 21:01:32 it 1500
+learning rate 0.001
+training/validation time: 3.74s/2.48s
+train loss 0.1291, avg dice 0.9672 [0.9735 0.9609]
+valid loss 0.1116, avg dice 0.9686 [0.9822 0.9551]
+
+2022-08-17 21:01:38 it 1600
+learning rate 0.001
+training/validation time: 4.30s/2.35s
+train loss 0.1212, avg dice 0.9691 [0.9743 0.9639]
+valid loss 0.0987, avg dice 0.9700 [0.9840 0.9559]
+
+2022-08-17 21:01:44 it 1700
+learning rate 0.001
+training/validation time: 3.17s/2.41s
+train loss 0.1229, avg dice 0.9685 [0.9746 0.9623]
+valid loss 0.1059, avg dice 0.9687 [0.9826 0.9549]
+
+2022-08-17 21:01:51 it 1800
+learning rate 0.001
+training/validation time: 4.39s/2.37s
+train loss 0.1180, avg dice 0.9693 [0.9752 0.9634]
+valid loss 0.1196, avg dice 0.9613 [0.9821 0.9404]
+
+2022-08-17 21:01:57 it 1900
+learning rate 0.001
+training/validation time: 3.63s/2.46s
+train loss 0.1017, avg dice 0.9737 [0.9783 0.9691]
+valid loss 0.0881, avg dice 0.9737 [0.9852 0.9622]
+
+2022-08-17 21:02:04 it 2000
+learning rate 0.001
+training/validation time: 4.45s/2.30s
+train loss 0.1301, avg dice 0.9657 [0.9716 0.9599]
+valid loss 0.1167, avg dice 0.9663 [0.9825 0.9501]
+
+2022-08-17 21:02:10 it 2100
+learning rate 0.001
+training/validation time: 3.73s/2.49s
+train loss 0.1197, avg dice 0.9682 [0.9749 0.9614]
+valid loss 0.1131, avg dice 0.9666 [0.9811 0.9520]
+
+2022-08-17 21:02:17 it 2200
+learning rate 0.001
+training/validation time: 4.39s/2.54s
+train loss 0.1228, avg dice 0.9675 [0.9739 0.9611]
+valid loss 0.0847, avg dice 0.9761 [0.9859 0.9663]
+
+2022-08-17 21:02:23 it 2300
+learning rate 0.001
+training/validation time: 3.74s/2.42s
+train loss 0.1126, avg dice 0.9707 [0.9759 0.9654]
+valid loss 0.0965, avg dice 0.9706 [0.9838 0.9574]
+
+2022-08-17 21:02:30 it 2400
+learning rate 0.001
+training/validation time: 4.45s/2.43s
+train loss 0.1073, avg dice 0.9718 [0.9771 0.9665]
+valid loss 0.1128, avg dice 0.9639 [0.9819 0.9460]
+
+2022-08-17 21:02:36 it 2500
+learning rate 0.001
+training/validation time: 3.67s/2.49s
+train loss 0.1108, avg dice 0.9700 [0.9770 0.9631]
+valid loss 0.0909, avg dice 0.9737 [0.9847 0.9626]
+
+2022-08-17 21:02:43 it 2600
+learning rate 0.001
+training/validation time: 4.44s/2.41s
+train loss 0.0998, avg dice 0.9736 [0.9782 0.9690]
+valid loss 0.0916, avg dice 0.9735 [0.9846 0.9624]
+
+2022-08-17 21:02:49 it 2700
+learning rate 0.001
+training/validation time: 3.42s/2.42s
+train loss 0.1167, avg dice 0.9692 [0.9749 0.9635]
+valid loss 0.0992, avg dice 0.9683 [0.9831 0.9535]
+
+2022-08-17 21:02:56 it 2800
+learning rate 0.001
+training/validation time: 4.50s/2.42s
+train loss 0.1007, avg dice 0.9729 [0.9780 0.9678]
+valid loss 0.0913, avg dice 0.9711 [0.9852 0.9570]
+
+2022-08-17 21:03:01 it 2900
+learning rate 0.001
+training/validation time: 3.44s/2.41s
+train loss 0.0980, avg dice 0.9741 [0.9783 0.9699]
+valid loss 0.0935, avg dice 0.9718 [0.9848 0.9587]
+
+2022-08-17 21:03:08 it 3000
+learning rate 0.001
+training/validation time: 4.31s/2.46s
+train loss 0.1045, avg dice 0.9719 [0.9770 0.9669]
+valid loss 0.0839, avg dice 0.9743 [0.9855 0.9631]
+
+2022-08-17 21:03:15 it 3100
+learning rate 0.001
+training/validation time: 3.83s/2.44s
+train loss 0.1040, avg dice 0.9720 [0.9772 0.9668]
+valid loss 0.0965, avg dice 0.9700 [0.9833 0.9568]
+
+2022-08-17 21:03:21 it 3200
+learning rate 0.001
+training/validation time: 4.31s/2.46s
+train loss 0.0980, avg dice 0.9738 [0.9785 0.9691]
+valid loss 0.0857, avg dice 0.9748 [0.9853 0.9644]
+
+2022-08-17 21:03:27 it 3300
+learning rate 0.001
+training/validation time: 3.68s/2.34s
+train loss 0.1026, avg dice 0.9722 [0.9779 0.9666]
+valid loss 0.0821, avg dice 0.9752 [0.9855 0.9649]
+
+2022-08-17 21:03:34 it 3400
+learning rate 0.001
+training/validation time: 4.34s/2.48s
+train loss 0.0941, avg dice 0.9745 [0.9794 0.9696]
+valid loss 0.0879, avg dice 0.9731 [0.9847 0.9616]
+
+2022-08-17 21:03:40 it 3500
+learning rate 0.001
+training/validation time: 3.76s/2.36s
+train loss 0.0976, avg dice 0.9738 [0.9782 0.9695]
+valid loss 0.1005, avg dice 0.9698 [0.9838 0.9558]
+
+2022-08-17 21:03:47 it 3600
+learning rate 0.001
+training/validation time: 4.38s/2.43s
+train loss 0.0997, avg dice 0.9732 [0.9780 0.9685]
+valid loss 0.0850, avg dice 0.9739 [0.9851 0.9626]
+
+2022-08-17 21:03:53 it 3700
+learning rate 0.001
+training/validation time: 3.80s/2.41s
+train loss 0.0932, avg dice 0.9748 [0.9793 0.9702]
+valid loss 0.0924, avg dice 0.9720 [0.9841 0.9598]
+
+2022-08-17 21:04:00 it 3800
+learning rate 0.001
+training/validation time: 4.31s/2.48s
+train loss 0.0985, avg dice 0.9739 [0.9784 0.9693]
+valid loss 0.0858, avg dice 0.9742 [0.9851 0.9633]
+
+2022-08-17 21:04:06 it 3900
+learning rate 0.001
+training/validation time: 3.73s/2.37s
+train loss 0.0923, avg dice 0.9749 [0.9796 0.9702]
+valid loss 0.0837, avg dice 0.9736 [0.9857 0.9616]
+
+2022-08-17 21:04:13 it 4000
+learning rate 0.001
+training/validation time: 4.33s/2.49s
+train loss 0.0969, avg dice 0.9739 [0.9789 0.9688]
+valid loss 0.0936, avg dice 0.9722 [0.9839 0.9606]
+
+2022-08-17 21:04:20 it 4100
+learning rate 0.001
+training/validation time: 4.43s/2.32s
+train loss 0.1057, avg dice 0.9712 [0.9766 0.9658]
+valid loss 0.0802, avg dice 0.9753 [0.9860 0.9646]
+
+2022-08-17 21:04:26 it 4200
+learning rate 0.001
+training/validation time: 3.70s/2.41s
+train loss 0.1017, avg dice 0.9732 [0.9774 0.9690]
+valid loss 0.1107, avg dice 0.9676 [0.9824 0.9527]
+
+2022-08-17 21:04:33 it 4300
+learning rate 0.001
+training/validation time: 4.40s/2.38s
+train loss 0.0996, avg dice 0.9727 [0.9784 0.9671]
+valid loss 0.0782, avg dice 0.9761 [0.9864 0.9658]
+
+2022-08-17 21:04:39 it 4400
+learning rate 0.0005
+training/validation time: 3.64s/2.41s
+train loss 0.0900, avg dice 0.9757 [0.9800 0.9714]
+valid loss 0.0740, avg dice 0.9775 [0.9869 0.9680]
+
+2022-08-17 21:04:46 it 4500
+learning rate 0.0005
+training/validation time: 4.42s/2.38s
+train loss 0.0861, avg dice 0.9766 [0.9808 0.9724]
+valid loss 0.0765, avg dice 0.9763 [0.9863 0.9663]
+
+2022-08-17 21:04:52 it 4600
+learning rate 0.0005
+training/validation time: 3.62s/2.42s
+train loss 0.0823, avg dice 0.9773 [0.9815 0.9731]
+valid loss 0.0707, avg dice 0.9776 [0.9871 0.9682]
+
+2022-08-17 21:04:58 it 4700
+learning rate 0.0005
+training/validation time: 4.42s/2.37s
+train loss 0.0817, avg dice 0.9776 [0.9814 0.9737]
+valid loss 0.0744, avg dice 0.9766 [0.9866 0.9667]
+
+2022-08-17 21:05:04 it 4800
+learning rate 0.0005
+training/validation time: 3.56s/2.36s
+train loss 0.0830, avg dice 0.9771 [0.9817 0.9725]
+valid loss 0.0711, avg dice 0.9774 [0.9871 0.9677]
+
+2022-08-17 21:05:11 it 4900
+learning rate 0.0005
+training/validation time: 4.30s/2.32s
+train loss 0.0785, avg dice 0.9784 [0.9821 0.9747]
+valid loss 0.0681, avg dice 0.9790 [0.9876 0.9704]
+
+2022-08-17 21:05:17 it 5000
+learning rate 0.0005
+training/validation time: 3.70s/2.43s
+train loss 0.0858, avg dice 0.9768 [0.9804 0.9731]
+valid loss 0.0703, avg dice 0.9777 [0.9872 0.9682]
+
+2022-08-17 21:05:24 it 5100
+learning rate 0.0005
+training/validation time: 4.40s/2.45s
+train loss 0.0798, avg dice 0.9780 [0.9819 0.9741]
+valid loss 0.0710, avg dice 0.9773 [0.9872 0.9674]
+
+2022-08-17 21:05:30 it 5200
+learning rate 0.0005
+training/validation time: 3.68s/2.43s
+train loss 0.0824, avg dice 0.9773 [0.9817 0.9729]
+valid loss 0.0749, avg dice 0.9771 [0.9868 0.9673]
+
+2022-08-17 21:05:36 it 5300
+learning rate 0.0005
+training/validation time: 3.90s/2.34s
+train loss 0.0807, avg dice 0.9778 [0.9816 0.9740]
+valid loss 0.0681, avg dice 0.9789 [0.9880 0.9698]
+
+2022-08-17 21:05:43 it 5400
+learning rate 0.0005
+training/validation time: 3.71s/2.48s
+train loss 0.0812, avg dice 0.9778 [0.9817 0.9739]
+valid loss 0.0728, avg dice 0.9773 [0.9869 0.9677]
+
+2022-08-17 21:05:49 it 5500
+learning rate 0.0005
+training/validation time: 4.31s/2.55s
+train loss 0.0850, avg dice 0.9767 [0.9808 0.9725]
+valid loss 0.0822, avg dice 0.9726 [0.9852 0.9600]
+
+2022-08-17 21:05:56 it 5600
+learning rate 0.0005
+training/validation time: 3.69s/2.49s
+train loss 0.0792, avg dice 0.9781 [0.9824 0.9738]
+valid loss 0.0729, avg dice 0.9773 [0.9866 0.9680]
+
+2022-08-17 21:06:02 it 5700
+learning rate 0.0005
+training/validation time: 4.40s/2.39s
+train loss 0.0794, avg dice 0.9780 [0.9819 0.9741]
+valid loss 0.0810, avg dice 0.9748 [0.9858 0.9638]
+
+2022-08-17 21:06:09 it 5800
+learning rate 0.0005
+training/validation time: 3.70s/2.42s
+train loss 0.0839, avg dice 0.9770 [0.9810 0.9730]
+valid loss 0.0728, avg dice 0.9765 [0.9872 0.9659]
+
+2022-08-17 21:06:15 it 5900
+learning rate 0.0005
+training/validation time: 4.38s/2.55s
+train loss 0.0840, avg dice 0.9769 [0.9813 0.9725]
+valid loss 0.0732, avg dice 0.9774 [0.9870 0.9679]
+
+2022-08-17 21:06:22 it 6000
+learning rate 0.0005
+training/validation time: 3.81s/2.33s
+train loss 0.0777, avg dice 0.9785 [0.9825 0.9745]
+valid loss 0.0711, avg dice 0.9783 [0.9874 0.9692]
+
+2022-08-17 21:06:29 it 6100
+learning rate 0.0005
+training/validation time: 4.49s/2.47s
+train loss 0.0814, avg dice 0.9777 [0.9814 0.9739]
+valid loss 0.0682, avg dice 0.9790 [0.9876 0.9704]
+
+2022-08-17 21:06:35 it 6200
+learning rate 0.0005
+training/validation time: 3.58s/2.39s
+train loss 0.0759, avg dice 0.9788 [0.9830 0.9747]
+valid loss 0.0671, avg dice 0.9796 [0.9880 0.9711]
+
+2022-08-17 21:06:41 it 6300
+learning rate 0.0005
+training/validation time: 4.32s/2.49s
+train loss 0.0817, avg dice 0.9777 [0.9814 0.9739]
+valid loss 0.0665, avg dice 0.9799 [0.9882 0.9715]
+
+2022-08-17 21:06:47 it 6400
+learning rate 0.0005
+training/validation time: 3.60s/2.38s
+train loss 0.0809, avg dice 0.9779 [0.9818 0.9739]
+valid loss 0.0694, avg dice 0.9784 [0.9878 0.9690]
+
+2022-08-17 21:06:54 it 6500
+learning rate 0.0005
+training/validation time: 4.40s/2.39s
+train loss 0.0748, avg dice 0.9792 [0.9832 0.9751]
+valid loss 0.0642, avg dice 0.9806 [0.9884 0.9729]
+
+2022-08-17 21:07:00 it 6600
+learning rate 0.0005
+training/validation time: 3.77s/2.45s
+train loss 0.0780, avg dice 0.9786 [0.9822 0.9750]
+valid loss 0.0664, avg dice 0.9794 [0.9878 0.9709]
+
+2022-08-17 21:07:07 it 6700
+learning rate 0.0005
+training/validation time: 4.17s/2.51s
+train loss 0.0765, avg dice 0.9789 [0.9823 0.9755]
+valid loss 0.0631, avg dice 0.9801 [0.9885 0.9717]
+
+2022-08-17 21:07:13 it 6800
+learning rate 0.0005
+training/validation time: 3.85s/2.54s
+train loss 0.0830, avg dice 0.9770 [0.9812 0.9728]
+valid loss 0.0675, avg dice 0.9782 [0.9878 0.9686]
+
+2022-08-17 21:07:20 it 6900
+learning rate 0.0005
+training/validation time: 4.24s/2.54s
+train loss 0.0803, avg dice 0.9778 [0.9820 0.9737]
+valid loss 0.0681, avg dice 0.9795 [0.9876 0.9713]
+
+2022-08-17 21:07:26 it 7000
+learning rate 0.0005
+training/validation time: 3.71s/2.52s
+train loss 0.0794, avg dice 0.9782 [0.9821 0.9742]
+valid loss 0.0778, avg dice 0.9758 [0.9860 0.9656]
+
+2022-08-17 21:07:33 it 7100
+learning rate 0.0005
+training/validation time: 3.97s/2.42s
+train loss 0.0811, avg dice 0.9774 [0.9814 0.9734]
+valid loss 0.0650, avg dice 0.9802 [0.9882 0.9722]
+
+2022-08-17 21:07:38 it 7200
+learning rate 0.0005
+training/validation time: 3.29s/2.27s
+train loss 0.0822, avg dice 0.9774 [0.9813 0.9735]
+valid loss 0.0732, avg dice 0.9768 [0.9869 0.9667]
+
+2022-08-17 21:07:45 it 7300
+learning rate 0.0005
+training/validation time: 4.47s/2.37s
+train loss 0.0774, avg dice 0.9784 [0.9823 0.9744]
+valid loss 0.0661, avg dice 0.9798 [0.9880 0.9715]
+
+2022-08-17 21:07:51 it 7400
+learning rate 0.0005
+training/validation time: 3.65s/2.43s
+train loss 0.0757, avg dice 0.9792 [0.9828 0.9756]
+valid loss 0.0678, avg dice 0.9783 [0.9876 0.9689]
+
+2022-08-17 21:07:58 it 7500
+learning rate 0.0005
+training/validation time: 4.30s/2.51s
+train loss 0.0781, avg dice 0.9785 [0.9826 0.9744]
+valid loss 0.0720, avg dice 0.9768 [0.9866 0.9670]
+
+2022-08-17 21:08:04 it 7600
+learning rate 0.0005
+training/validation time: 3.73s/2.43s
+train loss 0.0763, avg dice 0.9788 [0.9823 0.9754]
+valid loss 0.0674, avg dice 0.9794 [0.9876 0.9712]
+
+2022-08-17 21:08:11 it 7700
+learning rate 0.0005
+training/validation time: 4.36s/2.55s
+train loss 0.0803, avg dice 0.9779 [0.9815 0.9743]
+valid loss 0.0723, avg dice 0.9772 [0.9873 0.9672]
+
+2022-08-17 21:08:17 it 7800
+learning rate 0.0005
+training/validation time: 3.56s/2.36s
+train loss 0.0814, avg dice 0.9775 [0.9821 0.9728]
+valid loss 0.0665, avg dice 0.9791 [0.9879 0.9703]
+
+2022-08-17 21:08:24 it 7900
+learning rate 0.0005
+training/validation time: 4.31s/2.54s
+train loss 0.0764, avg dice 0.9787 [0.9830 0.9744]
+valid loss 0.0668, avg dice 0.9790 [0.9876 0.9704]
+
+2022-08-17 21:08:31 it 8000
+learning rate 0.0005
+training/validation time: 4.38s/2.43s
+train loss 0.0757, avg dice 0.9791 [0.9825 0.9757]
+valid loss 0.0734, avg dice 0.9782 [0.9873 0.9690]
+
+2022-08-17 21:08:37 it 8100
+learning rate 0.0005
+training/validation time: 3.43s/2.51s
+train loss 0.0785, avg dice 0.9782 [0.9822 0.9741]
+valid loss 0.0698, avg dice 0.9779 [0.9871 0.9687]
+
+2022-08-17 21:08:44 it 8200
+learning rate 0.0005
+training/validation time: 4.51s/2.49s
+train loss 0.0752, avg dice 0.9791 [0.9827 0.9755]
+valid loss 0.0702, avg dice 0.9781 [0.9876 0.9685]
+
+2022-08-17 21:08:50 it 8300
+learning rate 0.0005
+training/validation time: 3.64s/2.34s
+train loss 0.0763, avg dice 0.9788 [0.9825 0.9752]
+valid loss 0.0734, avg dice 0.9772 [0.9872 0.9672]
+
+2022-08-17 21:08:56 it 8400
+learning rate 0.0005
+training/validation time: 4.21s/2.39s
+train loss 0.0759, avg dice 0.9790 [0.9830 0.9750]
+valid loss 0.0704, avg dice 0.9780 [0.9874 0.9685]
+
+2022-08-17 21:09:03 it 8500
+learning rate 0.0005
+training/validation time: 3.77s/2.43s
+train loss 0.0799, avg dice 0.9781 [0.9817 0.9746]
+valid loss 0.0721, avg dice 0.9769 [0.9868 0.9670]
+
+2022-08-17 21:09:10 it 8600
+learning rate 0.0005
+training/validation time: 4.50s/2.45s
+train loss 0.0865, avg dice 0.9763 [0.9811 0.9715]
+valid loss 0.0763, avg dice 0.9759 [0.9861 0.9657]
+
+2022-08-17 21:09:15 it 8700
+learning rate 0.00025
+training/validation time: 3.59s/2.37s
+train loss 0.0749, avg dice 0.9794 [0.9827 0.9760]
+valid loss 0.0693, avg dice 0.9781 [0.9875 0.9687]
+
+2022-08-17 21:09:22 it 8800
+learning rate 0.00025
+training/validation time: 4.48s/2.41s
+train loss 0.0743, avg dice 0.9793 [0.9830 0.9756]
+valid loss 0.0664, avg dice 0.9791 [0.9879 0.9704]
+
+2022-08-17 21:09:29 it 8900
+learning rate 0.00025
+training/validation time: 3.70s/2.40s
+train loss 0.0725, avg dice 0.9799 [0.9835 0.9763]
+valid loss 0.0659, avg dice 0.9793 [0.9879 0.9706]
+
+2022-08-17 21:09:35 it 9000
+learning rate 0.00025
+training/validation time: 4.22s/2.49s
+train loss 0.0717, avg dice 0.9799 [0.9834 0.9765]
+valid loss 0.0638, avg dice 0.9801 [0.9882 0.9721]
+
+2022-08-17 21:09:41 it 9100
+learning rate 0.00025
+training/validation time: 3.67s/2.35s
+train loss 0.0690, avg dice 0.9809 [0.9839 0.9779]
+valid loss 0.0624, avg dice 0.9803 [0.9884 0.9723]
+
+2022-08-17 21:09:48 it 9200
+learning rate 0.00025
+training/validation time: 4.14s/2.34s
+train loss 0.0731, avg dice 0.9795 [0.9834 0.9756]
+valid loss 0.0628, avg dice 0.9802 [0.9884 0.9719]
+
+2022-08-17 21:09:53 it 9300
+learning rate 0.00025
+training/validation time: 3.32s/2.37s
+train loss 0.0698, avg dice 0.9804 [0.9842 0.9766]
+valid loss 0.0622, avg dice 0.9802 [0.9887 0.9718]
+
+2022-08-17 21:10:00 it 9400
+learning rate 0.00025
+training/validation time: 4.36s/2.30s
+train loss 0.0739, avg dice 0.9795 [0.9828 0.9762]
+valid loss 0.0664, avg dice 0.9791 [0.9879 0.9703]
+
+2022-08-17 21:10:06 it 9500
+learning rate 0.00025
+training/validation time: 3.69s/2.42s
+train loss 0.0722, avg dice 0.9800 [0.9839 0.9762]
+valid loss 0.0632, avg dice 0.9800 [0.9883 0.9718]
+
+2022-08-17 21:10:13 it 9600
+learning rate 0.00025
+training/validation time: 4.10s/2.42s
+train loss 0.0696, avg dice 0.9806 [0.9840 0.9772]
+valid loss 0.0731, avg dice 0.9775 [0.9872 0.9678]
+
+2022-08-17 21:10:19 it 9700
+learning rate 0.00025
+training/validation time: 3.77s/2.43s
+train loss 0.0721, avg dice 0.9799 [0.9833 0.9764]
+valid loss 0.0609, avg dice 0.9809 [0.9887 0.9731]
+
+2022-08-17 21:10:26 it 9800
+learning rate 0.00025
+training/validation time: 4.45s/2.39s
+train loss 0.0692, avg dice 0.9806 [0.9843 0.9769]
+valid loss 0.0652, avg dice 0.9795 [0.9879 0.9712]
+
+2022-08-17 21:10:32 it 9900
+learning rate 0.00025
+training/validation time: 3.55s/2.43s
+train loss 0.0684, avg dice 0.9810 [0.9844 0.9776]
+valid loss 0.0633, avg dice 0.9801 [0.9883 0.9719]
+
+2022-08-17 21:10:38 it 10000
+learning rate 0.00025
+training/validation time: 4.30s/2.39s
+train loss 0.0702, avg dice 0.9805 [0.9839 0.9771]
+valid loss 0.0677, avg dice 0.9787 [0.9878 0.9697]
+
+2022-08-17 21:10:45 it 10100
+learning rate 0.00025
+training/validation time: 3.79s/2.43s
+train loss 0.0724, avg dice 0.9799 [0.9834 0.9763]
+valid loss 0.0694, avg dice 0.9782 [0.9878 0.9686]
+
+2022-08-17 21:10:51 it 10200
+learning rate 0.00025
+training/validation time: 4.33s/2.40s
+train loss 0.0687, avg dice 0.9810 [0.9840 0.9780]
+valid loss 0.0655, avg dice 0.9795 [0.9882 0.9708]
+
+2022-08-17 21:10:58 it 10300
+learning rate 0.00025
+training/validation time: 3.70s/2.47s
+train loss 0.0722, avg dice 0.9797 [0.9838 0.9756]
+valid loss 0.0666, avg dice 0.9791 [0.9879 0.9703]
+
+2022-08-17 21:11:04 it 10400
+learning rate 0.00025
+training/validation time: 4.36s/2.47s
+train loss 0.0702, avg dice 0.9804 [0.9836 0.9773]
+valid loss 0.0622, avg dice 0.9802 [0.9884 0.9720]
+
+2022-08-17 21:11:11 it 10500
+learning rate 0.00025
+training/validation time: 3.72s/2.34s
+train loss 0.0697, avg dice 0.9805 [0.9841 0.9769]
+valid loss 0.0625, avg dice 0.9802 [0.9884 0.9721]
+
+2022-08-17 21:11:17 it 10600
+learning rate 0.00025
+training/validation time: 4.28s/2.38s
+train loss 0.0719, avg dice 0.9800 [0.9837 0.9763]
+valid loss 0.0631, avg dice 0.9797 [0.9882 0.9711]
+
+2022-08-17 21:11:24 it 10700
+learning rate 0.00025
+training/validation time: 3.76s/2.53s
+train loss 0.0717, avg dice 0.9803 [0.9833 0.9773]
+valid loss 0.0594, avg dice 0.9814 [0.9889 0.9740]
+
+2022-08-17 21:11:31 it 10800
+learning rate 0.00025
+training/validation time: 4.51s/2.46s
+train loss 0.0691, avg dice 0.9806 [0.9842 0.9769]
+valid loss 0.0598, avg dice 0.9816 [0.9889 0.9742]
+
+2022-08-17 21:11:37 it 10900
+learning rate 0.00025
+training/validation time: 3.77s/2.37s
+train loss 0.0692, avg dice 0.9806 [0.9841 0.9772]
+valid loss 0.0616, avg dice 0.9802 [0.9885 0.9719]
+
+2022-08-17 21:11:44 it 11000
+learning rate 0.00025
+training/validation time: 4.43s/2.43s
+train loss 0.0708, avg dice 0.9805 [0.9841 0.9768]
+valid loss 0.0601, avg dice 0.9810 [0.9888 0.9732]
+
+2022-08-17 21:11:50 it 11100
+learning rate 0.00025
+training/validation time: 3.72s/2.61s
+train loss 0.0706, avg dice 0.9802 [0.9836 0.9769]
+valid loss 0.0637, avg dice 0.9799 [0.9882 0.9717]
+
+2022-08-17 21:11:57 it 11200
+learning rate 0.00025
+training/validation time: 4.40s/2.40s
+train loss 0.0730, avg dice 0.9798 [0.9833 0.9762]
+valid loss 0.0591, avg dice 0.9817 [0.9890 0.9744]
+
+2022-08-17 21:12:03 it 11300
+learning rate 0.00025
+training/validation time: 3.73s/2.57s
+train loss 0.0685, avg dice 0.9808 [0.9841 0.9776]
+valid loss 0.0659, avg dice 0.9790 [0.9878 0.9702]
+
+2022-08-17 21:12:10 it 11400
+learning rate 0.00025
+training/validation time: 4.36s/2.33s
+train loss 0.0699, avg dice 0.9804 [0.9840 0.9768]
+valid loss 0.0595, avg dice 0.9813 [0.9889 0.9736]
+
+2022-08-17 21:12:16 it 11500
+learning rate 0.00025
+training/validation time: 3.76s/2.39s
+train loss 0.0685, avg dice 0.9808 [0.9840 0.9777]
+valid loss 0.0629, avg dice 0.9802 [0.9884 0.9719]
+
+2022-08-17 21:12:23 it 11600
+learning rate 0.00025
+training/validation time: 4.31s/2.45s
+train loss 0.0704, avg dice 0.9805 [0.9835 0.9775]
+valid loss 0.0614, avg dice 0.9807 [0.9883 0.9730]
+
+2022-08-17 21:12:29 it 11700
+learning rate 0.00025
+training/validation time: 3.67s/2.35s
+train loss 0.0692, avg dice 0.9806 [0.9844 0.9767]
+valid loss 0.0612, avg dice 0.9805 [0.9886 0.9724]
+
+2022-08-17 21:12:35 it 11800
+learning rate 0.00025
+training/validation time: 4.22s/2.32s
+train loss 0.0689, avg dice 0.9807 [0.9842 0.9773]
+valid loss 0.0631, avg dice 0.9800 [0.9883 0.9716]
+
+2022-08-17 21:12:42 it 11900
+learning rate 0.00025
+training/validation time: 4.27s/2.57s
+train loss 0.0706, avg dice 0.9803 [0.9836 0.9770]
+valid loss 0.0632, avg dice 0.9801 [0.9882 0.9721]
+
+2022-08-17 21:12:48 it 12000
+learning rate 0.00025
+training/validation time: 3.33s/2.35s
+train loss 0.0693, avg dice 0.9805 [0.9841 0.9768]
+valid loss 0.0621, avg dice 0.9805 [0.9884 0.9727]
+
+2022-08-17 21:12:55 it 12100
+learning rate 0.00025
+training/validation time: 4.30s/2.49s
+train loss 0.0684, avg dice 0.9810 [0.9843 0.9776]
+valid loss 0.0605, avg dice 0.9810 [0.9888 0.9732]
+
+2022-08-17 21:13:01 it 12200
+learning rate 0.00025
+training/validation time: 3.80s/2.52s
+train loss 0.0686, avg dice 0.9809 [0.9844 0.9774]
+valid loss 0.0584, avg dice 0.9816 [0.9891 0.9741]
+
+2022-08-17 21:13:08 it 12300
+learning rate 0.00025
+training/validation time: 4.44s/2.54s
+train loss 0.0691, avg dice 0.9809 [0.9839 0.9779]
+valid loss 0.0592, avg dice 0.9814 [0.9889 0.9739]
+
+2022-08-17 21:13:14 it 12400
+learning rate 0.00025
+training/validation time: 3.88s/2.44s
+train loss 0.0701, avg dice 0.9806 [0.9836 0.9775]
+valid loss 0.0594, avg dice 0.9815 [0.9891 0.9740]
+
+2022-08-17 21:13:21 it 12500
+learning rate 0.00025
+training/validation time: 4.52s/2.40s
+train loss 0.0728, avg dice 0.9798 [0.9836 0.9760]
+valid loss 0.0638, avg dice 0.9801 [0.9883 0.9718]
+
+2022-08-17 21:13:27 it 12600
+learning rate 0.00025
+training/validation time: 3.62s/2.43s
+train loss 0.0710, avg dice 0.9801 [0.9837 0.9765]
+valid loss 0.0625, avg dice 0.9805 [0.9885 0.9725]
+
+2022-08-17 21:13:34 it 12700
+learning rate 0.00025
+training/validation time: 4.40s/2.36s
+train loss 0.0675, avg dice 0.9813 [0.9843 0.9782]
+valid loss 0.0631, avg dice 0.9803 [0.9882 0.9724]
+
+2022-08-17 21:13:40 it 12800
+learning rate 0.00025
+training/validation time: 3.69s/2.44s
+train loss 0.0672, avg dice 0.9812 [0.9843 0.9781]
+valid loss 0.0673, avg dice 0.9786 [0.9876 0.9696]
+
+2022-08-17 21:13:47 it 12900
+learning rate 0.00025
+training/validation time: 4.06s/2.41s
+train loss 0.0684, avg dice 0.9808 [0.9844 0.9772]
+valid loss 0.0611, avg dice 0.9809 [0.9887 0.9731]
+
+2022-08-17 21:13:53 it 13000
+learning rate 0.00025
+training/validation time: 3.61s/2.46s
+train loss 0.0669, avg dice 0.9812 [0.9846 0.9778]
+valid loss 0.0592, avg dice 0.9816 [0.9889 0.9742]
+
+2022-08-17 21:13:59 it 13100
+learning rate 0.00025
+training/validation time: 4.44s/2.41s
+train loss 0.0705, avg dice 0.9804 [0.9836 0.9772]
+valid loss 0.0607, avg dice 0.9810 [0.9889 0.9732]
+
+2022-08-17 21:14:06 it 13200
+learning rate 0.00025
+training/validation time: 3.68s/2.38s
+train loss 0.0691, avg dice 0.9805 [0.9843 0.9768]
+valid loss 0.0648, avg dice 0.9796 [0.9883 0.9708]
+
+2022-08-17 21:14:12 it 13300
+learning rate 0.00025
+training/validation time: 4.42s/2.39s
+train loss 0.0691, avg dice 0.9807 [0.9838 0.9776]
+valid loss 0.0618, avg dice 0.9800 [0.9885 0.9716]
+
+2022-08-17 21:14:18 it 13400
+learning rate 0.000125
+training/validation time: 3.69s/2.42s
+train loss 0.0686, avg dice 0.9810 [0.9841 0.9779]
+valid loss 0.0613, avg dice 0.9803 [0.9888 0.9717]
+
+2022-08-17 21:14:25 it 13500
+learning rate 0.000125
+training/validation time: 4.47s/2.35s
+train loss 0.0678, avg dice 0.9809 [0.9847 0.9771]
+valid loss 0.0596, avg dice 0.9813 [0.9890 0.9736]
+
+2022-08-17 21:14:31 it 13600
+learning rate 0.000125
+training/validation time: 3.67s/2.46s
+train loss 0.0674, avg dice 0.9809 [0.9846 0.9773]
+valid loss 0.0613, avg dice 0.9807 [0.9886 0.9727]
+
+2022-08-17 21:14:38 it 13700
+learning rate 0.000125
+training/validation time: 4.42s/2.50s
+train loss 0.0651, avg dice 0.9819 [0.9847 0.9791]
+valid loss 0.0609, avg dice 0.9808 [0.9886 0.9730]
+
+2022-08-17 21:14:44 it 13800
+learning rate 0.000125
+training/validation time: 3.29s/2.42s
+train loss 0.0659, avg dice 0.9815 [0.9853 0.9777]
+valid loss 0.0636, avg dice 0.9796 [0.9884 0.9709]
+
+2022-08-17 21:14:51 it 13900
+learning rate 0.000125
+training/validation time: 4.28s/2.44s
+train loss 0.0687, avg dice 0.9807 [0.9838 0.9776]
+valid loss 0.0595, avg dice 0.9813 [0.9889 0.9737]
+
+2022-08-17 21:14:57 it 14000
+learning rate 0.000125
+training/validation time: 3.77s/2.53s
+train loss 0.0661, avg dice 0.9815 [0.9848 0.9782]
+valid loss 0.0615, avg dice 0.9804 [0.9886 0.9723]
+
+2022-08-17 21:15:04 it 14100
+learning rate 0.000125
+training/validation time: 4.46s/2.41s
+train loss 0.0665, avg dice 0.9813 [0.9845 0.9781]
+valid loss 0.0614, avg dice 0.9804 [0.9886 0.9721]
+
+2022-08-17 21:15:10 it 14200
+learning rate 0.000125
+training/validation time: 3.73s/2.45s
+train loss 0.0683, avg dice 0.9812 [0.9842 0.9781]
+valid loss 0.0591, avg dice 0.9813 [0.9890 0.9736]
+
+2022-08-17 21:15:17 it 14300
+learning rate 0.000125
+training/validation time: 4.39s/2.46s
+train loss 0.0654, avg dice 0.9817 [0.9847 0.9787]
+valid loss 0.0606, avg dice 0.9806 [0.9887 0.9725]
+
+2022-08-17 21:15:23 it 14400
+learning rate 0.000125
+training/validation time: 3.68s/2.53s
+train loss 0.0676, avg dice 0.9810 [0.9846 0.9774]
+valid loss 0.0623, avg dice 0.9803 [0.9885 0.9722]
+
+2022-08-17 21:15:30 it 14500
+learning rate 0.000125
+training/validation time: 4.10s/2.42s
+train loss 0.0657, avg dice 0.9817 [0.9851 0.9783]
+valid loss 0.0604, avg dice 0.9808 [0.9888 0.9728]
+
+2022-08-17 21:15:36 it 14600
+learning rate 0.000125
+training/validation time: 3.66s/2.43s
+train loss 0.0653, avg dice 0.9817 [0.9847 0.9787]
+valid loss 0.0595, avg dice 0.9811 [0.9889 0.9733]
+
+2022-08-17 21:15:43 it 14700
+learning rate 0.000125
+training/validation time: 4.38s/2.47s
+train loss 0.0645, avg dice 0.9819 [0.9848 0.9789]
+valid loss 0.0588, avg dice 0.9815 [0.9889 0.9740]
+
+2022-08-17 21:15:49 it 14800
+learning rate 0.000125
+training/validation time: 3.78s/2.43s
+train loss 0.0658, avg dice 0.9816 [0.9846 0.9786]
+valid loss 0.0576, avg dice 0.9819 [0.9893 0.9746]
+
+2022-08-17 21:15:56 it 14900
+learning rate 0.000125
+training/validation time: 4.29s/2.42s
+train loss 0.0645, avg dice 0.9819 [0.9848 0.9789]
+valid loss 0.0664, avg dice 0.9788 [0.9880 0.9696]
+
+2022-08-17 21:16:02 it 15000
+learning rate 0.000125
+training/validation time: 3.64s/2.41s
+train loss 0.0668, avg dice 0.9812 [0.9847 0.9777]
+valid loss 0.0652, avg dice 0.9791 [0.9882 0.9700]
+The best performing iter is 14800, valid dice 0.9819497466087341
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/Fetal_HC
+dataset train_csv = config/fetal_hc_train.csv
+dataset valid_csv = config/fetal_hc_valid.csv
+dataset test_csv = config/fetal_hc_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['Rescale', 'RandomCrop', 'RandomFlip', 'NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset valid_transform = ['Rescale', 'NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset test_transform = ['Rescale', 'NormalizeWithMeanStd']
+dataset rescale_output_size = [256, 384]
+dataset randomcrop_output_size = [224, 320]
+dataset randomflip_flip_depth = False
+dataset randomflip_flip_height = True
+dataset randomflip_flip_width = True
+dataset normalizewithmeanstd_channels = [0]
+dataset labelconvert_source_list = [0, 255]
+dataset labelconvert_target_list = [0, 1]
+dataset labeltoprobability_class_num = 2
+network net_type = UNet2D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [4, 16, 32, 64, 128]
+network dropout = [0, 0, 0.3, 0.4, 0.5]
+network bilinear = True
+network deep_supervise = False
+training gpus = [0]
+training loss_type = ['DiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_scheduler = ReduceLROnPlateau
+training lr_gamma = 0.5
+training reducelronplateau_patience = 2000
+training early_stop_patience = 5000
+training ckpt_save_dir = model/unet
+training iter_start = 0
+training iter_max = 15000
+training iter_valid = 100
+training iter_save = 5000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing tta_mode = 0
+testing sliding_window_enable = True
+testing sliding_window_size = [224, 320]
+testing sliding_window_stride = [224, 320]
+testing label_source = [0, 1]
+testing label_target = [0, 255]
+deterministric is true
+parameter number 452050
+testing time 0.18410233523221625 +/- 0.015261589017194281
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/Fetal_HC
+dataset train_csv = config/fetal_hc_train.csv
+dataset valid_csv = config/fetal_hc_valid.csv
+dataset test_csv = config/fetal_hc_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['Rescale', 'RandomCrop', 'RandomFlip', 'NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset valid_transform = ['Rescale', 'NormalizeWithMeanStd', 'LabelConvert', 'LabelToProbability']
+dataset test_transform = ['Rescale', 'NormalizeWithMeanStd']
+dataset rescale_output_size = [256, 384]
+dataset randomcrop_output_size = [224, 320]
+dataset randomflip_flip_depth = False
+dataset randomflip_flip_height = True
+dataset randomflip_flip_width = True
+dataset normalizewithmeanstd_channels = [0]
+dataset labelconvert_source_list = [0, 255]
+dataset labelconvert_target_list = [0, 1]
+dataset labeltoprobability_class_num = 2
+network net_type = UNet2D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [4, 16, 32, 64, 128]
+network dropout = [0, 0, 0.3, 0.4, 0.5]
+network bilinear = True
+network deep_supervise = False
+training gpus = [0]
+training loss_type = ['DiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_scheduler = ReduceLROnPlateau
+training lr_gamma = 0.5
+training reducelronplateau_patience = 2000
+training early_stop_patience = 5000
+training ckpt_save_dir = model/unet
+training iter_start = 0
+training iter_max = 15000
+training iter_valid = 100
+training iter_save = 5000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing tta_mode = 1
+testing sliding_window_enable = True
+testing sliding_window_size = [224, 320]
+testing sliding_window_stride = [224, 320]
+testing label_source = [0, 1]
+testing label_target = [0, 255]
+deterministric is true
+parameter number 452050
+testing time 0.23305926386942 +/- 0.019355422893271256
