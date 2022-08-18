@@ -147,7 +147,7 @@ train_batch_size_unlab = 4
 ```
 
 ### Entropy Minimization
-The configuration for Entropy Minimization is in `config/unet2d_em.cfg`.  The data configuration has been described above, and the settings for data augmentation, network, optmizer, learning rate scheduler and inference are the same as those in the baseline method. Specific configuration for Entropy Minimization is:
+The configuration file for Entropy Minimization is `config/unet2d_em.cfg`.  The data configuration has been described above, and the settings for data augmentation, network, optmizer, learning rate scheduler and inference are the same as those in the baseline method. Specific setting for Entropy Minimization is:
 
 ```bash
 ssl_method     = EntropyMinimization
@@ -166,7 +166,7 @@ pymic_run test config/unet2d_em.cfg
 ```
 
 ### UAMT
-The configuration for UAMT is in `config/unet2d_uamt.cfg`. The corresponding settings are:
+The configuration file for UAMT is `config/unet2d_uamt.cfg`. The corresponding setting is:
 
 ```bash
 ssl_method     = UAMT
@@ -183,7 +183,7 @@ pymic_run test config/unet2d_uamt.cfg
 ```
 
 ### UPRC
-The configuration for UAMT is in `config/unet2d_urpc.cfg`. This method requires deep supervision and pyramid prediction of a network. The configuration for network is:
+The configuration file for UAMT is `config/unet2d_urpc.cfg`. This method requires deep supervision and pyramid prediction of a network. The network setting is:
 
 ```bash 
 net_type      = UNet2D
@@ -195,7 +195,7 @@ bilinear      = True
 deep_supervise= True
 ```
 
-The configuration for URPC training is:
+The setting for URPC training is:
 
 ```bash 
 ssl_method     = URPC
@@ -211,7 +211,7 @@ pymic_run test config/unet2d_urpc.cfg
 ```
 
 ### CCT
-The orginal [CCT][cct_paper] uses multiple auxiliary deocders in the network. Due to the memory constraint and efficiency consideration, we only use 4 auxiliary decoders based on DropOut, FeatureDrop, FeatureNoise and VAT, respectively. The configuration for network is:
+The orginal [CCT][cct_paper] uses multiple auxiliary deocders in the network. Due to the memory constraint and efficiency consideration, we only use 4 auxiliary decoders based on DropOut, FeatureDrop, FeatureNoise and VAT, respectively. The configuration file of CCT is `config/unet2d_cct.cfg`, and the network setting is:
 
 ```bash 
 net_type      = UNet2D_CCT
@@ -228,7 +228,7 @@ VAT_eps= 2
 Uniform_range = 0.3
 ```
 
-The configuration for URPC training is:
+The setting for CCT training is:
 
 ```bash 
 ssl_method     = CCT
@@ -246,7 +246,7 @@ pymic_run test config/unet2d_cct.cfg
 ```
 
 ### CPS
-The configuration for UAMT is in `config/unet2d_cps.cfg`, and the configuration for CPS training is:
+The configuration file for CPS is `config/unet2d_cps.cfg`, and the corresponding setting is:
 
 ```bash 
 ssl_method     = CPS
