@@ -4,12 +4,20 @@ In this example, we show semi-supervised learning methods implemented in PyMIC.
 Currently, the following semi-supervised methods are implemented:
 |PyMIC Method|Reference|Remarks|
 |---|---|---|
-|SSLEntropyMinimization|[Grandvalet et al.][em_paper], 2005| Oringinally proposed for classification|
-|SSLMeanTeacher| [Tarvainen et al.][mt_paper], 2017| Oringinally proposed for classification|
+|SSLEntropyMinimization|[Grandvalet et al.][em_paper], NeurIPS 2005| Oringinally proposed for classification|
+|SSLMeanTeacher| [Tarvainen et al.][mt_paper], NeurIPS 2017| Oringinally proposed for classification|
+|SSLUAMT| [Yu et al.][uamt_paper], MICCAI 2019| Uncertainty-aware mean teacher|
+|SSLURPC| [Luo et al.][urpc_paper],MedIA 2022| Uncertainty rectified pyramid consistency|
+|SSLCCT| [Ouali et al.][cct_paper],CVPR 2020| Cross-pseudo supervision|
+|SSLCPS| [Chen et al.][cps_paper],CVPR 2021| Cross-consistency training|
 
 
 [em_paper]:https://papers.nips.cc/paper/2004/file/96f2b50b5d3613adf9c27049b2a888c7-Paper.pdf
 [mt_paper]:https://arxiv.org/abs/1703.01780
+[uamt_paper]:https://arxiv.org/abs/1907.07034 
+[urpc_paper]:https://doi.org/10.1016/j.media.2022.102517
+[cct_paper]:https://arxiv.org/abs/2003.09005 
+[cps_paper]:https://arxiv.org/abs/2106.01226 
 
 
 ## Data 
