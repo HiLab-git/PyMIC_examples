@@ -1,0 +1,391 @@
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/Promise12/preprocess
+dataset train_csv = config/data/image_train.csv
+dataset valid_csv = config/data/image_valid.csv
+dataset test_csv = config/data/image_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['RandomFlip', 'RandomCrop', 'NormalizeWithMeanStd', 'GammaCorrection', 'GaussianNoise', 'LabelToProbability']
+dataset valid_transform = ['NormalizeWithMeanStd', 'Pad', 'LabelToProbability']
+dataset test_transform = ['NormalizeWithMeanStd', 'Pad']
+dataset randomflip_flip_depth = True
+dataset randomflip_flip_height = True
+dataset randomflip_flip_width = True
+dataset randomcrop_output_size = [48, 48, 48]
+dataset randomcrop_foreground_focus = True
+dataset randomcrop_foreground_ratio = 0.5
+dataset randomcrop_mask_label = [1]
+dataset normalizewithmeanstd_channels = [0]
+dataset gammacorrection_channels = [0]
+dataset gammacorrection_gamma_min = 0.7
+dataset gammacorrection_gamma_max = 1.5
+dataset gaussiannoise_channels = [0]
+dataset gaussiannoise_mean = 0
+dataset gaussiannoise_std = 0.05
+dataset gaussiannoise_probability = 0.5
+dataset pad_output_size = [8, 8, 8]
+dataset pad_ceil_mode = True
+dataset labeltoprobability_class_num = 2
+network net_type = UNet3D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [16, 32, 64, 64]
+network dropout = [0.0, 0.0, 0.5, 0.5]
+network trilinear = True
+network deep_supervise = True
+training gpus = [0]
+training loss_type = ['DiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_scheduler = MultiStepLR
+training lr_gamma = 0.5
+training lr_milestones = [3000, 6000]
+training ckpt_save_dir = model/unet3d
+training iter_start = 0
+training iter_max = 9000
+training iter_valid = 200
+training iter_save = 9000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing post_process = KeepLargestComponent
+testing sliding_window_enable = True
+testing sliding_window_size = [96, 96, 96]
+testing sliding_window_stride = [96, 96, 96]
+deterministric is true
+parameter number 880200
+2022-08-17 22:20:39 training start
+
+2022-08-17 22:21:20 it 200
+learning rate 0.001
+training/validation time: 38.88s/1.53s
+train loss 0.9401, avg dice 0.6269 [0.8474 0.4065]
+valid loss 1.0823, avg dice 0.6772 [0.9208 0.4335]
+
+2022-08-17 22:22:00 it 400
+learning rate 0.001
+training/validation time: 38.56s/1.55s
+train loss 0.7592, avg dice 0.7193 [0.8894 0.5493]
+valid loss 0.9781, avg dice 0.7706 [0.9592 0.5819]
+
+2022-08-17 22:22:40 it 600
+learning rate 0.001
+training/validation time: 38.88s/1.52s
+train loss 0.6502, avg dice 0.7694 [0.9061 0.6328]
+valid loss 0.8664, avg dice 0.7380 [0.9744 0.5015]
+
+2022-08-17 22:23:21 it 800
+learning rate 0.001
+training/validation time: 38.63s/1.56s
+train loss 0.5847, avg dice 0.7885 [0.9187 0.6584]
+valid loss 0.8406, avg dice 0.8158 [0.9739 0.6578]
+
+2022-08-17 22:24:02 it 1000
+learning rate 0.001
+training/validation time: 39.65s/1.56s
+train loss 0.5297, avg dice 0.8129 [0.9245 0.7013]
+valid loss 0.7966, avg dice 0.8465 [0.9813 0.7117]
+
+2022-08-17 22:24:42 it 1200
+learning rate 0.001
+training/validation time: 38.91s/1.57s
+train loss 0.4902, avg dice 0.8242 [0.9331 0.7153]
+valid loss 0.7579, avg dice 0.8510 [0.9794 0.7225]
+
+2022-08-17 22:25:23 it 1400
+learning rate 0.001
+training/validation time: 38.71s/1.54s
+train loss 0.4706, avg dice 0.8339 [0.9353 0.7324]
+valid loss 0.7708, avg dice 0.8678 [0.9837 0.7520]
+
+2022-08-17 22:26:03 it 1600
+learning rate 0.001
+training/validation time: 39.01s/1.54s
+train loss 0.4685, avg dice 0.8357 [0.9348 0.7367]
+valid loss 0.7237, avg dice 0.8856 [0.9854 0.7859]
+
+2022-08-17 22:26:44 it 1800
+learning rate 0.001
+training/validation time: 38.85s/1.61s
+train loss 0.4216, avg dice 0.8566 [0.9416 0.7716]
+valid loss 0.7784, avg dice 0.8478 [0.9781 0.7175]
+
+2022-08-17 22:27:25 it 2000
+learning rate 0.001
+training/validation time: 39.53s/1.58s
+train loss 0.4529, avg dice 0.8428 [0.9375 0.7481]
+valid loss 0.7056, avg dice 0.9075 [0.9874 0.8277]
+
+2022-08-17 22:28:05 it 2200
+learning rate 0.001
+training/validation time: 38.90s/1.54s
+train loss 0.4002, avg dice 0.8591 [0.9462 0.7720]
+valid loss 0.6600, avg dice 0.8955 [0.9876 0.8034]
+
+2022-08-17 22:28:46 it 2400
+learning rate 0.001
+training/validation time: 38.89s/1.55s
+train loss 0.3707, avg dice 0.8744 [0.9495 0.7993]
+valid loss 0.6489, avg dice 0.8113 [0.9814 0.6412]
+
+2022-08-17 22:29:26 it 2600
+learning rate 0.001
+training/validation time: 38.98s/1.53s
+train loss 0.3693, avg dice 0.8739 [0.9478 0.8000]
+valid loss 0.7000, avg dice 0.8380 [0.9753 0.7007]
+
+2022-08-17 22:30:07 it 2800
+learning rate 0.001
+training/validation time: 39.70s/1.54s
+train loss 0.3546, avg dice 0.8777 [0.9516 0.8037]
+valid loss 0.6000, avg dice 0.8979 [0.9879 0.8079]
+
+2022-08-17 22:30:48 it 3000
+learning rate 0.001
+training/validation time: 38.91s/1.55s
+train loss 0.3364, avg dice 0.8858 [0.9533 0.8183]
+valid loss 0.6403, avg dice 0.8754 [0.9835 0.7672]
+
+2022-08-17 22:31:28 it 3200
+learning rate 0.0005
+training/validation time: 38.90s/1.53s
+train loss 0.3176, avg dice 0.8915 [0.9580 0.8251]
+valid loss 0.5798, avg dice 0.9016 [0.9879 0.8154]
+
+2022-08-17 22:32:09 it 3400
+learning rate 0.0005
+training/validation time: 38.72s/1.58s
+train loss 0.2992, avg dice 0.8988 [0.9599 0.8376]
+valid loss 0.5873, avg dice 0.9029 [0.9882 0.8176]
+
+2022-08-17 22:32:49 it 3600
+learning rate 0.0005
+training/validation time: 38.99s/1.54s
+train loss 0.2925, avg dice 0.9034 [0.9612 0.8456]
+valid loss 0.5925, avg dice 0.9040 [0.9887 0.8193]
+
+2022-08-17 22:33:30 it 3800
+learning rate 0.0005
+training/validation time: 39.70s/1.56s
+train loss 0.3024, avg dice 0.8997 [0.9609 0.8385]
+valid loss 0.6292, avg dice 0.9003 [0.9880 0.8126]
+
+2022-08-17 22:34:11 it 4000
+learning rate 0.0005
+training/validation time: 38.91s/1.57s
+train loss 0.2869, avg dice 0.9076 [0.9609 0.8544]
+valid loss 0.5549, avg dice 0.9020 [0.9883 0.8157]
+
+2022-08-17 22:34:51 it 4200
+learning rate 0.0005
+training/validation time: 39.05s/1.56s
+train loss 0.2646, avg dice 0.9125 [0.9662 0.8588]
+valid loss 0.5666, avg dice 0.8959 [0.9870 0.8048]
+
+2022-08-17 22:35:32 it 4400
+learning rate 0.0005
+training/validation time: 38.77s/1.58s
+train loss 0.2545, avg dice 0.9168 [0.9674 0.8662]
+valid loss 0.5336, avg dice 0.9158 [0.9896 0.8419]
+
+2022-08-17 22:36:13 it 4600
+learning rate 0.0005
+training/validation time: 39.75s/1.56s
+train loss 0.2718, avg dice 0.9128 [0.9646 0.8611]
+valid loss 0.5238, avg dice 0.9137 [0.9896 0.8379]
+
+2022-08-17 22:36:54 it 4800
+learning rate 0.0005
+training/validation time: 39.03s/1.54s
+train loss 0.2690, avg dice 0.9138 [0.9644 0.8631]
+valid loss 0.4614, avg dice 0.9063 [0.9893 0.8233]
+
+2022-08-17 22:37:34 it 5000
+learning rate 0.0005
+training/validation time: 38.77s/1.57s
+train loss 0.2428, avg dice 0.9215 [0.9694 0.8737]
+valid loss 0.5507, avg dice 0.8921 [0.9872 0.7970]
+
+2022-08-17 22:38:15 it 5200
+learning rate 0.0005
+training/validation time: 39.02s/1.54s
+train loss 0.2509, avg dice 0.9185 [0.9671 0.8699]
+valid loss 0.5316, avg dice 0.9270 [0.9910 0.8629]
+
+2022-08-17 22:38:55 it 5400
+learning rate 0.0005
+training/validation time: 38.97s/1.56s
+train loss 0.2518, avg dice 0.9189 [0.9665 0.8713]
+valid loss 0.5113, avg dice 0.9168 [0.9906 0.8430]
+
+2022-08-17 22:39:36 it 5600
+learning rate 0.0005
+training/validation time: 39.65s/1.53s
+train loss 0.2566, avg dice 0.9164 [0.9660 0.8667]
+valid loss 0.4334, avg dice 0.9242 [0.9916 0.8569]
+
+2022-08-17 22:40:17 it 5800
+learning rate 0.0005
+training/validation time: 39.05s/1.58s
+train loss 0.2317, avg dice 0.9267 [0.9703 0.8830]
+valid loss 0.4768, avg dice 0.9161 [0.9901 0.8421]
+
+2022-08-17 22:40:58 it 6000
+learning rate 0.0005
+training/validation time: 39.25s/1.56s
+train loss 0.2304, avg dice 0.9270 [0.9702 0.8838]
+valid loss 0.5000, avg dice 0.8966 [0.9886 0.8046]
+
+2022-08-17 22:41:38 it 6200
+learning rate 0.00025
+training/validation time: 38.71s/1.55s
+train loss 0.2142, avg dice 0.9319 [0.9726 0.8912]
+valid loss 0.4668, avg dice 0.9150 [0.9900 0.8399]
+
+2022-08-17 22:42:19 it 6400
+learning rate 0.00025
+training/validation time: 39.64s/1.58s
+train loss 0.2197, avg dice 0.9293 [0.9721 0.8865]
+valid loss 0.4854, avg dice 0.9116 [0.9904 0.8328]
+
+2022-08-17 22:43:00 it 6600
+learning rate 0.00025
+training/validation time: 39.10s/1.54s
+train loss 0.2083, avg dice 0.9327 [0.9738 0.8916]
+valid loss 0.4316, avg dice 0.9145 [0.9909 0.8380]
+
+2022-08-17 22:43:40 it 6800
+learning rate 0.00025
+training/validation time: 38.86s/1.51s
+train loss 0.2031, avg dice 0.9362 [0.9737 0.8988]
+valid loss 0.4552, avg dice 0.9147 [0.9905 0.8390]
+
+2022-08-17 22:44:21 it 7000
+learning rate 0.00025
+training/validation time: 39.06s/1.52s
+train loss 0.2132, avg dice 0.9345 [0.9720 0.8969]
+valid loss 0.4689, avg dice 0.8996 [0.9890 0.8101]
+
+2022-08-17 22:45:01 it 7200
+learning rate 0.00025
+training/validation time: 38.80s/1.57s
+train loss 0.2057, avg dice 0.9352 [0.9737 0.8967]
+valid loss 0.4636, avg dice 0.9197 [0.9915 0.8479]
+
+2022-08-17 22:45:42 it 7400
+learning rate 0.00025
+training/validation time: 39.73s/1.51s
+train loss 0.2089, avg dice 0.9346 [0.9728 0.8963]
+valid loss 0.4511, avg dice 0.9168 [0.9913 0.8423]
+
+2022-08-17 22:46:23 it 7600
+learning rate 0.00025
+training/validation time: 39.12s/1.55s
+train loss 0.2093, avg dice 0.9336 [0.9735 0.8936]
+valid loss 0.4847, avg dice 0.9267 [0.9919 0.8614]
+
+2022-08-17 22:47:04 it 7800
+learning rate 0.00025
+training/validation time: 38.96s/1.56s
+train loss 0.2079, avg dice 0.9350 [0.9733 0.8967]
+valid loss 0.4093, avg dice 0.9192 [0.9912 0.8472]
+
+2022-08-17 22:47:44 it 8000
+learning rate 0.00025
+training/validation time: 38.96s/1.53s
+train loss 0.2044, avg dice 0.9347 [0.9742 0.8952]
+valid loss 0.4246, avg dice 0.9285 [0.9920 0.8651]
+
+2022-08-17 22:48:25 it 8200
+learning rate 0.00025
+training/validation time: 39.69s/1.55s
+train loss 0.2062, avg dice 0.9352 [0.9737 0.8968]
+valid loss 0.4600, avg dice 0.9088 [0.9904 0.8272]
+
+2022-08-17 22:49:06 it 8400
+learning rate 0.00025
+training/validation time: 39.15s/1.57s
+train loss 0.2017, avg dice 0.9368 [0.9742 0.8993]
+valid loss 0.4283, avg dice 0.9215 [0.9920 0.8510]
+
+2022-08-17 22:49:47 it 8600
+learning rate 0.00025
+training/validation time: 38.88s/1.55s
+train loss 0.1902, avg dice 0.9394 [0.9763 0.9026]
+valid loss 0.4078, avg dice 0.9242 [0.9922 0.8562]
+
+2022-08-17 22:50:27 it 8800
+learning rate 0.00025
+training/validation time: 38.95s/1.56s
+train loss 0.1909, avg dice 0.9397 [0.9758 0.9035]
+valid loss 0.3926, avg dice 0.9264 [0.9922 0.8605]
+
+2022-08-17 22:51:08 it 9000
+learning rate 0.00025
+training/validation time: 38.95s/1.57s
+train loss 0.1961, avg dice 0.9380 [0.9748 0.9012]
+valid loss 0.4329, avg dice 0.9217 [0.9915 0.8519]
+The best performing iter is 8000, valid dice 0.928514838218689
+dataset tensor_type = float
+dataset task_type = seg
+dataset root_dir = /home/disk2t/projects/PyMIC_project/PyMIC_data/Promise12/preprocess
+dataset train_csv = config/data/image_train.csv
+dataset valid_csv = config/data/image_valid.csv
+dataset test_csv = config/data/image_test.csv
+dataset train_batch_size = 4
+dataset train_transform = ['RandomFlip', 'RandomCrop', 'NormalizeWithMeanStd', 'GammaCorrection', 'GaussianNoise', 'LabelToProbability']
+dataset valid_transform = ['NormalizeWithMeanStd', 'Pad', 'LabelToProbability']
+dataset test_transform = ['NormalizeWithMeanStd', 'Pad']
+dataset randomflip_flip_depth = True
+dataset randomflip_flip_height = True
+dataset randomflip_flip_width = True
+dataset randomcrop_output_size = [48, 48, 48]
+dataset randomcrop_foreground_focus = True
+dataset randomcrop_foreground_ratio = 0.5
+dataset randomcrop_mask_label = [1]
+dataset normalizewithmeanstd_channels = [0]
+dataset gammacorrection_channels = [0]
+dataset gammacorrection_gamma_min = 0.7
+dataset gammacorrection_gamma_max = 1.5
+dataset gaussiannoise_channels = [0]
+dataset gaussiannoise_mean = 0
+dataset gaussiannoise_std = 0.05
+dataset gaussiannoise_probability = 0.5
+dataset pad_output_size = [8, 8, 8]
+dataset pad_ceil_mode = True
+dataset labeltoprobability_class_num = 2
+network net_type = UNet3D
+network class_num = 2
+network in_chns = 1
+network feature_chns = [16, 32, 64, 64]
+network dropout = [0.0, 0.0, 0.5, 0.5]
+network trilinear = True
+network deep_supervise = True
+training gpus = [0]
+training loss_type = ['DiceLoss', 'CrossEntropyLoss']
+training loss_weight = [1.0, 1.0]
+training optimizer = Adam
+training learning_rate = 0.001
+training momentum = 0.9
+training weight_decay = 1e-05
+training lr_scheduler = MultiStepLR
+training lr_gamma = 0.5
+training lr_milestones = [3000, 6000]
+training ckpt_save_dir = model/unet3d
+training iter_start = 0
+training iter_max = 9000
+training iter_valid = 200
+training iter_save = 9000
+testing gpus = [0]
+testing ckpt_mode = 1
+testing output_dir = result
+testing post_process = KeepLargestComponent
+testing sliding_window_enable = True
+testing sliding_window_size = [96, 96, 96]
+testing sliding_window_stride = [96, 96, 96]
+deterministric is true
+parameter number 880200
+testing time 0.2052222728729248 +/- 0.06842621383688706
