@@ -30,7 +30,7 @@ In the training set, we randomly select 14 images of 7 patients as annotated ima
 In this demo, we experiment with five methods: EM, UAMT, UPRC, CCT and CPS, and they are compared with the baseline of learning from annotated images. All these methods use UNet2D as the backbone network.
 
 ### Baseline Method
-The baseline method uses the 14 annotated cases for training. The batch size is 4, and the patch size is 6x192x192. Therefore, indeed there are 2D 16 slices in each batch. See `config/unet2d_baseline.cfg` for details about the configuration.You need to set `root_dir` to your own `PyMIC_data/ACDC/preprocess`. The dataset configration is:
+The baseline method uses the 14 annotated cases for training. The batch size is 4, and the patch size is 6x192x192. Therefore, indeed there are 16 2D slices in each batch. See `config/unet2d_baseline.cfg` for details about the configuration.You need to set `root_dir` to your own `PyMIC_data/ACDC/preprocess`. The dataset configuration is:
 
 ```bash
 tensor_type = float
@@ -42,7 +42,7 @@ test_csv  = config/data/image_test.csv
 train_batch_size = 4
 ```
 
-For data augmentation, we use random rotate, random crop, random flip, gamma correction and gaussian noise. The images cropped images are also normaized with mean and std. The details for data transforms are:
+For data augmentation, we use random rotate, random crop, random flip, gamma correction and gaussian noise. The cropped images are also normaized with mean and std. The details for data transforms are:
 
 ```bash
 train_transform = [Pad, RandomRotate, RandomCrop, RandomFlip, NormalizeWithMeanStd, GammaCorrection, GaussianNoise, LabelToProbability]
@@ -78,6 +78,7 @@ GaussianNoise_probability = 0.5
 ```
 
 The configuration of 2D UNet is:
+
 ```bash
 net_type = UNet2D
 class_num     = 4
@@ -125,48 +126,138 @@ sliding_window_size   = [6, 192, 192]
 sliding_window_stride = [6, 192, 192]
 ```
 
-To train the mode, run `pymic_run train config/unet2d_baseline.cfg`.
-For inference, run `pymic_run test config/unet2d_baseline.cfg`.
+The following commands are used for training and inference with this method, respectively:
 
-1. Edit `config/unet.cfg` by setting the value of `root_dir` as your `HC_root`. Then start to train by running:
- 
 ```bash
-pymic_run train config/unet.cfg
+pymic_run train config/unet2d_baseline.cfg
+pymic_run test config/unet2d_baseline.cfg
 ```
 
-2. During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where red and blue curves are for training set and validation set respectively. 
-
-![avg_dice](./picture/train_avg_dice.png)
-![avg_loss](./picture/train_avg_loss.png)
-
-## Testing and evaluation
-1. Run the following command to obtain segmentation results of testing images based on the best-performing checkpoint on the validation set. By default we use sliding window inference to get better results. You can also edit the `testing` section of `config/unet.cfg` to use other inference strategies.
+### Data configuration for semi-supervised learning
+For semi-supervised learning, we set the batch size as 8, where 4 are annotated images and the other 4 are unannotated images. 
 
 ```bash
-pymic_run test config/unet.cfg
+train_csv = config/data/image_train_r10_lab.csv
+train_csv_unlab = config/data/image_train_r10_unlab.csv
+valid_csv = config/data/image_valid.csv
+test_csv  = config/data/image_test.csv
+
+train_batch_size = 4
+train_batch_size_unlab = 4
 ```
 
-2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `HC_root`, and run the following command to obtain quantitative evaluation results in terms of Dice. 
+### Entropy Minimization
+The configuration for Entropy Minimization is in `config/unet2d_em.cfg`.  The data configuration has been described above, and the settings for data augmentation, network, optmizer, learning rate scheduler and inference are the same as those in the baseline method. Specific configuration for Entropy Minimization is:
 
 ```bash
-pymic_eval_seg config/evaluation.cfg
+ssl_method     = EntropyMinimization
+regularize_w   = 0.1
+rampup_start   = 1000
+rampup_end     = 20000
 ```
 
-The obtained average Dice score by default setting should be close to 97.07%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get Average Symmetric Surface Distance (ASSD) evaluation results. 
+where wet the weight of the regularization loss as 0.1, rampup is used to gradually increase it from 0 t 0.1.
 
-3. Set `tta_mode = 1` in `config/unet.cfg` to enable test time augmentation, and run the testing and evaluation code again, we find that the average Dice will be increased to around 97.22%.
-
-[PyMIC][PyMIC_link] is an Pytorch-based medical image computing toolkit with deep learning. Here we provide a set of examples to show how it can be used for image classification and segmentation tasks. For beginners, you can follow the examples by just editting the configure files for model training, testing and evaluation. For advanced users, you can develop your own modules, such as customized networks and loss functions.  
-
-## Install PyMIC
-The latest released version of PyMIC can be installed by:
+The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pip install PYMIC==0.2.4
+pymic_ssl train config/unet2d_em.cfg
+pymic_run test config/unet2d_em.cfg
 ```
 
-To use the latest development version, you can download the source code [here][PyMIC_link], and install it by:
+### UAMT
+The configuration for UAMT is in `config/unet2d_uamt.cfg`. The corresponding settings are:
 
 ```bash
-python setup.py install
-``` 
+ssl_method     = UAMT
+regularize_w   = 0.1
+ema_decay      = 0.99
+rampup_start   = 1000
+rampup_end     = 20000
+```
+
+The following commands are used for training and inference with this method, respectively:
+```bash
+pymic_ssl train config/unet2d_uamt.cfg
+pymic_run test config/unet2d_uamt.cfg
+```
+
+### UPRC
+The configuration for UAMT is in `config/unet2d_urpc.cfg`. This method requires deep supervision and pyramid prediction of a network. The configuration for network is:
+
+```bash 
+net_type      = UNet2D
+class_num     = 4
+in_chns       = 1
+feature_chns  = [16, 32, 64, 128, 256]
+dropout       = [0.0, 0.0, 0.0, 0.5, 0.5]
+bilinear      = True
+deep_supervise= True
+```
+
+The configuration for URPC training is:
+
+```bash 
+ssl_method     = URPC
+regularize_w   = 0.1
+rampup_start   = 1000
+rampup_end     = 20000
+```
+
+The following commands are used for training and inference with this method, respectively:
+```bash
+pymic_ssl train config/unet2d_urpc.cfg
+pymic_run test config/unet2d_urpc.cfg
+```
+
+### CCT
+The orginal [CCT][cct_paper] uses multiple auxiliary deocders in the network. Due to the memory constraint and efficiency consideration, we only use 4 auxiliary decoders based on DropOut, FeatureDrop, FeatureNoise and VAT, respectively. The configuration for network is:
+
+```bash 
+net_type      = UNet2D_CCT
+class_num     = 4
+in_chns       = 1
+feature_chns  = [16, 32, 64, 128, 256]
+dropout       = [0.0, 0.0, 0.0, 0.5, 0.5]
+bilinear      = True
+
+# parameters specific to CCT
+VAT_it = 2
+VAT_xi = 1e-6
+VAT_eps= 2
+Uniform_range = 0.3
+```
+
+The configuration for URPC training is:
+
+```bash 
+ssl_method     = CCT
+regularize_w   = 0.1
+rampup_start   = 1000
+rampup_end     = 20000
+unsupervised_loss = MSE
+```
+
+The following commands are used for training and inference with this method, respectively:
+
+```bash
+pymic_ssl train config/unet2d_cct.cfg
+pymic_run test config/unet2d_cct.cfg
+```
+
+### CPS
+The configuration for UAMT is in `config/unet2d_cps.cfg`, and the configuration for CPS training is:
+
+```bash 
+ssl_method     = CPS
+regularize_w   = 0.1
+rampup_start   = 1000
+rampup_end     = 20000
+```
+
+The training and inference commands are:
+
+```bash
+pymic_ssl train config/unet2d_cps.cfg
+pymic_run test config/unet2d_cps.cfg
+```
