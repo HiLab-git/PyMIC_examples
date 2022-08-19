@@ -1,4 +1,4 @@
-# Semi-supervised demo using PyMIC
+# Semi-supervised segmentation using PyMIC
 
 In this example, we show semi-supervised learning methods implemented in PyMIC.
 Currently, the following semi-supervised methods are implemented:
@@ -20,9 +20,9 @@ Currently, the following semi-supervised methods are implemented:
 
 
 ## Data 
-The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). The images are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. You can download `PyMIC_data` from .... The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/datas` for details).
+The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). The images are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. You can download `PyMIC_data` from .... The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/data` for details).
 
-In the training set, we randomly select 14 images of 7 patients as annotated images and the other 126 images as unannotated images. See `random_split_train.py`. 
+In the training set, we have randomly selected 14 images of 7 patients as annotated images and the other 126 images as unannotated images. See `random_split_train.py`. 
 
 [ACDC_link]:https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html
 
@@ -30,7 +30,7 @@ In the training set, we randomly select 14 images of 7 patients as annotated ima
 In this demo, we experiment with five methods: EM, UAMT, UPRC, CCT and CPS, and they are compared with the baseline of learning from annotated images. All these methods use UNet2D as the backbone network.
 
 ### Baseline Method
-The baseline method uses the 14 annotated cases for training. The batch size is 4, and the patch size is 6x192x192. Therefore, indeed there are 16 2D slices in each batch. See `config/unet2d_baseline.cfg` for details about the configuration.You need to set `root_dir` to your own `PyMIC_data/ACDC/preprocess`. The dataset configuration is:
+The baseline method uses the 14 annotated cases for training. The batch size is 4, and the patch size is 6x192x192. Therefore, indeed there are 16 2D slices in each batch. See `config/unet2d_baseline.cfg` for details about the configuration. You need to set `root_dir` to your own `PyMIC_data/ACDC/preprocess`. The dataset configuration is:
 
 ```bash
 tensor_type = float
@@ -46,8 +46,8 @@ For data augmentation, we use random rotate, random crop, random flip, gamma cor
 
 ```bash
 train_transform = [Pad, RandomRotate, RandomCrop, RandomFlip, NormalizeWithMeanStd, GammaCorrection, GaussianNoise, LabelToProbability]
-valid_transform       = [NormalizeWithMeanStd, Pad, LabelToProbability]
-test_transform        = [NormalizeWithMeanStd, Pad]
+valid_transform = [NormalizeWithMeanStd, Pad, LabelToProbability]
+test_transform  = [NormalizeWithMeanStd, Pad]
 
 Pad_output_size = [8, 256, 256]
 Pad_ceil_mode   = False
@@ -80,7 +80,7 @@ GaussianNoise_probability = 0.5
 The configuration of 2D UNet is:
 
 ```bash
-net_type = UNet2D
+net_type      = UNet2D
 class_num     = 4
 in_chns       = 1
 feature_chns  = [16, 32, 64, 128, 256]
@@ -91,7 +91,7 @@ deep_supervise= False
 
 For training, we use a combinatin of DiceLoss and CrossEntropyLoss, and train the network by the   `Adam` optimizer. The maximal iteration is 30k, and the training is early stopped if there is not performance improvement on the validation set for 10k iteratins. The learning rate scheduler is `ReduceLROnPlateau`. The corresponding configuration is:
 ```bash
-gpus       = [0]
+gpus          = [0]
 loss_type     = [DiceLoss, CrossEntropyLoss]
 loss_weight   = [0.5, 0.5]
 
@@ -114,7 +114,7 @@ iter_valid = 100
 iter_save  = [30000]
 ```
 
-During inference, we use a sliding window of 6x192x192, and post process the results by `KeepLargestComponent`. The configuration is:
+During inference, we use a sliding window of 6x192x192, and postprocess the results by `KeepLargestComponent`. The configuration is:
 ```bash
 # checkpoint mode can be [0-latest, 1-best, 2-specified]
 ckpt_mode         = 1
@@ -156,8 +156,7 @@ rampup_start   = 1000
 rampup_end     = 20000
 ```
 
-where wet the weight of the regularization loss as 0.1, rampup is used to gradually increase it from 0 t 0.1.
-
+where the weight of the regularization loss is 0.1, and rampup is used to gradually increase it from 0 to 0.1.
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
@@ -183,7 +182,7 @@ pymic_run test config/unet2d_uamt.cfg
 ```
 
 ### UPRC
-The configuration file for UAMT is `config/unet2d_urpc.cfg`. This method requires deep supervision and pyramid prediction of a network. The network setting is:
+The configuration file for UPRC is `config/unet2d_urpc.cfg`. This method requires deep supervision and pyramid prediction of a network. The network setting is:
 
 ```bash 
 net_type      = UNet2D
@@ -259,5 +258,17 @@ The training and inference commands are:
 
 ```bash
 pymic_ssl train config/unet2d_cps.cfg
-pymic_run test config/unet2d_cps.cfg
+pymic_ssl test config/unet2d_cps.cfg
+```
+
+## Evaluation
+Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
+
+```bash
+metric = dice
+label_list = [1,2,3]
+organ_name = heart
+ground_truth_folder_root  = /home/disk2t/projects/PyMIC_project/PyMIC_data/ACDC/preprocess
+segmentation_folder_root  = ./result/unet2d_baseline
+evaluation_image_pair     = ./config/data/image_test_gt_seg.csv
 ```
