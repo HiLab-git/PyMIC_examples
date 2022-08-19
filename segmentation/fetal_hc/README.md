@@ -7,12 +7,12 @@ In this example, we use 2D U-Net to segment the fetal brain from ultrasound imag
 
 ## Data and preprocessing
 1. We use the [HC18][hc18_link] dataset for this example. The images are ready to use in `PyMIC_data/Fetal_HC`. There are 999 2D ultrasound images and their annotations in the training set.  The original annotations are contours, and we have converted them into binary masks for segmentation. (The conversion code is in `get_ground_truth.py`)
-2. Set `HC_root` according to your computer in `write_csv_files.py` and run `python write_csv_files.py` to randomly split the official HC18 training set into our own training (780 images), validation (70 images) and testing (149 images) sets. The output csv files are saved in `config`.
+2. Run `python write_csv_files.py` to randomly split the official HC18 training set into our own training (780 images), validation (70 images) and testing (149 images) sets. The output csv files are saved in `config`.
 
 [hc18_link]:https://hc18.grand-challenge.org/
 
 ## Training
-1. Edit `config/unet.cfg` by setting the value of `root_dir` as your `HC_root`. Then start to train by running:
+1. Start to train by running:
  
 ```bash
 pymic_run train config/unet.cfg

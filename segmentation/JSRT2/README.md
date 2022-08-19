@@ -13,7 +13,7 @@ We also write a customized main function in `jsrt_net_run.py` so that we can com
 1. We use the same dataset as in the the `JSRT` example. 
 
 ## Training
-1. Edit `config/mynet.cfg` by setting the value of `root_dir` as your `JSRT_root`, and start to train by running:
+1. Start to train by running:
  
 ```bash
 python net_run_jsrt.py train config/mynet.cfg

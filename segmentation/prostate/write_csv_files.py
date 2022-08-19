@@ -79,7 +79,7 @@ def get_evaluation_image_pairs(test_csv, gt_seg_csv):
 if __name__ == "__main__":
     # create cvs file for promise 2012
     # set data_dir based on your own system
-    data_dir    = '/home/disk2t/projects/PyMIC_project/PyMIC_data/Promise12/preprocess'
+    data_dir    = '../../PyMIC_data/Promise12/preprocess'
     fields      = ['image', 'label']
     output_file = 'config/data/image_all.csv'
     create_csv_file(data_dir, output_file, fields)

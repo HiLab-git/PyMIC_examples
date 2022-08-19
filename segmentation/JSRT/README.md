@@ -6,14 +6,14 @@
 In this example, we use 2D U-Net to segment the lung from X-Ray images. First we edit the configuration file for training and testing. During training, we use tensorboard to observe the performance of the network at different iterations. We then apply the trained model to testing images and obtain quantitative evaluation results.
 
 ## Data and preprocessing
-1. Download the `PyMIC_data` and the images are saved in `PyMIC_data/JSRT`. The orginal dataset is available at the [JSRT website][jsrt_link]. It consists of 247 chest radiographs. We have preprocessed the images by resizing them to 256x256 and extracting the lung masks for the segmentation task. If interested, you can read `image_convert.py` for details of the preprocessing.  
+1. The orginal dataset is available at the [JSRT website][jsrt_link]. It consists of 247 chest radiographs. We have preprocessed the images by resizing them to 256x256 and extracting the lung masks for the segmentation task. The images are available at `PyMIC_data/JSRT`. If interested, you can read `image_convert.py` for details of the preprocessing.  
 
-5. Set `JSRT_root` according to your computer in `write_csv_files.py` and run `python write_csv_files.py` to randomly split the 247 images into training (180 images), validation (20 images) and testing (47 images) sets. The output csv files are saved in `config`.
+5. Run `python write_csv_files.py` to randomly split the 247 images into training (180 images), validation (20 images) and testing (47 images) sets. The output csv files are saved in `config`.
 
 [jsrt_link]:http://db.jsrt.or.jp/eng.php
 
 ## Training
-1. Edit `config/unet.cfg` by setting the value of `root_dir` as your `JSRT_root`. Then start to train by running:
+1. Start to train by running:
  
 ```bash
 pymic_run  train config/unet.cfg

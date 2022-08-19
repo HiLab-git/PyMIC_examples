@@ -5,12 +5,12 @@ In this example, we use 3D U-Net with deep supervision to segment the prostate f
 
 ## Data 
 1. We use the [Promise12][promise12_link] dataset for this example. The preprocessed images are available in `PyMIC_data/Promise12`. We have resampled the original images into a uniform resolution and cropped them to a smaller size. The code for preprocessing is in  `preprocess.py`.
-2. Open `write_csv_files.py` and set `data_dir` accordingly, such as `PyMIC_data/Promise12/preprocess`. Run `python write_csv_files.py` to randomly split the dataset into our own training (35 images), validation (5 images) and testing (10 images) sets. The output csv files are saved in `config/data`.
+2. Run `python write_csv_files.py` to randomly split the dataset into our own training (35 images), validation (5 images) and testing (10 images) sets. The output csv files are saved in `config/data`.
 
 [promise12_link]:https://promise12.grand-challenge.org/
 
 ## Training
-1. Edit `config/unet3d.cfg` by setting the value of `root_dir` as your `PyMIC_data/Promise12/preprocess`. Then start to train by running:
+1. Start to train by running:
  
 ```bash
 pymic_run train config/unet3d.cfg
