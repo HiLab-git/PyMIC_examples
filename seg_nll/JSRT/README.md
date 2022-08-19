@@ -1,22 +1,24 @@
-# Weakly supervised segmentation demo using PyMIC
+# Noisy label-based segmentation demo using PyMIC
 
-In this example, we show scribble-supervised learning methods implemented in PyMIC.
-Currently, the following are available in PyMIC:
+In this example, we show noisy label learning methods implemented in PyMIC.
+Currently, the following methods are available in PyMIC:
 |PyMIC Method|Reference|Remarks|
 |---|---|---|
-|WSLEntropyMinimization|[Grandvalet et al.][em_paper], NeurIPS 2005| Entropy minimization for regularization|
-|WSLTotalVariation| [Luo et al.][tv_paper], arXiv 2022| Tobal variation for regularization|
-|WSLMumfordShah| [Kim et al.][mumford_paper], TIP 2020| Mumford-Shah loss for regularization|
-|WSLGatedCRF| [Lbukhov et al.][gcrf_paper], arXiv 2019| Gated CRF for regularization|
-|WSLUSTM| [Liu et al.][ustm_paper], PR 2022| Adapt USTM with transform-consistency|
-|WSLDMPLS| [Luo et al.][dmpls_paper], MICCAI 2022| Dynamically mixed pseudo label supervision|
+|GCELoss|[Zhang et al.][gce_paper], NeurIPS 2018| Train with SegmentationAgent|
+|NRDiceLoss| [Wang et al.][nrdice_paper], TMI 2020| Train with SegmentationAgent|
+|MAELoss| [Kim et al.][mae_paper], AAAI 2017| Train with SegmentationAgent|
+|NLLCoTeaching| [Han et al.][cot_paper], NeurIPS 2018| Co-teaching between two networks|
+|NLLCLSLSR| [Zhang et al.][cl_paper], MICCAI 2020| Confident learning with spatial label smoothing|
+|NLLTriNet| [Zhang et al.][trinet_paper], MICCAI 2020| Tri-network combined with sample selection|
+|NLLDAST| [Yang et al.][dast_paper], JBHI 2022| Divergence-aware selective training|
 
-[em_paper]:https://papers.nips.cc/paper/2004/file/96f2b50b5d3613adf9c27049b2a888c7-Paper.pdf
-[tv_paper]:https://arxiv.org/abs/2111.02403
-[mumford_paper]:https://doi.org/10.1109/TIP.2019.2941265  
-[gcrf_paper]:http://arxiv.org/abs/1906.04651
-[ustm_paper]:https://doi.org/10.1016/j.patcog.2021.108341 
-[dmpls_paper]:https://arxiv.org/abs/2203.02106 
+[gce_paper]:https://arxiv.org/abs/1805.07836
+[nrdice_paper]:https://ieeexplore.ieee.org/document/9109297
+[mae_paper]:https://arxiv.org/abs/1712.09482v1  
+[cot_paper]:https://arxiv.org/abs/1804.06872
+[cl_paper]:https://link.springer.com/chapter/10.1007/978-3-030-59710-8_70 
+[trinet_paper]:https://link.springer.com/chapter/10.1007/978-3-030-59719-1_25 
+[dast_paper]:https://ieeexplore.ieee.org/document/9770406 
 
 
 ## Data 

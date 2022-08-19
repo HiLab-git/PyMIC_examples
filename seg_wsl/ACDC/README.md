@@ -1,7 +1,7 @@
 # Weakly supervised segmentation demo using PyMIC
 
 In this example, we show scribble-supervised learning methods implemented in PyMIC.
-Currently, the following are available in PyMIC:
+Currently, the following methods are available in PyMIC:
 |PyMIC Method|Reference|Remarks|
 |---|---|---|
 |WSLEntropyMinimization|[Grandvalet et al.][em_paper], NeurIPS 2005| Entropy minimization for regularization|
