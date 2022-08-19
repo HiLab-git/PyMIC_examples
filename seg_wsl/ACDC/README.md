@@ -20,7 +20,7 @@ Currently, the following are available in PyMIC:
 
 
 ## Data 
-The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). [Valvano et al.][scribble_link] provided scribble annotations of this dataset. The images and scribble annotations are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. You can download `PyMIC_data` from .... The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/data` for details).
+The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). [Valvano et al.][scribble_link] provided scribble annotations of this dataset. The images and scribble annotations are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/data` for details).
 
 [ACDC_link]:https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html
 [scribble_link]:https://gvalvano.github.io/wss-multiscale-adversarial-attention-gates/data
@@ -34,7 +34,7 @@ The dataset setting is similar to that in the `seg_ssl/ACDC` demo. Here we use a
 ```bash
 tensor_type = float
 task_type = seg
-root_dir  = /home/disk2t/projects/PyMIC_project/PyMIC_data/ACDC/preprocess
+root_dir  = ../../PyMIC_data/ACDC/preprocess
 train_csv = config/data/image_train.csv
 valid_csv = config/data/image_valid.csv
 test_csv  = config/data/image_test.csv
@@ -219,7 +219,7 @@ Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the se
 metric = dice
 label_list = [1,2,3]
 organ_name = heart
-ground_truth_folder_root  = /home/disk2t/projects/PyMIC_project/PyMIC_data/ACDC/preprocess
+ground_truth_folder_root  = ../../PyMIC_data/ACDC/preprocess
 segmentation_folder_root  = ./result/unet2d_baseline
 evaluation_image_pair     = ./config/data/image_test_gt_seg.csv
 ```

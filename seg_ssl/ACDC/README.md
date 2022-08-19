@@ -20,7 +20,7 @@ Currently, the following semi-supervised methods are implemented:
 
 
 ## Data 
-The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). The images are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. You can download `PyMIC_data` from .... The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/data` for details).
+The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). The images are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/data` for details).
 
 In the training set, we have randomly selected 14 images of 7 patients as annotated images and the other 126 images as unannotated images. See `random_split_train.py`. 
 
@@ -30,12 +30,12 @@ In the training set, we have randomly selected 14 images of 7 patients as annota
 In this demo, we experiment with five methods: EM, UAMT, UPRC, CCT and CPS, and they are compared with the baseline of learning from annotated images. All these methods use UNet2D as the backbone network.
 
 ### Baseline Method
-The baseline method uses the 14 annotated cases for training. The batch size is 4, and the patch size is 6x192x192. Therefore, indeed there are 16 2D slices in each batch. See `config/unet2d_baseline.cfg` for details about the configuration. You need to set `root_dir` to your own `PyMIC_data/ACDC/preprocess`. The dataset configuration is:
+The baseline method uses the 14 annotated cases for training. The batch size is 4, and the patch size is 6x192x192. Therefore, indeed there are 16 2D slices in each batch. See `config/unet2d_baseline.cfg` for details about the configuration. The dataset configuration is:
 
 ```bash
 tensor_type = float
 task_type = seg
-root_dir  = /home/disk2t/projects/PyMIC_project/PyMIC_data/ACDC/preprocess/
+root_dir  = ../../PyMIC_data/ACDC/preprocess/
 train_csv = config/data/image_train_r10_lab.csv
 valid_csv = config/data/image_valid.csv
 test_csv  = config/data/image_test.csv
@@ -268,7 +268,7 @@ Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the se
 metric = dice
 label_list = [1,2,3]
 organ_name = heart
-ground_truth_folder_root  = /home/disk2t/projects/PyMIC_project/PyMIC_data/ACDC/preprocess
+ground_truth_folder_root  = ../../PyMIC_data/ACDC/preprocess
 segmentation_folder_root  = ./result/unet2d_baseline
 evaluation_image_pair     = ./config/data/image_test_gt_seg.csv
 ```

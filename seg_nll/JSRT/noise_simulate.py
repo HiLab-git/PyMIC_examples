@@ -60,7 +60,7 @@ def add_random_nosie_to_label(label, r_range):
 
 def debug():
     # for debug
-    image_name = "/home/disk2t/projects/PyMIC_project/PyMIC_data/JSRT/label/JPCLN003.png"
+    image_name = "../../PyMIC_data/JSRT/label/JPCLN003.png"
     img = Image.open(image_name)
     lab = np.asarray(img)
     lab_max = lab.max()
@@ -119,4 +119,4 @@ if __name__ == "__main__":
     clean_ratio = 0.05
     radius_range = (6, 12)
     select_clean_samples(clean_ratio)
-    generate_noise("./data", radius_range)
+    generate_noise("../../PyMIC_data/JSRT", radius_range)
