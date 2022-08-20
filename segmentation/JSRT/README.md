@@ -1,4 +1,4 @@
-# Heart segmentation from 2D X-ray images
+# Lung segmentation from 2D X-ray images
 
 ![image_example](./picture/JPCLN002.png)
 ![label_example](./picture/JPCLN002_seg.png)
