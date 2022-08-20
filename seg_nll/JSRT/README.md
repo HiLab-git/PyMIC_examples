@@ -22,196 +22,104 @@ Currently, the following methods are available in PyMIC:
 
 
 ## Data 
-The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). [Valvano et al.][scribble_link] provided scribble annotations of this dataset. The images and scribble annotations are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. You can download `PyMIC_data` from .... The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/data` for details).
+The [JSRT][jsrt_link] dataset is used in this demo. It consists of 247 chest radiographs. We have preprocessed the images by resizing them to 256x256 and extracting the lung masks for the segmentation task. The images are available at `PyMIC_data/JSRT`. The images are split into 180, 20 and 47 for training, validation and testing, respectively. 
 
-[ACDC_link]:https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html
-[scribble_link]:https://gvalvano.github.io/wss-multiscale-adversarial-attention-gates/data
+For training images, we simulate noisy labels for 171 images (95%) and keep the clean label for 9 (5%) images. Run `python noise_simulate.py` to generate niosy labels based on dilation, erosion and edge distortion. The following figure shows simulated noisy labels compared with the ground truth clean label. The .csv files for data split are saved in `config/data`.
+
+![noisy_label](./picture/noisy_label.png)
+
 
 ## Training
-In this demo, we experiment with five methods: EM, TV, GatedCRF, USTM and DMPLS, and they are compared with the baseline of learning from annotated pixels with partial CE loss. All these methods use UNet2D as the backbone network.
+In this demo, we experiment with five methods: GCE loss, co-teaching, Trinet and DAST, and they are compared with the baseline of learning with a cross entropy loss. All these methods use UNet2D as the backbone network.
 
 ### Baseline Method
-The dataset setting is similar to that in the `seg_ssl/ACDC` demo. Here we use a slightly different setting of data transform:
+The dataset setting is similar to that in the `segmentation/JSRT` demo. See `config/unet2d_ce.cfg` for details. Here we use a slightly different setting of data and loss function:
 
 ```bash
-tensor_type = float
+...
 task_type = seg
-root_dir  = /home/disk2t/projects/PyMIC_project/PyMIC_data/ACDC/preprocess
-train_csv = config/data/image_train.csv
-valid_csv = config/data/image_valid.csv
-test_csv  = config/data/image_test.csv
-train_batch_size = 4
-
-# data transforms
-train_transform = [Pad, RandomCrop, RandomFlip, NormalizeWithMeanStd, PartialLabelToProbability]
-valid_transform       = [NormalizeWithMeanStd, Pad, LabelToProbability]
-test_transform        = [NormalizeWithMeanStd, Pad]
-
-Pad_output_size = [4, 224, 224]
-Pad_ceil_mode   = False
-
-RandomCrop_output_size = [3, 224, 224]
-RandomCrop_foreground_focus = False
-RandomCrop_foreground_ratio = None
-Randomcrop_mask_label       = None
-
-RandomFlip_flip_depth  = False
-RandomFlip_flip_height = True
-RandomFlip_flip_width  = True
-
-NormalizeWithMeanStd_channels = [0]
-```
-
-Please note that we use a `PartialLabelToProbability` class to convert the partial labels into a one-hot segmentation map and a mask for annotated pixels. The mask is used as a pixel weighting map in `CrossEntropyLoss`, so that parial CE loss is calculated as a weighted CE loss, i.e., the weight for unannotated pixels is 0.
-
-
-The configuration of 2D UNet is:
-
-```bash
-net_type = UNet2D
-class_num     = 4
-in_chns       = 1
-feature_chns  = [16, 32, 64, 128, 256]
-dropout       = [0.0, 0.0, 0.0, 0.5, 0.5]
-bilinear      = True
-deep_supervise= False
-```
-
-For training, we use the CrossEntropyLoss with pixel weighting (i.e., partial CE loss), and train the network by the  `Adam` optimizer. The maximal iteration is 20k, and the training is early stopped if there is not performance improvement on the validation set for 8k iteratins. The learning rate scheduler is `ReduceLROnPlateau`. The corresponding configuration is:
-
-```bash
-gpus       = [0]
+root_dir  = ../../PyMIC_data/JSRT
+train_csv = config/data/jsrt_train_mix.csv
+valid_csv = config/data/jsrt_valid.csv
+test_csv  = config/data/jsrt_test.csv
+...
 loss_type     = CrossEntropyLoss
-
-# for optimizers
-optimizer     = Adam
-learning_rate = 1e-3
-momentum      = 0.9
-weight_decay  = 1e-5
-
-# for lr schedular 
-lr_scheduler  = ReduceLROnPlateau
-lr_gamma      = 0.5
-ReduceLROnPlateau_patience = 2000
-early_stop_patience = 8000
-ckpt_save_dir    = model/unet2d_baseline
-
-# start iter
-iter_start = 0
-iter_max   = 20000
-iter_valid = 100
-iter_save  = [2000, 20000]
-```
-
-During inference, we use a sliding window of 3x224x224, and post process the results by `KeepLargestComponent`. The configuration is:
-```bash
-# checkpoint mode can be [0-latest, 1-best, 2-specified]
-ckpt_mode         = 1
-output_dir        = result/unet2d_baseline
-post_process      = KeepLargestComponent
-
-sliding_window_enable = True
-sliding_window_size   = [3, 224, 224]
-sliding_window_stride = [3, 224, 224]
 ```
 
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_run train config/unet2d_baseline.cfg
-pymic_run test config/unet2d_baseline.cfg
+pymic_run train config/unet_ce.cfg
+pymic_run test config/unet_ce.cfg
 ```
 
-### Entropy Minimization
-The configuration file for Entropy Minimization is `config/unet2d_em.cfg`.  The data configuration has been described above, and the settings for data augmentation, network, optmizer, learning rate scheduler and inference are the same as those in the baseline method. Specific setting for Entropy Minimization is:
+### GCE Loss
+The configuration file for using GCE loss is `config/unet2d_gce.cfg`.  The  configuration is the same as that in the baseline except the loss function:
 
 ```bash
-wsl_method     = EntropyMinimization
-regularize_w   = 0.1
-rampup_start   = 2000
-rampup_end     = 15000
+...
+loss_type     = GeneralizedCELoss
+...
 ```
-
-where wet the weight of the regularization loss as 0.1, rampup is used to gradually increase it from 0 t 0.1.
 
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_wsl train config/unet2d_em.cfg
-pymic_run test config/unet2d_em.cfg
+pymic_run train config/unet_gce.cfg
+pymic_run test config/unet_gce.cfg
 ```
 
-### TV
-The configuration file for TV is `config/unet2d_tv.cfg`. The corresponding setting is:
+### Co-Teaching
+The configuration file for Co-Teaching is `config/unet2d_cot.cfg`. The corresponding setting is:
 
 ```bash
-wsl_method     = TotalVariation
-regularize_w   = 0.1
-rampup_start   = 2000
-rampup_end     = 15000
+nll_method   = CoTeaching
+co_teaching_select_ratio  = 0.8  
+rampup_start = 1000
+rampup_end   = 8000
 ```
 
 The following commands are used for training and inference with this method, respectively:
 ```bash
-pymic_wsl train config/unet2d_tv.cfg
-pymic_run test config/unet2d_tv.cfg
+pymic_nll train config/unet_cot.cfg
+pymic_nll test config/unet_cot.cfg
 ```
 
-### Gated CRF
-The configuration file for Gated CRF is `config/unet2d_gcrf.cfg`. The corresponding setting is:
+### TriNet
+The configuration file for TriNet is `config/unet_trinet.cfg`. The corresponding setting is:
 
 ```bash 
-wsl_method     = GatedCRF
-regularize_w   = 0.1
-rampup_start   = 2000
-rampup_end     = 15000
-GatedCRFLoss_W0     = 1.0
-GatedCRFLoss_XY0    = 5
-GatedCRFLoss_rgb    = 0.1
-GatedCRFLoss_W1     = 1.0
-GatedCRFLoss_XY1    = 3
-GatedCRFLoss_Radius = 5
+nll_method   = TriNet
+trinet_select_ratio = 0.9
+rampup_start = 1000
+rampup_end   = 8000
 ```
 
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_wsl train config/unet2d_gcrf.cfg
-pymic_run test config/unet2d_gcrf.cfg
+pymic_nll train config/unet_trinet.cfg
+pymic_nll test config/unet_trinet.cfg
 ```
 
-### USTM
-The configuration file for USTM is `config/unet2d_ustm.cfg`. The corresponding setting is:
+### DAST
+The configuration file for DAST is `config/unet_dast.cfg`. The corresponding setting is:
 
 ```bash
-wsl_method     = USTM
-regularize_w   = 0.1
-rampup_start   = 2000
-rampup_end     = 15000
+nll_method   = DAST
+dast_dbc_w   = 0.1
+dast_st_w    = 0.1  
+dast_rank_length  = 20
+dast_select_ratio = 0.2
+rampup_start = 1000
+rampup_end   = 8000
 ```
 
 The commands for training and inference are:
 
 ```bash
-pymic_wsl train config/unet2d_ustm.cfg
-pymic_run test config/unet2d_ustm.cfg
-```
-
-### DMPLS
-The configuration file for DMPLS is `config/unet2d_dmpls.cfg`, and the corresponding setting is:
-
-```bash 
-wsl_method     = DMPLS
-regularize_w   = 0.1
-rampup_start   = 2000
-rampup_end     = 15000
-```
-
-The training and inference commands are:
-
-```bash
-pymic_ssl train config/unet2d_dmpls.cfg
-pymic_run test config/unet2d_dmpls.cfg
+pymic_nll train config/unet_dast.cfg
+pymic_run test config/unet_dast.cfg
 ```
 
 ## Evaluation
@@ -219,10 +127,11 @@ Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the se
 
 ```bash
 metric = dice
-label_list = [1,2,3]
-organ_name = heart
-ground_truth_folder_root  = /home/disk2t/projects/PyMIC_project/PyMIC_data/ACDC/preprocess
-segmentation_folder_root  = ./result/unet2d_baseline
-evaluation_image_pair     = ./config/data/image_test_gt_seg.csv
+label_list = [255]
+organ_name = lung
+
+ground_truth_folder_root  = ../../PyMIC_data/JSRT
+segmentation_folder_root  = result/unet_ce
+evaluation_image_pair     = config/data/jsrt_test_gt_seg.csv
 ```
 
