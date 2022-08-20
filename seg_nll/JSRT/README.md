@@ -24,13 +24,15 @@ Currently, the following methods are available in PyMIC:
 ## Data 
 The [JSRT][jsrt_link] dataset is used in this demo. It consists of 247 chest radiographs. We have preprocessed the images by resizing them to 256x256 and extracting the lung masks for the segmentation task. The images are available at `PyMIC_data/JSRT`. The images are split into 180, 20 and 47 for training, validation and testing, respectively. 
 
-For training images, we simulate noisy labels for 171 images (95%) and keep the clean label for 9 (5%) images. Run `python noise_simulate.py` to generate niosy labels based on dilation, erosion and edge distortion. The following figure shows simulated noisy labels compared with the ground truth clean label. The .csv files for data split are saved in `config/data`.
+[jsrt_link]:http://db.jsrt.or.jp/eng.php
+
+For training images, we simulate noisy labels for 171 images (95%) and keep the clean label for 9 (5%) images. Run `python noise_simulate.py` to generate niosy labels based on dilation, erosion and edge distortion. The output noisy labels are saved in `PyMIC_data/JSRT/label_noise1`. The following figure shows simulated noisy labels compared with the ground truth clean label. The .csv files for data split are saved in `config/data`.
 
 ![noisy_label](./picture/noisy_label.png)
 
 
 ## Training
-In this demo, we experiment with five methods: GCE loss, co-teaching, Trinet and DAST, and they are compared with the baseline of learning with a cross entropy loss. All these methods use UNet2D as the backbone network.
+In this demo, we experiment with five methods: GCE loss, co-teaching, Trinet and DAST, and the baseline of learning with a cross entropy loss. All these methods use UNet2D as the backbone network.
 
 ### Baseline Method
 The dataset setting is similar to that in the `segmentation/JSRT` demo. See `config/unet2d_ce.cfg` for details. Here we use a slightly different setting of data and loss function:
@@ -54,7 +56,7 @@ pymic_run test config/unet_ce.cfg
 ```
 
 ### GCE Loss
-The configuration file for using GCE loss is `config/unet2d_gce.cfg`.  The  configuration is the same as that in the baseline except the loss function:
+The configuration file for using GCE loss is `config/unet2d_gce.cfg`.  The  configuration is the same as that in the baseline except for the loss function:
 
 ```bash
 ...

@@ -3,7 +3,7 @@
 ![image_example](../JSRT/picture/JPCLN001.png)
 ![label_example](../JSRT/picture/JPCLN001_seg.png)
 
-In this example, we show how to use a customized CNN and a customized loss function to segment the lung from X-Ray images. The configurations are the same as those in the `JSRT` example except the network structure and loss function. 
+In this example, we show how to use a customized CNN and a customized loss function to segment the lung from X-Ray images. The configurations are the same as those in the `JSRT` example except for the network structure and loss function. 
 
 The customized CNN is detailed in `my_net2d.py`, which is a modification of the 2D UNet. In this new network, we use a residual connection in each block. The customized loss is detailed in `my_loss.py`, where we define a focal dice loss named as MyFocalDiceLoss. We use `MyFocalDiceLoss + CrossEntropyLoss` to train the customized network.
 
