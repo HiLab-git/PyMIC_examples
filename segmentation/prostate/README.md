@@ -30,7 +30,7 @@ Note that we set `deep_supervise = True` and `loss_type = [DiceLoss, CrossEntrop
 pymic_run test config/unet3d.cfg
 ```
 
-2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `PyMIC_data/Promise12/preprocess`, and run the following command to obtain quantitative evaluation results in terms of Dice. 
+2. Run the following command to obtain quantitative evaluation results in terms of Dice. 
 
 ```bash
 pymic_eval_seg config/evaluation.cfg

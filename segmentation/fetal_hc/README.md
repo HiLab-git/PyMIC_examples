@@ -30,7 +30,7 @@ pymic_run train config/unet.cfg
 pymic_run test config/unet.cfg
 ```
 
-2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `HC_root`, and run the following command to obtain quantitative evaluation results in terms of Dice. 
+2. Use the following command to obtain quantitative evaluation results in terms of Dice. 
 
 ```bash
 pymic_eval_seg config/evaluation.cfg

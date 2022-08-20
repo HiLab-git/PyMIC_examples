@@ -31,7 +31,7 @@ python net_run_jsrt.py train config/mynet.cfg
 python net_run_jsrt.py test config/mynet.cfg
 ```
 
-2. Edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `JSRT_root`, and run the following command to obtain quantitative evaluation results in terms of dice.
+2. Use the following command to obtain quantitative evaluation results in terms of dice.
 
 ```
 pymic_eval_seg config/evaluation.cfg
