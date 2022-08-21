@@ -67,7 +67,8 @@ def get_evaluation_image_pairs(test_csv, gt_seg_csv):
 
 if __name__ == "__main__":
     # create cvs file for JSRT dataset
-    JSRT_root   = '/home/disk2t/data/JSRT'
+    # edit JSRT_root based on your system
+    JSRT_root   = '../../PyMIC_data/JSRT'
     output_file = 'config/jsrt_all.csv'
     fields      = ['image', 'label']
     create_csv_file(JSRT_root, output_file, fields)

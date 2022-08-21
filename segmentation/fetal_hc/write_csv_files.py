@@ -67,7 +67,7 @@ def get_evaluation_image_pairs(test_csv, gt_seg_csv):
 
 if __name__ == "__main__":
     # create cvs file for training set
-    HC_root     = '/home/disk2t/data/Fetal_HC'
+    HC_root     = '../../PyMIC_data/Fetal_HC'
     output_file = 'config/fetal_hc_all.csv'
     create_csv_file(HC_root, output_file)
 

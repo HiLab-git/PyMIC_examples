@@ -50,7 +50,7 @@ def get_evaluation_image_pairs(test_csv, gt_seg_csv):
 
 if __name__ == "__main__":
     # create cvs file for JSRT dataset
-    AntBee_root   = '/home/guotai/disk2t/projects/torch_project/transfer_learning/hymenoptera_data'
+    AntBee_root   = '../../PyMIC_data/hymenoptera_data'
     create_csv_file(AntBee_root, 'train', 'config/train_data.csv')
     create_csv_file(AntBee_root, 'val', 'config/valid_data.csv')
 

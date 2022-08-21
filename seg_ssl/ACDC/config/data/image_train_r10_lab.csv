@@ -1,0 +1,15 @@
+image,label
+patient016_frame01.nii.gz,patient016_frame01_gt.nii.gz
+patient016_frame12.nii.gz,patient016_frame12_gt.nii.gz
+patient025_frame01.nii.gz,patient025_frame01_gt.nii.gz
+patient025_frame09.nii.gz,patient025_frame09_gt.nii.gz
+patient046_frame01.nii.gz,patient046_frame01_gt.nii.gz
+patient046_frame10.nii.gz,patient046_frame10_gt.nii.gz
+patient062_frame01.nii.gz,patient062_frame01_gt.nii.gz
+patient062_frame09.nii.gz,patient062_frame09_gt.nii.gz
+patient063_frame01.nii.gz,patient063_frame01_gt.nii.gz
+patient063_frame16.nii.gz,patient063_frame16_gt.nii.gz
+patient074_frame01.nii.gz,patient074_frame01_gt.nii.gz
+patient074_frame12.nii.gz,patient074_frame12_gt.nii.gz
+patient086_frame01.nii.gz,patient086_frame01_gt.nii.gz
+patient086_frame08.nii.gz,patient086_frame08_gt.nii.gz

@@ -2,7 +2,15 @@ import os
 from PIL import Image
 import numpy as np
 
-def convert_JCRT_images(input_dir, output_dir):
+"""
+script for preprocessing the JSRT dataset. 
+resize the images into 256X256, and extract the lung masks.
+"""
+def convert_JSRT_images(input_dir, output_dir):
+    """
+    Resise images from 4096x4096 to 256x256, and normalize the 
+    intensity to 0-255.
+    """
     file_names = os.listdir(input_dir)
     file_names = [item for item in file_names if item[:2] == "JP"]
     print("image number: {0:}".format(len(file_names)))
@@ -22,7 +30,7 @@ def convert_JCRT_images(input_dir, output_dir):
 
         # Rescale intensity to 0-255
         data[data > 4096] = 4096
-        data = data * 255.0 / 4096 #data.max()
+        data = 255 - data * 255.0 / 4096 #data.max()
         data = np.asarray(data, np.uint8)
         
         # Reshape to 256x256
@@ -31,8 +39,8 @@ def convert_JCRT_images(input_dir, output_dir):
         img.save(output_file_name)
         print(file_name, data.min(), data.max(), data.mean(), data.std())
 
-def convert_JCRT_labels(input_dir, output_dir):
-    organs      = ['heart'] 
+def convert_JSRT_labels(input_dir, output_dir):
+    organs      = ['left lung', 'right lung'] 
     sub_folders = ['fold1', 'fold2']
 
     for sub_folder in sub_folders:
@@ -60,8 +68,8 @@ if __name__ == "__main__":
     JSRT_root  = "/home/guotai/disk2t/data/JSRT"
     input_image_dir  = JSRT_root + "/All247images"
     output_image_dir = JSRT_root + "/image"
-    convert_JCRT_images(input_image_dir, output_image_dir)
+    convert_JSRT_images(input_image_dir, output_image_dir)
 
     input_label_dir  = JSRT_root + "/scratch"
     output_label_dir = JSRT_root + "/label"
-    convert_JCRT_labels(input_label_dir, output_label_dir)
+    convert_JSRT_labels(input_label_dir, output_label_dir)

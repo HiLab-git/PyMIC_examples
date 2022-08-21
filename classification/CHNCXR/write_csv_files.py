@@ -58,7 +58,7 @@ def random_split_dataset():
   
 if __name__ == "__main__":
     # create cvs file for ISIC dataset
-    image_dir   = '/home/guotai/disk2t/data/lung/ChinaSet_AllFiles/CXR_png'
+    image_dir   = '../../PyMIC_data/CHNCXR/CXR_png'
     output_csv  = 'config/cxr_all.csv'
     create_csv_file(image_dir, output_csv)
 
