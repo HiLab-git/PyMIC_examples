@@ -47,5 +47,5 @@ Currently we provide the following examples in this repository:
 [nll_jsrt_link]:seg_nll/JSRT
 
 ## Useful links
-PyMIC on Github: https://github.com/HiLab-git/PyMIC
-Usage of PyMIC: https://pymic.readthedocs.io/en/latest/usage.html 
+* PyMIC on Github: https://github.com/HiLab-git/PyMIC
+* Usage of PyMIC: https://pymic.readthedocs.io/en/latest/usage.html 
