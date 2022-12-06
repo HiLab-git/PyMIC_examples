@@ -216,7 +216,7 @@ pymic_run test config/unet2d_dmpls.cfg
 Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
 
 ```bash
-metric = dice
+metric_list = [dice, hd95]
 label_list = [1,2,3]
 organ_name = heart
 ground_truth_folder_root  = ../../PyMIC_data/ACDC/preprocess

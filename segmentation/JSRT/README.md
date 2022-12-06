@@ -37,4 +37,4 @@ pymic_run test config/unet.cfg
 pymic_eval_seg config/evaluation.cfg
 ```
 
-The obtained average Dice score by default setting should be close to 97.989%. If setting `ckpt_mode` to 1 during testing, the average Dice would be around 97.997%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get average symmetric surface distance (assd) evaluation results.
+The obtained average Dice score by default setting should be close to 97.989%. If setting `ckpt_mode` to 1 during testing, the average Dice would be around 97.997%. 

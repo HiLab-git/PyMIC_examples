@@ -128,7 +128,7 @@ pymic_run test config/unet_dast.cfg
 Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
 
 ```bash
-metric = dice
+metric_list = [dice, assd]
 label_list = [255]
 organ_name = lung
 
