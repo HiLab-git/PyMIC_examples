@@ -16,7 +16,7 @@ In this example, we use 3D U-Net with deep supervision to segment the prostate f
 pymic_run train config/unet3d.cfg
 ```
 
-Note that we set `deep_supervise = True` and `loss_type = [DiceLoss, CrossEntropyLoss]` in the configure file. We also use Mixup for data
+Note that we set `multiscale_pred = True`, `deep_supervise = True` and `loss_type = [DiceLoss, CrossEntropyLoss]` in the configure file. We also use Mixup for data
 augmentation by setting `mixup_probability=0.5`.
 
 2. During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. 
@@ -37,5 +37,5 @@ pymic_run test config/unet3d.cfg
 pymic_eval_seg config/evaluation.cfg
 ```
 
-The obtained average Dice score by default setting should be close to 87.92%, and the Average Symmetric Surface Distance (ASSD) is 1.45 mm. You can try your efforts to improve the performance with different networks or training strategies by changing the configuration file `config/unet3d.cfg`.
+The obtained average Dice score by default setting should be close to 88.04%, and the Average Symmetric Surface Distance (ASSD) is 1.41 mm. You can try your efforts to improve the performance with different networks or training strategies by changing the configuration file `config/unet3d.cfg`.
 

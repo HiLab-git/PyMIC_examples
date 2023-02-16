@@ -37,4 +37,4 @@ pymic_run test config/unet.cfg
 pymic_eval_seg config/evaluation.cfg
 ```
 
-The obtained average Dice score by default setting should be close to 97.989%. If setting `ckpt_mode` to 1 during testing, the average Dice would be around 97.997%. 
+The obtained average Dice score by default setting should be close to 98.068%. If setting `ckpt_mode` to 1 during testing, the average Dice would be around 98.096%. 

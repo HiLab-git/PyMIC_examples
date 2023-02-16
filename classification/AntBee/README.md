@@ -13,14 +13,14 @@ In this example, we finetune a pretrained resnet18 for classification of images 
 [data_link]:https://download.pytorch.org/tutorial/hymenoptera_data.zip
 
 ## Finetuning all layers of resnet18
-1. Here we use resnet18 for finetuning, and update all the layers. Open the configure file `config/train_test_ce1.cfg`. In  the `network` section we can find details for the network. Here `update_layers = 0` means updating all the layers.
+1. Here we use resnet18 for finetuning, and update all the layers. Open the configure file `config/train_test_ce1.cfg`. In  the `network` section we can find details for the network. Here `update_mode = all` means updating all the layers.
 ```bash
 # type of network
 net_type   = resnet18
 pretrain   = True
 input_chns = 3
 # finetune all the layers
-update_layers = 0  
+update_mode = all 
 ```
 
 Then start to train by running:
@@ -48,20 +48,20 @@ pymic_run test config/train_test_ce1.cfg
 pymic_eval_cls config/evaluation.cfg
 ```
 
-The obtained accuracy by default setting should be around 0.9412, and the AUC will be around 0.976.
+The obtained accuracy by default setting should be around 0.9477, and the AUC will be around 0.9745.
 
 3. Run `python show_roc.py` to show the receiver operating characteristic curve. 
 
 ![roc](./picture/roc.png)
 
 ## Finetuning the last layer of resnet18
-Similarly to the above example, we further try to only finetune the last layer of resnet18 for the same classification task. Use a different configure file `config/train_test_ce2.cfg` for training and testing, where `update_layers = -1` in the `network` section means updating the last layer only:
+Similarly to the above example, we further try to only finetune the last layer of resnet18 for the same classification task. Use a different configure file `config/train_test_ce2.cfg` for training and testing, where `update_mode = last` in the `network` section means updating the last layer only:
 ```bash
 net_type   = resnet18
 pretrain   = True
 input_chns = 3
 # finetune the last layer only
-update_layers = -1
+update_mode = last
 ```
 
-Edit `config/evaluation.cfg` accordinly for evaluation. 
+Edit `config/evaluation.cfg` accordinly for evaluation. The corresponding accuracy and AUC would be around 0.9477 and 0.9778, respectively.
