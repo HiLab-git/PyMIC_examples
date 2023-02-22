@@ -5,7 +5,7 @@
 The latest released version of PyMIC can be installed by:
 
 ```bash
-pip install PYMIC
+pip install PYMIC==0.3.1.1
 ```
 
 To use the latest development version, you can download the source code [here][PyMIC_link], and install it by:
@@ -29,7 +29,8 @@ Currently we provide the following examples in this repository:
 |Fully supervised segmentation|[JSRT2][JSRT2_link]|Using a customized network and loss function for the JSRT dataset|
 |Fully supervised segmentation|[Fetal_HC][fetal_hc_link]|Using a 2D UNet for fetal head segmentation from 2D ultrasound images|
 |Fully supervised segmentation|[Prostate][prostate_link]|Using a 3D UNet for prostate segmentation from 3D MRI|
-|Semi-supervised segmentation|[seg_ssl/ACDC][ssl_acdc_link]|Comparing different semi-supervised methods for heart structure segmentation|
+|Semi-supervised segmentation|[seg_ssl/ACDC][ssl_acdc_link]|Semi-supervised methods for heart structure segmentation using 2D CNNs|
+|Semi-supervised segmentation|[seg_ssl/AtriaSeg][ssl_atrial_link]|Semi-supervised methods for left atrial segmentation using 3D CNNs|
 |Weakly-supervised segmentation|[seg_wsl/ACDC][wsl_acdc_link]|Segmentation of heart structure with scrible annotations|
 |Noisy label learning|[seg_nll/JSRT][nll_jsrt_link]|Comparing different NLL methods for learning from noisy labels|
 
@@ -43,6 +44,7 @@ Currently we provide the following examples in this repository:
 [fetal_hc_link]:segmentation/fetal_hc
 [prostate_link]:segmentation/prostate
 [ssl_acdc_link]:seg_ssl/ACDC
+[ssl_atrial_link]:seg_ssl/AtriaSeg/
 [wsl_acdc_link]:seg_wsl/ACDC 
 [nll_jsrt_link]:seg_nll/JSRT
 
