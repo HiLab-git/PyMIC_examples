@@ -72,7 +72,7 @@ in_chns       = 1
 feature_chns  = [16, 32, 64, 128, 256]
 dropout       = [0.0, 0.0, 0.0, 0.5, 0.5]
 bilinear      = True
-deep_supervise= False
+multiscale_pred = False
 ```
 
 For training, we use the CrossEntropyLoss with pixel weighting (i.e., partial CE loss), and train the network by the  `Adam` optimizer. The maximal iteration is 20k, and the training is early stopped if there is not performance improvement on the validation set for 8k iteratins. The learning rate scheduler is `ReduceLROnPlateau`. The corresponding configuration is:
@@ -216,7 +216,7 @@ pymic_run test config/unet2d_dmpls.cfg
 Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
 
 ```bash
-metric = dice
+metric_list = [dice, hd95]
 label_list = [1,2,3]
 organ_name = heart
 ground_truth_folder_root  = ../../PyMIC_data/ACDC/preprocess

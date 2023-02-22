@@ -36,6 +36,6 @@ pymic_run test config/unet.cfg
 pymic_eval_seg config/evaluation.cfg
 ```
 
-The obtained average Dice score by default setting should be close to 97.07%. You can set `metric = assd` in `config/evaluation.cfg` and run the evaluation command again to get Average Symmetric Surface Distance (ASSD) evaluation results. 
+The obtained average Dice score by default setting should be close to 97.07%. The Average Symmetric Surface Distance (ASSD) is also calculated. 
 
 3. Set `tta_mode = 1` in `config/unet.cfg` to enable test time augmentation, and run the testing and evaluation code again, we find that the average Dice will be increased to around 97.22%.

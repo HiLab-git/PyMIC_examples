@@ -20,7 +20,7 @@ net_type = resnet18
 pretrain = True
 input_chns = 3
 # finetune all the layers
-update_layers = 0
+update_mode = all
 ```
 
 Start to train by running:
@@ -48,7 +48,7 @@ pymic_run test config/net_resnet18.cfg
 pymic_eval_cls config/evaluation.cfg
 ```
 
-The obtained accuracy by default setting should be around 0.8571, and the AUC is 0.94.
+The obtained accuracy by default setting should be around 0.8271, and the AUC is 0.9343.
 
 3. Run `python show_roc.py` to show the receiver operating characteristic curve. 
 
@@ -56,4 +56,4 @@ The obtained accuracy by default setting should be around 0.8571, and the AUC is
 
 
 ## Finetuning vgg16
-Similarly to the above example, we further try to finetune vgg16 for the same classification task. Use a different configure file `config/net_vg16.cfg` for training and testing. Edit `config/evaluation.cfg` accordinly for evaluation. The iteration number for the highest accuracy on the validation set was 2300, and the accuracy will be around 0.8797. 
+Similarly to the above example, we further try to finetune vgg16 for the same classification task. Use a different configure file `config/net_vg16.cfg` for training and testing. Edit `config/evaluation.cfg` accordinly for evaluation. The accuracy and AUC would be around 0.8571 and 0.9271, respectively. 

@@ -1,5 +1,5 @@
-PyMIC_data/ACDC/*
-PyMIC_data/Fetal_HC/*
-PyMIC_data/JSRT/*
-PyMIC_data/MyoPS/*
-PyMIC_data/Promis12/*
+PyMIC_data/ACDC/
+PyMIC_data/Fetal_HC
+PyMIC_data/JSRT
+PyMIC_data/MyoPS
+PyMIC_data/Promise12

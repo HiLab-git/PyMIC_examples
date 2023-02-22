@@ -86,7 +86,7 @@ in_chns       = 1
 feature_chns  = [16, 32, 64, 128, 256]
 dropout       = [0.0, 0.0, 0.0, 0.5, 0.5]
 bilinear      = True
-deep_supervise= False
+multiscale_pred = False
 ```
 
 For training, we use a combinatin of DiceLoss and CrossEntropyLoss, and train the network by the   `Adam` optimizer. The maximal iteration is 30k, and the training is early stopped if there is not performance improvement on the validation set for 10k iteratins. The learning rate scheduler is `ReduceLROnPlateau`. The corresponding configuration is:
@@ -185,13 +185,16 @@ pymic_run test config/unet2d_uamt.cfg
 The configuration file for UPRC is `config/unet2d_urpc.cfg`. This method requires deep supervision and pyramid prediction of a network. The network setting is:
 
 ```bash 
+[network]
 net_type      = UNet2D
 class_num     = 4
 in_chns       = 1
 feature_chns  = [16, 32, 64, 128, 256]
 dropout       = [0.0, 0.0, 0.0, 0.5, 0.5]
 bilinear      = True
-deep_supervise= True
+multiscale_pred = True
+[training]
+deep_supervise = True
 ```
 
 The setting for URPC training is:
@@ -265,7 +268,7 @@ pymic_ssl test config/unet2d_cps.cfg
 Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
 
 ```bash
-metric = dice
+metric_list = [dice, hd95]
 label_list = [1,2,3]
 organ_name = heart
 ground_truth_folder_root  = ../../PyMIC_data/ACDC/preprocess
