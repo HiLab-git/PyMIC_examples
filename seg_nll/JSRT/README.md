@@ -71,6 +71,22 @@ pymic_run train config/unet_gce.cfg
 pymic_run test config/unet_gce.cfg
 ```
 
+### CLSLSR
+The CLSLSR method estimates errors in the original noisy label and obtains pixel-level weight maps based on an intial model, and then uses the weight maps to suppress noises in  a standard supervised learning procedure. Assume that the initial model is the baseline method, run the following command to obtain the weight maps:
+
+```bash
+python clslsr_get_condience config/unet_ce.cfg
+```
+
+The weight maps will be saved in `$root_dir/slsr_conf`. Then train the new model and do inference by:
+
+```bash
+pymic_run train config/unet_clslsr.cfg
+pymic_run test config/unet_clslsr.cfg
+```
+
+Note that the weight maps for training images are specified in the configuration file `train_csv = config/data/jsrt_train_mix_clslsr.csv`.
+
 ### Co-Teaching
 The configuration file for Co-Teaching is `config/unet2d_cot.cfg`. The corresponding setting is:
 
