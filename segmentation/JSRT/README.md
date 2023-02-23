@@ -16,7 +16,7 @@ In this example, we use 2D U-Net to segment the lung from X-Ray images. First we
 1. Start to train by running:
  
 ```bash
-pymic_run  train config/unet.cfg
+pymic_train config/unet.cfg
 ```
 
 2. During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where red and blue curves are for training set and validation set respectively. We can observe some over-fitting on the training set. 
@@ -28,7 +28,7 @@ pymic_run  train config/unet.cfg
 1. Run the following command to obtain segmentation results of testing images. By default we use the latest checkpoint. You can set `ckpt_mode` to 1 in `config/unet.cfg` to use the best performing checkpoint based on the validation set.
 
 ```bash
-pymic_run test config/unet.cfg
+pymic_test config/unet.cfg
 ```
 
 2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `JSRT_root`, and run the following command to obtain quantitative evaluation results in terms of dice. 
