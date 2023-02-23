@@ -39,7 +39,10 @@ The dataset setting is similar to that in the `segmentation/JSRT` demo. See `con
 
 ```bash
 ...
-task_type = seg
+tensor_type    = float
+task_type      = seg
+supervise_type = fully_sup
+
 root_dir  = ../../PyMIC_data/JSRT
 train_csv = config/data/jsrt_train_mix.csv
 valid_csv = config/data/jsrt_valid.csv
@@ -51,8 +54,8 @@ loss_type     = CrossEntropyLoss
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_run train config/unet_ce.cfg
-pymic_run test config/unet_ce.cfg
+pymic_train config/unet_ce.cfg
+pymic_test config/unet_ce.cfg
 ```
 
 ### GCE Loss
@@ -67,8 +70,8 @@ loss_type     = GeneralizedCELoss
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_run train config/unet_gce.cfg
-pymic_run test config/unet_gce.cfg
+pymic_train config/unet_gce.cfg
+pymic_test config/unet_gce.cfg
 ```
 
 ### CLSLSR
@@ -81,17 +84,23 @@ python clslsr_get_condience config/unet_ce.cfg
 The weight maps will be saved in `$root_dir/slsr_conf`. Then train the new model and do inference by:
 
 ```bash
-pymic_run train config/unet_clslsr.cfg
-pymic_run test config/unet_clslsr.cfg
+pymic_train config/unet_clslsr.cfg
+pymic_test config/unet_clslsr.cfg
 ```
 
 Note that the weight maps for training images are specified in the configuration file `train_csv = config/data/jsrt_train_mix_clslsr.csv`.
 
 ### Co-Teaching
-The configuration file for Co-Teaching is `config/unet2d_cot.cfg`. The corresponding setting is:
+The configuration file for Co-Teaching is `config/unet2d_cot.cfg`. Note that for the following methods, `supervise_type` should be set to  `noisy_label`.
 
 ```bash
-nll_method   = CoTeaching
+[dataset]
+...
+supervise_type = noisy_label
+...
+
+[noisy_label_learning]
+method_name  = CoTeaching
 co_teaching_select_ratio  = 0.8  
 rampup_start = 1000
 rampup_end   = 8000
@@ -99,15 +108,21 @@ rampup_end   = 8000
 
 The following commands are used for training and inference with this method, respectively:
 ```bash
-pymic_nll train config/unet_cot.cfg
-pymic_nll test config/unet_cot.cfg
+pymic_train config/unet_cot.cfg
+pymic_test config/unet_cot.cfg
 ```
 
 ### TriNet
 The configuration file for TriNet is `config/unet_trinet.cfg`. The corresponding setting is:
 
 ```bash 
-nll_method   = TriNet
+[dataset]
+...
+supervise_type = noisy_label
+...
+
+[noisy_label_learning]
+method_name  = TriNet
 trinet_select_ratio = 0.9
 rampup_start = 1000
 rampup_end   = 8000
@@ -116,15 +131,21 @@ rampup_end   = 8000
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_nll train config/unet_trinet.cfg
-pymic_nll test config/unet_trinet.cfg
+pymic_train config/unet_trinet.cfg
+pymic_test config/unet_trinet.cfg
 ```
 
 ### DAST
 The configuration file for DAST is `config/unet_dast.cfg`. The corresponding setting is:
 
 ```bash
-nll_method   = DAST
+[dataset]
+...
+supervise_type = noisy_label
+...
+
+[noisy_label_learning]
+method_name  = DAST
 dast_dbc_w   = 0.1
 dast_st_w    = 0.1  
 dast_rank_length  = 20
@@ -136,8 +157,8 @@ rampup_end   = 8000
 The commands for training and inference are:
 
 ```bash
-pymic_nll train config/unet_dast.cfg
-pymic_run test config/unet_dast.cfg
+pymic_train config/unet_dast.cfg
+pymic_test config/unet_dast.cfg
 ```
 
 ## Evaluation

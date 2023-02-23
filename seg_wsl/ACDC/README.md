@@ -32,8 +32,9 @@ In this demo, we experiment with five methods: EM, TV, GatedCRF, USTM and DMPLS,
 The dataset setting is similar to that in the `seg_ssl/ACDC` demo. Here we use a slightly different setting of data transform:
 
 ```bash
-tensor_type = float
-task_type = seg
+tensor_type    = float
+task_type      = seg
+supervise_type = fully_sup
 root_dir  = ../../PyMIC_data/ACDC/preprocess
 train_csv = config/data/image_train.csv
 valid_csv = config/data/image_valid.csv
@@ -42,8 +43,8 @@ train_batch_size = 4
 
 # data transforms
 train_transform = [Pad, RandomCrop, RandomFlip, NormalizeWithMeanStd, PartialLabelToProbability]
-valid_transform       = [NormalizeWithMeanStd, Pad, LabelToProbability]
-test_transform        = [NormalizeWithMeanStd, Pad]
+valid_transform = [NormalizeWithMeanStd, Pad, LabelToProbability]
+test_transform  = [NormalizeWithMeanStd, Pad]
 
 Pad_output_size = [4, 224, 224]
 Pad_ceil_mode   = False
@@ -116,15 +117,31 @@ sliding_window_stride = [3, 224, 224]
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_run train config/unet2d_baseline.cfg
-pymic_run test config/unet2d_baseline.cfg
+pymic_train config/unet2d_baseline.cfg
+pymic_test config/unet2d_baseline.cfg
+```
+
+### Data configuration for other weakly supervised learning
+For other weakly supervised learning methods, please set `supervise_type = weak_sup` in the configuration.
+
+```bash
+tensor_type    = float
+task_type      = seg
+supervise_type = weak_sup
+
+root_dir  = ../../PyMIC_data/ACDC/preprocess
+train_csv = config/data/image_train.csv
+valid_csv = config/data/image_valid.csv
+test_csv  = config/data/image_test.csv
+...
 ```
 
 ### Entropy Minimization
 The configuration file for Entropy Minimization is `config/unet2d_em.cfg`.  The data configuration has been described above, and the settings for data augmentation, network, optmizer, learning rate scheduler and inference are the same as those in the baseline method. Specific setting for Entropy Minimization is:
 
 ```bash
-wsl_method     = EntropyMinimization
+[weakly_supervised_learning]
+method_name    = EntropyMinimization
 regularize_w   = 0.1
 rampup_start   = 2000
 rampup_end     = 15000
@@ -135,15 +152,16 @@ where wet the weight of the regularization loss as 0.1, rampup is used to gradua
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_wsl train config/unet2d_em.cfg
-pymic_run test config/unet2d_em.cfg
+pymic_train config/unet2d_em.cfg
+pymic_test config/unet2d_em.cfg
 ```
 
 ### TV
 The configuration file for TV is `config/unet2d_tv.cfg`. The corresponding setting is:
 
 ```bash
-wsl_method     = TotalVariation
+[weakly_supervised_learning]
+method_name    = TotalVariation
 regularize_w   = 0.1
 rampup_start   = 2000
 rampup_end     = 15000
@@ -151,15 +169,16 @@ rampup_end     = 15000
 
 The following commands are used for training and inference with this method, respectively:
 ```bash
-pymic_wsl train config/unet2d_tv.cfg
-pymic_run test config/unet2d_tv.cfg
+pymic_train config/unet2d_tv.cfg
+pymic_test config/unet2d_tv.cfg
 ```
 
 ### Gated CRF
 The configuration file for Gated CRF is `config/unet2d_gcrf.cfg`. The corresponding setting is:
 
 ```bash 
-wsl_method     = GatedCRF
+[weakly_supervised_learning]
+method_name    = GatedCRF
 regularize_w   = 0.1
 rampup_start   = 2000
 rampup_end     = 15000
@@ -174,15 +193,16 @@ GatedCRFLoss_Radius = 5
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_wsl train config/unet2d_gcrf.cfg
-pymic_run test config/unet2d_gcrf.cfg
+pymic_train config/unet2d_gcrf.cfg
+pymic_test config/unet2d_gcrf.cfg
 ```
 
 ### USTM
 The configuration file for USTM is `config/unet2d_ustm.cfg`. The corresponding setting is:
 
 ```bash
-wsl_method     = USTM
+[weakly_supervised_learning]
+method_name    = USTM
 regularize_w   = 0.1
 rampup_start   = 2000
 rampup_end     = 15000
@@ -191,15 +211,16 @@ rampup_end     = 15000
 The commands for training and inference are:
 
 ```bash
-pymic_wsl train config/unet2d_ustm.cfg
-pymic_run test config/unet2d_ustm.cfg
+pymic_train config/unet2d_ustm.cfg
+pymic_test config/unet2d_ustm.cfg
 ```
 
 ### DMPLS
 The configuration file for DMPLS is `config/unet2d_dmpls.cfg`, and the corresponding setting is:
 
 ```bash 
-wsl_method     = DMPLS
+[weakly_supervised_learning]
+method_name    = DMPLS
 regularize_w   = 0.1
 rampup_start   = 2000
 rampup_end     = 15000
@@ -208,8 +229,8 @@ rampup_end     = 15000
 The training and inference commands are:
 
 ```bash
-pymic_ssl train config/unet2d_dmpls.cfg
-pymic_run test config/unet2d_dmpls.cfg
+pymic_train config/unet2d_dmpls.cfg
+pymic_test config/unet2d_dmpls.cfg
 ```
 
 ## Evaluation

@@ -33,8 +33,9 @@ In this demo, we experiment with five methods: EM, UAMT, UPRC, CCT and CPS, and 
 The baseline method uses the 14 annotated cases for training. The batch size is 4, and the patch size is 6x192x192. Therefore, indeed there are 16 2D slices in each batch. See `config/unet2d_baseline.cfg` for details about the configuration. The dataset configuration is:
 
 ```bash
-tensor_type = float
-task_type = seg
+tensor_type    = float
+task_type      = seg
+supervise_type = fully_sup
 root_dir  = ../../PyMIC_data/ACDC/preprocess/
 train_csv = config/data/image_train_r10_lab.csv
 valid_csv = config/data/image_valid.csv
@@ -129,14 +130,19 @@ sliding_window_stride = [6, 192, 192]
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_run train config/unet2d_baseline.cfg
-pymic_run test config/unet2d_baseline.cfg
+pymic_train config/unet2d_baseline.cfg
+pymic_test  config/unet2d_baseline.cfg
 ```
 
 ### Data configuration for semi-supervised learning
 For semi-supervised learning, we set the batch size as 8, where 4 are annotated images and the other 4 are unannotated images. 
 
 ```bash
+tensor_type    = float
+task_type      = seg
+supervise_type = semi_sup
+
+root_dir  = ../../PyMIC_data/ACDC/preprocess/
 train_csv = config/data/image_train_r10_lab.csv
 train_csv_unlab = config/data/image_train_r10_unlab.csv
 valid_csv = config/data/image_valid.csv
@@ -150,7 +156,8 @@ train_batch_size_unlab = 4
 The configuration file for Entropy Minimization is `config/unet2d_em.cfg`.  The data configuration has been described above, and the settings for data augmentation, network, optmizer, learning rate scheduler and inference are the same as those in the baseline method. Specific setting for Entropy Minimization is:
 
 ```bash
-ssl_method     = EntropyMinimization
+[semi_supervised_learning]
+method_name    = EntropyMinimization
 regularize_w   = 0.1
 rampup_start   = 1000
 rampup_end     = 20000
@@ -160,15 +167,16 @@ where the weight of the regularization loss is 0.1, and rampup is used to gradua
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_ssl train config/unet2d_em.cfg
-pymic_run test config/unet2d_em.cfg
+pymic_train config/unet2d_em.cfg
+pymic_test config/unet2d_em.cfg
 ```
 
 ### UAMT
 The configuration file for UAMT is `config/unet2d_uamt.cfg`. The corresponding setting is:
 
 ```bash
-ssl_method     = UAMT
+[semi_supervised_learning]
+method_name    = UAMT
 regularize_w   = 0.1
 ema_decay      = 0.99
 rampup_start   = 1000
@@ -177,8 +185,8 @@ rampup_end     = 20000
 
 The following commands are used for training and inference with this method, respectively:
 ```bash
-pymic_ssl train config/unet2d_uamt.cfg
-pymic_run test config/unet2d_uamt.cfg
+pymic_train config/unet2d_uamt.cfg
+pymic_test config/unet2d_uamt.cfg
 ```
 
 ### UPRC
@@ -200,7 +208,8 @@ deep_supervise = True
 The setting for URPC training is:
 
 ```bash 
-ssl_method     = URPC
+[semi_supervised_learning]
+method_name    = URPC
 regularize_w   = 0.1
 rampup_start   = 1000
 rampup_end     = 20000
@@ -208,8 +217,8 @@ rampup_end     = 20000
 
 The following commands are used for training and inference with this method, respectively:
 ```bash
-pymic_ssl train config/unet2d_urpc.cfg
-pymic_run test config/unet2d_urpc.cfg
+pymic_train config/unet2d_urpc.cfg
+pymic_test config/unet2d_urpc.cfg
 ```
 
 ### CCT
@@ -233,7 +242,8 @@ Uniform_range = 0.3
 The setting for CCT training is:
 
 ```bash 
-ssl_method     = CCT
+[semi_supervised_learning]
+method_name    = CCT
 regularize_w   = 0.1
 rampup_start   = 1000
 rampup_end     = 20000
@@ -243,15 +253,16 @@ unsupervised_loss = MSE
 The following commands are used for training and inference with this method, respectively:
 
 ```bash
-pymic_ssl train config/unet2d_cct.cfg
-pymic_run test config/unet2d_cct.cfg
+pymic_train config/unet2d_cct.cfg
+pymic_test config/unet2d_cct.cfg
 ```
 
 ### CPS
 The configuration file for CPS is `config/unet2d_cps.cfg`, and the corresponding setting is:
 
 ```bash 
-ssl_method     = CPS
+[semi_supervised_learning]
+method_name    = CPS
 regularize_w   = 0.1
 rampup_start   = 1000
 rampup_end     = 20000
@@ -260,8 +271,8 @@ rampup_end     = 20000
 The training and inference commands are:
 
 ```bash
-pymic_ssl train config/unet2d_cps.cfg
-pymic_ssl test config/unet2d_cps.cfg
+pymic_train config/unet2d_cps.cfg
+pymic_test config/unet2d_cps.cfg
 ```
 
 ## Evaluation

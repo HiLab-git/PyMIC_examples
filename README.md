@@ -15,7 +15,7 @@ python setup.py install
 ``` 
 
 ## Data
-The datasets for the examples can be downloaded from [Google Drive][google_link] or [Baidu Disk][baidu_link] (extraction code: n07g). Extract the files to `PyMIC_data` after the download. 
+The datasets for the examples can be downloaded from [Google Drive][google_link] or [Baidu Disk][baidu_link] (extraction code: xlwg). Extract the files to `PyMIC_data` after downloading. 
 
 
 ## List of Examples
@@ -35,8 +35,8 @@ Currently we provide the following examples in this repository:
 |Noisy label learning|[seg_nll/JSRT][nll_jsrt_link]|Comparing different NLL methods for learning from noisy labels|
 
 [PyMIC_link]: https://github.com/HiLab-git/PyMIC
-[google_link]:https://drive.google.com/file/d/1-LrMHsX7ZdBto2iC1WnbFFZ0tDeJQFHy/view?usp=sharing
-[baidu_link]:https://pan.baidu.com/s/15mjc0QqH75xztmc23PPWQQ 
+[google_link]:https://drive.google.com/file/d/1eZakSEBr_zfIHFTAc96OFJix8cUBf-KR/view?usp=sharing
+[baidu_link]:https://pan.baidu.com/s/1tN0inIrVYtSxTVRfErD9Bw 
 [AntBee_link]:classification/AntBee
 [CHNCXR_link]:classification/CHNCXR
 [JSRT_link]:segmentation/JSRT
