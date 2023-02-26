@@ -26,7 +26,7 @@ update_mode = all
 Then start to train by running:
  
 ```bash
-pymic_run train config/train_test_ce1.cfg
+pymic_train config/train_test_ce1.cfg
 ```
 
 2. During training or after training, run `tensorboard --logdir model/resnet18_ce1` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average loss and accuracy during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. The iteration number obtained the highest accuracy on the validation set was 400, and may be different based on the hardware environment. After training, you can find the trained models in `./model/resnet18_ce1`. 
@@ -39,7 +39,7 @@ pymic_run train config/train_test_ce1.cfg
 
 ```bash
 mkdir result
-pymic_run test config/train_test_ce1.cfg
+pymic_test config/train_test_ce1.cfg
 ```
 
 2. Then run the following command to obtain quantitative evaluation results in terms of accuracy. 

@@ -13,7 +13,7 @@ In this example, we use 3D U-Net with deep supervision to segment the prostate f
 1. Start to train by running:
  
 ```bash
-pymic_run train config/unet3d.cfg
+pymic_train config/unet3d.cfg
 ```
 
 Note that we set `multiscale_pred = True`, `deep_supervise = True` and `loss_type = [DiceLoss, CrossEntropyLoss]` in the configure file. We also use Mixup for data
@@ -28,7 +28,7 @@ augmentation by setting `mixup_probability=0.5`.
 1. Run the following command to obtain segmentation results of testing images. By default we set `ckpt_mode` to 1, which means using the best performing checkpoint based on the validation set.
 
 ```bash
-pymic_run test config/unet3d.cfg
+pymic_test config/unet3d.cfg
 ```
 
 2. Run the following command to obtain quantitative evaluation results in terms of Dice. 

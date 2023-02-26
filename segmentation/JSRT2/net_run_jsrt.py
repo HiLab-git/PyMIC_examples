@@ -23,7 +23,7 @@ def main():
     config   = synchronize_config(config)
     log_dir  = config['training']['ckpt_save_dir']
     if(not os.path.exists(log_dir)):
-        os.mkdir(log_dir)
+        os.makedirs(log_dir)
     if sys.version.startswith("3.9"):
         logging.basicConfig(filename=log_dir+"/log_{0:}.txt".format(stage), level=logging.INFO,
                             format='%(message)s', force=True) # for python 3.9

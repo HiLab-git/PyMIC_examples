@@ -15,7 +15,7 @@ In this example, we use 2D U-Net to segment the fetal brain from ultrasound imag
 1. Start to train by running:
  
 ```bash
-pymic_run train config/unet.cfg
+pymic_train config/unet.cfg
 ```
 
 2. During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where red and blue curves are for training set and validation set respectively. 
@@ -27,7 +27,7 @@ pymic_run train config/unet.cfg
 1. Run the following command to obtain segmentation results of testing images based on the best-performing checkpoint on the validation set. By default we use sliding window inference to get better results. You can also edit the `testing` section of `config/unet.cfg` to use other inference strategies.
 
 ```bash
-pymic_run test config/unet.cfg
+pymic_test config/unet.cfg
 ```
 
 2. Use the following command to obtain quantitative evaluation results in terms of Dice. 
