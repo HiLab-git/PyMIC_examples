@@ -7,6 +7,7 @@ In this example, we show the following four semi-supervised learning methods for
 |SSLUAMT| [Yu et al.][uamt_paper], MICCAI 2019| Uncertainty-aware mean teacher|
 |SSLURPC| [Luo et al.][urpc_paper], MedIA 2022| Uncertainty rectified pyramid consistency|
 |SSLCPS| [Chen et al.][cps_paper], CVPR 2021| Cross-consistency training|
+
 For a full list of available semi-supervised methods, see the [document][all_ssl_link].
 
 [em_paper]:https://papers.nips.cc/paper/2004/file/96f2b50b5d3613adf9c27049b2a888c7-Paper.pdf
