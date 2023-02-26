@@ -2,10 +2,10 @@
 [PyMIC][PyMIC_link] is a PyTorch-based toolkit for medical image computing with annotation-efficient deep learning. Here we provide a set of examples to show how it can be used for image classification and segmentation tasks. For annotation efficient learning, we show examples of Semi-Supervised Learning (SSL), Weakly Supervised Learning (WSL) and Noisy Label Learning (NLL), respectively.  For beginners, you can follow the examples by just editting the configuration files for model training, testing and evaluation. For advanced users, you can easily develop your own modules, such as customized networks and loss functions.  
 
 ## Install PyMIC
-The latest released version of PyMIC can be installed by:
+The released version of PyMIC (v0.4.0) is required for these examples, and it can be installed by:
 
 ```bash
-pip install PYMIC==0.3.1.1
+pip install PYMIC==0.4.0
 ```
 
 To use the latest development version, you can download the source code [here][PyMIC_link], and install it by:
