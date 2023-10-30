@@ -1,5 +1,6 @@
-PyMIC_data/ACDC/
-PyMIC_data/Fetal_HC
-PyMIC_data/JSRT
-PyMIC_data/MyoPS
-PyMIC_data/Promise12
+PyMIC_data/
+*/*/model/
+*/*/result/
+seg_ssl/BraTS19_WT/
+seg_ssl/FLARE/
+seg_ssl/AtriaSeg_dev/
