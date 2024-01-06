@@ -55,7 +55,7 @@ VolumeFusion_size_min = [8,  8, 8]
 VolumeFusion_size_max = [40, 80, 80]
 ```
 
-where we generate 5 classes of voxels (including the background), and the block number for fusion ranges from 10 to 40, and the block size ranges from [8, 8, 8] and [40, 80, 80]. The generated validation set for volume fusion is saved in `./pretrain_valid/volume_fusion`. Blow is an example of the fused volume and the ground truth for the pseudo-segmentation task:
+where we generate 5 classes of voxels (including the background), and the block number for fusion ranges from 10 to 40, and the block size ranges from [8, 8, 8] and [40, 80, 80]. The generated validation set for volume fusion is saved in `./pretrain_valid/volumefusion`. Blow is an example of the fused volume and the ground truth for the pseudo-segmentation task:
 
 ![fusion_example](./pictures/fusion_example.png)
 
@@ -259,3 +259,43 @@ Note that we do not use any post-processing methods. The average Dice (%) for ea
 |---|---|---|---|---|---|
 |From Scratch               | 68.89 | 89.86 | 85.50 | 97.23 | 85.37 |
 |Pretrain with Volume Fusion| 73.38 | 91.61 | 86.20 | 97.35 | 87.14 |
+
+## Using other self-supervised pretraining methods
+In addition to Volume Fusion, you can also try other self-supervised pretraining methods including Model Genesis and Patch Swapping.
+### Pretraining with Model Genesis
+Similarly to Volume Fusion, we need to  create a validation dataset that contains corrupted input images and the ground truth for the pretext task, i.e., image reconstruction task. Do this by runing the following command:
+
+```bash
+pymic_preprocess config/luna_data/preprocess_genesis.cfg
+```
+
+The generated validation set for model genesis is saved in `./pretrain_valid/genesis`.
+Then we use `SelfSupModelGenesis` to pretrain a 3D UNet, run the following command:
+
+```bash
+pymic_train config/luna_pretrain/unet3d_genesis.cfg
+```
+
+Finally, we initialize 3D UNet with the pretrained weights for downstream segmentation:
+```bash
+pymic_train config/lctsc_train/unet3d_genesis.cfg
+``` 
+
+### Pretraining with Patch Swapping
+Firstly, we also create a validation dataset that contains patch-swapped input images and the ground truth for the pretext task, i.e., image reconstruction task. Do this by runing the following command:
+
+```bash
+pymic_preprocess config/luna_data/preprocess_patchswap.cfg
+```
+
+The generated validation set for patch swapping is saved in `./pretrain_valid/patchswap`.
+Then we use `SelfSupPatchSwap` to pretrain a 3D UNet, run the following command:
+
+```bash
+pymic_train config/luna_pretrain/unet3d_patchswap.cfg
+```
+
+Finally, we initialize 3D UNet with the pretrained weights for downstream segmentation:
+```bash
+pymic_train config/lctsc_train/unet3d_patchswap.cfg
+``` 
