@@ -4,12 +4,12 @@ In this example, we show self-supervised training methods for segmentation imple
 Currently, the following self-supervised methods are implemented:
 |PyMIC Method|Reference|Remarks|
 |---|---|---|
-|SelfSupVolumeFusion| [Wang et al.][vf_paper], Arxiv 2023| Volume Fusion|
-|SelfSupModelGenesis|[Zhou et al.][mg_paper], MIA 2021| Model Genesis|
-|SelfSupPatchSwapping| [Chen et al.][ps_paper], MIA 2019| Patch Swapping|
+|SelfSupVolumeFusion| [Wang et al., Arxiv 2023][vf_paper]| Volume Fusion|
+|SelfSupModelGenesis| [Zhou et al., MIA 2021][mg_paper]| Model Genesis|
+|SelfSupPatchSwapping| [Chen et al., MIA 2019][ps_paper]| Patch Swapping|
 
 [vf_paper]:https://arxiv.org/abs/2306.16925
-[emg_paper]:https://www.sciencedirect.com/science/article/pii/S1361841520302048
+[mg_paper]:https://www.sciencedirect.com/science/article/pii/S1361841520302048
 [ps_paper]:https://www.sciencedirect.com/science/article/pii/S1361841518304699
 
 
@@ -182,5 +182,6 @@ pymic_eval_seg -cfg config/evaluation.cfg
 Note that we do not use any post-processing methods. The average Dice (%) for each class obtained by the two models will be like:
 
 |Method |Esophagus |Heart |Spinal cord |Lung |Average |
+|---|---|---|---|---|---|---|
 |From Scratch               | 68.89 | 89.86 | 85.50 | 97.23 | 85.37 |
 |Pretrain with Volume Fusion| 73.38 | 91.61 | 86.20 | 97.35 | 87.14 |
