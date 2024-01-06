@@ -1,6 +1,10 @@
 PyMIC_data/
 */*/model/
 */*/result/
-seg_ssl/BraTS19_WT/
-seg_ssl/FLARE/
-seg_ssl/AtriaSeg_dev/
+seg_semi_sup/BraTS19_WT/
+seg_semi_sup/FLARE/
+seg_semi_sup/AtriaSeg_dev/
+*.pptx
+*.zip
+*.pyc
+*~*
