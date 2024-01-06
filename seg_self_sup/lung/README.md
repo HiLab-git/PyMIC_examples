@@ -123,9 +123,6 @@ valid_csv = config/data_lctsc/image_valid.csv
 test_csv  = config/data_lctsc/image_test.csv
 
 [network]
-# this section gives parameters for network
-# the keys may be different for different networks
-
 # type of network
 net_type = UNet3D
 
@@ -163,12 +160,84 @@ ckpt_init_name      = ../../pretrain_model/unet3d_volumefusion/unet3d_volumefusi
 ckpt_init_mode      = 0
 ``` 
 
+The performance on the training and validation set during the first 1000 iterations would be like:
+
+```bash
+2024-01-05 22:43:58 it 200
+learning rate 0.001
+training/validation time: 63.95s/33.70s
+train loss 0.4338, avg foreground dice 0.4221 [0.9144 0.0204 0.5661 0.1734 0.9285]
+valid loss 0.2120, avg foreground dice 0.6257 [0.9828 0.0000 0.7991 0.7334 0.9704]
+
+2024-01-05 22:45:36 it 400
+learning rate 0.001
+training/validation time: 63.56s/33.61s
+train loss 0.2369, avg foreground dice 0.6609 [0.9559 0.2293 0.8100 0.6426 0.9618]
+valid loss 0.1572, avg foreground dice 0.7423 [0.9827 0.3464 0.8199 0.8314 0.9715]
+
+2024-01-05 22:47:15 it 600
+learning rate 0.001
+training/validation time: 63.28s/33.66s
+train loss 0.1964, avg foreground dice 0.7342 [0.9611 0.4172 0.8446 0.7091 0.9660]
+valid loss 0.1158, avg foreground dice 0.8026 [0.9881 0.5026 0.8747 0.8601 0.9729]
+
+2024-01-05 22:48:53 it 800
+learning rate 0.001
+training/validation time: 62.19s/33.60s
+train loss 0.1777, avg foreground dice 0.7631 [0.9667 0.4951 0.8750 0.7122 0.9700]
+valid loss 0.1041, avg foreground dice 0.8248 [0.9890 0.5737 0.8847 0.8657 0.9752]
+
+2024-01-05 22:50:33 it 1000
+learning rate 0.001
+training/validation time: 63.72s/34.05s
+train loss 0.1744, avg foreground dice 0.7713 [0.9663 0.5360 0.8693 0.7104 0.9693]
+valid loss 0.1217, avg foreground dice 0.7994 [0.9859 0.5184 0.8499 0.8627 0.9667]
+```
+
+It can be observed that after 1000 iterations, the average foreground Dice on the validation set reaches 0.7994.
+
 ### Comparison with training from scatch
 For comparison, we also train 3D UNet for the downstream segmentatin task fron scratch, run the following command:
 
 ```bash
 pymic_train config/lctsc_train/unet3d_scratch.cfg
 ``` 
+
+The performance on the training and validation set during the first 1000 iterations would be like:
+
+```bash
+2024-01-05 21:51:58 it 200
+learning rate 0.001
+training/validation time: 63.13s/32.00s
+train loss 0.5676, avg foreground dice 0.3941 [0.8745 0.0652 0.4574 0.1555 0.8981]
+valid loss 0.4571, avg foreground dice 0.3210 [0.9221 0.0000 0.3579 0.0000 0.9263]
+
+2024-01-05 21:53:31 it 400
+learning rate 0.001
+training/validation time: 60.62s/32.27s
+train loss 0.4227, avg foreground dice 0.4294 [0.9149 0.0500 0.5838 0.1450 0.9389]
+valid loss 0.4203, avg foreground dice 0.3470 [0.9263 0.0000 0.5348 0.0000 0.8534]
+
+2024-01-05 21:55:08 it 600
+learning rate 0.001
+training/validation time: 61.73s/32.33s
+train loss 0.3926, avg foreground dice 0.4511 [0.9256 0.0550 0.6557 0.1500 0.9437]
+valid loss 0.4006, avg foreground dice 0.3739 [0.9413 0.0000 0.6263 0.0000 0.8694]
+
+2024-01-05 21:56:43 it 800
+learning rate 0.001
+training/validation time: 60.51s/32.34s
+train loss 0.3571, avg foreground dice 0.4938 [0.9311 0.0650 0.6926 0.2678 0.9498]
+valid loss 0.4259, avg foreground dice 0.4724 [0.9290 0.0000 0.6742 0.3995 0.8161]
+
+2024-01-05 21:58:19 it 1000
+learning rate 0.001
+training/validation time: 61.42s/32.38s
+train loss 0.3271, avg foreground dice 0.5411 [0.9352 0.0950 0.7140 0.4034 0.9520]
+valid loss 0.2957, avg foreground dice 0.5071 [0.9610 0.0000 0.6950 0.4240 0.9093]
+```
+
+It can be observed that the performance during the first 1000 iteration is much lower than that with pretraining. 
 
 Then we do the inference with the trained models respectively:
 ```bash
