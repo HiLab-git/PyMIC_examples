@@ -13,7 +13,8 @@ Currently, the following self-supervised methods are implemented:
 [ps_paper]:https://www.sciencedirect.com/science/article/pii/S1361841518304699
 
 The following figure shows a performance comparision between training from scratch and with Volume Fusion-bsed pretraining. It can be observed that the pretraining largely improves the convergence of the model and leads to a better final performance.
-<img src="https://github.com/HiLab-git/PyMIC_examples/blob/dev/seg_self_sup/lung/pictures/valid_dice2.png" width="150">
+
+<img src="https://github.com/HiLab-git/PyMIC_examples/blob/dev/seg_self_sup/lung/pictures/valid_dice2.png" width="800">
 
 ## Data 
 The LUNA dataset is used for self-supervised pretraining. It contains 888 CT volumes of patients with lung nodule. The [LCTSC2017][lctsc_link] dataset is used for downstream segmentation for four organs-at-risks: the esophagus, heart, spinal cord and lung. LCTSC2017 contains CT scans of 60 patients. Please downlaod the LUNA dataset from the [zenodo][luna_link] website. We have provided a preprocessed version of LCTSC2017 and it is available at 
