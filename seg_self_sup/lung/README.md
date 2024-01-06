@@ -237,7 +237,10 @@ train loss 0.3271, avg foreground dice 0.5411 [0.9352 0.0950 0.7140 0.4034 0.952
 valid loss 0.2957, avg foreground dice 0.5071 [0.9610 0.0000 0.6950 0.4240 0.9093]
 ```
 
-It can be observed that the performance during the first 1000 iteration is much lower than that with pretraining. 
+It can be observed that the performance during the first 1000 iteration is much lower than that with pretraining. You can also observe the curves of Dice and loss during training using tensorboard:
+```bash
+tensorboard --logdir=./lctsc_model
+```
 
 Then we do the inference with the trained models respectively:
 ```bash
