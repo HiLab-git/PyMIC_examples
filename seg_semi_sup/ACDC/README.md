@@ -4,12 +4,13 @@ In this example, we show semi-supervised learning methods implemented in PyMIC.
 Currently, the following semi-supervised methods are implemented:
 |PyMIC Method|Reference|Remarks|
 |---|---|---|
-|SSLEntropyMinimization|[Grandvalet et al.][em_paper], NeurIPS 2005| Oringinally proposed for classification|
-|SSLMeanTeacher| [Tarvainen et al.][mt_paper], NeurIPS 2017| Oringinally proposed for classification|
-|SSLUAMT| [Yu et al.][uamt_paper], MICCAI 2019| Uncertainty-aware mean teacher|
-|SSLURPC| [Luo et al.][urpc_paper], MedIA 2022| Uncertainty rectified pyramid consistency|
-|SSLCCT| [Ouali et al.][cct_paper], CVPR 2020| Cross-pseudo supervision|
-|SSLCPS| [Chen et al.][cps_paper], CVPR 2021| Cross-consistency training|
+|SSLEntropyMinimization|[Grandvalet et al., NeurIPS 2005][em_paper]| Oringinally proposed for classification|
+|SSLMeanTeacher| [Tarvainen et al., NeurIPS 2017][mt_paper]| Oringinally proposed for classification|
+|SSLUAMT| [Yu et al., MICCAI 2019][uamt_paper]| Uncertainty-aware mean teacher|
+|SSLURPC| [Luo et al., MedIA 2022][urpc_paper]| Uncertainty rectified pyramid consistency|
+|SSLCCT| [Ouali et al., CVPR 2020][cct_paper]| Cross-pseudo supervision|
+|SSLCPS| [Chen et al., CVPR 2021][cps_paper]| Cross-consistency training|
+|SSLMCNet| [Wu et al. MICCAI 2021][mcnet_paper]| Mutual Consistency training|
 
 [em_paper]:https://papers.nips.cc/paper/2004/file/96f2b50b5d3613adf9c27049b2a888c7-Paper.pdf
 [mt_paper]:https://arxiv.org/abs/1703.01780
@@ -17,6 +18,7 @@ Currently, the following semi-supervised methods are implemented:
 [urpc_paper]:https://doi.org/10.1016/j.media.2022.102517
 [cct_paper]:https://arxiv.org/abs/2003.09005 
 [cps_paper]:https://arxiv.org/abs/2106.01226 
+[mcnet_paper]:https://link.springer.com/chapter/10.1007/978-3-030-87196-3_28
 
 
 ## Data 
@@ -27,7 +29,7 @@ In the training set, we have randomly selected 14 images of 7 patients as annota
 [ACDC_link]:https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html
 
 ## Training
-In this demo, we experiment with five methods: EM, UAMT, UPRC, CCT and CPS, and they are compared with the baseline of learning from annotated images. All these methods use UNet2D as the backbone network.
+In this demo, we experiment with six methods: EM, UAMT, UPRC, CCT, CPS and MCNet, and they are compared with the baseline of learning from annotated images. All these methods use UNet2D as the backbone network.
 
 ### Baseline Method
 The baseline method uses the 14 annotated cases for training. The batch size is 4, and the patch size is 6x192x192. Therefore, indeed there are 16 2D slices in each batch. See `config/unet2d_baseline.cfg` for details about the configuration. The dataset configuration is:
@@ -86,7 +88,7 @@ class_num     = 4
 in_chns       = 1
 feature_chns  = [16, 32, 64, 128, 256]
 dropout       = [0.0, 0.0, 0.0, 0.5, 0.5]
-bilinear      = True
+up_mode       = 2
 multiscale_pred = False
 ```
 
@@ -275,6 +277,24 @@ pymic_train config/unet2d_cps.cfg
 pymic_test config/unet2d_cps.cfg
 ```
 
+### MCNet
+The configuration file for MCNet is `config/unet2d_mcnet.cfg`, and the corresponding setting is:
+
+```bash 
+[semi_supervised_learning]
+method_name    = MCNet2D
+regularize_w   = 0.1
+rampup_start   = 1000
+rampup_end     = 20000
+```
+
+The training and inference commands are:
+
+```bash
+pymic_train config/unet2d_mcnet.cfg
+pymic_test config/unet2d_mcnet.cfg
+```
+
 ## Evaluation
 Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
 
@@ -282,7 +302,7 @@ Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the se
 metric_list = [dice, hd95]
 label_list = [1,2,3]
 organ_name = heart
-ground_truth_folder_root  = ../../PyMIC_data/ACDC/preprocess
-segmentation_folder_root  = ./result/unet2d_baseline
-evaluation_image_pair     = ./config/data/image_test_gt_seg.csv
+ground_truth_folder = ../../PyMIC_data/ACDC/preprocess
+segmentation_folder = ./result/unet2d_baseline
+evaluation_image_pair  = ./config/data/image_test_gt_seg.csv
 ```
