@@ -8,3 +8,4 @@ seg_semi_sup/AtriaSeg_dev/
 *.zip
 *.pyc
 *~*
+*_dev.sh
