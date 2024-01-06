@@ -12,7 +12,7 @@ Currently, the following self-supervised methods are implemented:
 [mg_paper]:https://www.sciencedirect.com/science/article/pii/S1361841520302048
 [ps_paper]:https://www.sciencedirect.com/science/article/pii/S1361841518304699
 
-The following figure shows a performance comparision between training from scratch and with Volume Fusion-bsed pretraining. It can be observed that the pretraining largely improves the convergence of the model and leads to a better final performance.
+The following figure shows a performance comparison between training from scratch and with Volume Fusion-bsed pretraining. It can be observed that the pretraining largely improves the convergence of the model and leads to a better final performance.
 
 <img src="https://github.com/HiLab-git/PyMIC_examples/blob/dev/seg_self_sup/lung/pictures/valid_dice2.png" width="600">
 
@@ -24,7 +24,7 @@ The LUNA dataset is used for self-supervised pretraining. It contains 888 CT vol
 [lctsc_link]:https://wiki.cancerimagingarchive.net/pages/viewpage.action?pageId=24284539
 
 ### Preprocessing for LUNA dataset
-The LUNA dataset contrains 10 subfolders. We use folder 0-8 for training and 9 for validation during self-supervised learning.  As the orignal CT volumes is large and to speedup the data loading process, we preprocess the LUNA dataset by cropping each volume to smaller subvolumes. In addition, the intensity is clipped to [-1000, 1000] and then normalized to [-1, 1]. Do the preprocessing by running:
+The LUNA dataset contrains 10 subfolders. We use folder 0-8 for training and 9 for validation during self-supervised learning.  As the orignal CT volumes have a large size, and to speedup the data loading process, we preprocess the LUNA dataset by cropping each volume to smaller subvolumes. In addition, the intensity is clipped to [-1000, 1000] and then normalized to [-1, 1]. Do the preprocessing by running:
 
 ```bash
 python luna_preprocess.py
@@ -40,7 +40,7 @@ Note that the path of folder containing the preprocessed LUNA dataset should be 
 
 
 ## Volume Fusion for pretraining
-For Volume Fusion, we need to  create a validation dataset that contains fused volumes and the ground truth for the pretext task in the self-supervised learning. Do this by runing the following command:
+For Volume Fusion, we need to  create a validation dataset that contains fused volumes and the ground truth for the pretext task, i.e., a pseudo-segmentation task. Do this by runing the following command:
 
 ```bash
 pymic_preprocess config/luna_data/preprocess_volumefusion.cfg
@@ -101,16 +101,16 @@ iter_valid = 500
 iter_save  = 40000
 ```
 
-### Downstream segmentation with LCTSC2017 dataset
+## Downstream segmentation with LCTSC2017 dataset
 Based on the pretrained model, we use it to intialize the 3D UNet for the downstream segmentation task on the LCTSC2017 dataset.
 
-First, make sure that you have downloaded  the preprocessed LCTSC2017 dataset and put it in `PyMIC_data/LCTSC2017`, as mentioned above. As the 60 CT volumes have 24 for testing, we randomly split the other 36 into 27 for training and 9 for validation. Run the following to do the data split and writing the csv files:
+First, make sure that you have downloaded  the preprocessed LCTSC2017 dataset and put it in `PyMIC_data/LCTSC2017`, as mentioned above. As the 60 CT volumes have 24 for testing, we randomly split the other 36 into 27 for training and 9 for validation. Run the following command to do the data split and writing the csv files:
 
 ```bash
 python write_csv.py
 ```
 
-Then run the following to train the segmentation model with the pretrained weights:
+Then run the following command to train the segmentation model with the pretrained weights:
 ```bash
 pymic_train config/lctsc_train/unet3d_volumefusion.cfg
 ``` 
@@ -196,8 +196,8 @@ valid loss 0.1217, avg foreground dice 0.7994 [0.9859 0.5184 0.8499 0.8627 0.966
 
 It can be observed that after 1000 iterations, the average foreground Dice on the validation set reaches 0.7994.
 
-### Comparison with training from scatch
-For comparison, we also train 3D UNet for the downstream segmentatin task fron scratch, run the following command:
+## Comparison with training from scatch
+For comparison, we also train 3D UNet for the downstream segmentatin task from scratch, run the following command:
 
 ```bash
 pymic_train config/lctsc_train/unet3d_scratch.cfg
