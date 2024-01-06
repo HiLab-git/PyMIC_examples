@@ -180,8 +180,7 @@ pymic_eval_seg -cfg config/evaluation.cfg
 ``` 
 
 Note that we do not use any post-processing methods. The average Dice (%) for each class obtained by the two models will be like:
-
 |Method |Esophagus |Heart |Spinal cord |Lung |Average |
-|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|
 |From Scratch               | 68.89 | 89.86 | 85.50 | 97.23 | 85.37 |
 |Pretrain with Volume Fusion| 73.38 | 91.61 | 86.20 | 97.35 | 87.14 |
