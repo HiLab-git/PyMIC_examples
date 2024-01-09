@@ -43,7 +43,7 @@ tensor_type    = float
 task_type      = seg
 supervise_type = fully_sup
 
-root_dir  = ../../PyMIC_data/JSRT
+train_dir = ../../PyMIC_data/JSRT
 train_csv = config/data/jsrt_train_mix.csv
 valid_csv = config/data/jsrt_valid.csv
 test_csv  = config/data/jsrt_test.csv
@@ -78,7 +78,7 @@ pymic_test config/unet_gce.cfg
 The CLSLSR method estimates errors in the original noisy label and obtains pixel-level weight maps based on an intial model, and then uses the weight maps to suppress noises in  a standard supervised learning procedure. Assume that the initial model is the baseline method, run the following command to obtain the weight maps:
 
 ```bash
-python clslsr_get_condience config/unet_ce.cfg
+python clslsr_get_condience.py config/unet_ce.cfg
 ```
 
 The weight maps will be saved in `$root_dir/slsr_conf`. Then train the new model and do inference by:
@@ -169,8 +169,8 @@ metric_list = [dice, assd]
 label_list = [255]
 organ_name = lung
 
-ground_truth_folder_root  = ../../PyMIC_data/JSRT
-segmentation_folder_root  = result/unet_ce
+ground_truth_folder = ../../PyMIC_data/JSRT
+segmentation_folder = result/unet_ce
 evaluation_image_pair     = config/data/jsrt_test_gt_seg.csv
 ```
 
