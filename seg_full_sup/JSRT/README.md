@@ -102,5 +102,5 @@ pymic_test config/unet.cfg
 pymic_eval_seg config/evaluation.cfg
 ```
 
-3. Similarly, you can inference with other networks and get the evaluation results by changing the cifig files.
+3. Similarly, you can inference with other networks and get the evaluation results by changing the cofig files.
 The obtained average Dice score by default setting should be close to 98.068%. If setting `ckpt_mode` to 1 during testing, the average Dice would be around 98.096%. 
