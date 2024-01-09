@@ -1,5 +1,5 @@
 # PyMIC_examples
-[PyMIC][PyMIC_link] is a PyTorch-based toolkit for medical image computing with annotation-efficient deep learning. Here we provide a set of examples to show how it can be used for image classification and segmentation tasks. For annotation efficient learning, we show examples of Semi-Supervised Learning (SSL), Self-Supervised Learning (self-SL), Weakly Supervised Learning (WSL) and Noisy Label Learning (NLL), respectively.  For beginners, you can follow the examples by just editting the configuration files for model training, testing and evaluation. For advanced users, you can easily develop your own modules, such as customized networks and loss functions.  
+[PyMIC][PyMIC_link] is a PyTorch-based toolkit for medical image computing with annotation-efficient deep learning. Here we provide a set of examples to show how it can be used for image classification and segmentation tasks. For annotation efficient learning, we show examples of Semi-Supervised Learning (SSL), Self-Supervised Learning (Self-SL), Weakly Supervised Learning (WSL) and Noisy Label Learning (NLL), respectively.  For beginners, you can follow the examples by just editting the configuration files for model training, testing and evaluation. For advanced users, you can easily develop your own modules, such as customized networks and loss functions.  
 
 ## Install PyMIC
 The released version of PyMIC (v0.4.0) is required for these examples, and it can be installed by:
@@ -24,13 +24,13 @@ Currently we provide the following examples in this repository:
 |Catetory|Example|Remarks|
 |---|---|---|
 |Classification|[AntBee][AntBee_link]|Finetuning a resnet18 for Ant and Bee classification|
-|Classification|[CHNCXR][CHNCXR_link]|Finetuning restnet18 and vgg16 for normal/tuberculosis X-ray image classification|
+|  |[CHNCXR][CHNCXR_link]|Finetuning restnet18 and vgg16 for normal/tuberculosis X-ray image classification|
 |Fully supervised segmentation|[JSRT][JSRT_link]|Using five 2D Networks for lung segmentation from chest X-ray images|
-|Fully supervised segmentation|[JSRT2][JSRT2_link]|Using a customized network and loss function for the JSRT dataset|
-|Fully supervised segmentation|[Fetal_HC][fetal_hc_link]|Using a 2D UNet for fetal head segmentation from 2D ultrasound images|
-|Fully supervised segmentation|[Prostate][prostate_link]|Using a 3D UNet for prostate segmentation from 3D MRI|
+| |[JSRT2][JSRT2_link]|Using a customized network and loss function for the JSRT dataset|
+| |[Fetal_HC][fetal_hc_link]|Using a 2D UNet for fetal head segmentation from 2D ultrasound images|
+| |[Prostate][prostate_link]|Using a 3D UNet for prostate segmentation from 3D MRI|
 |Semi-supervised segmentation|[seg_semi_sup/ACDC][ssl_acdc_link]|Semi-supervised methods for heart structure segmentation using 2D CNNs|
-|Semi-supervised segmentation|[seg_semi_sup/AtriaSeg][ssl_atrial_link]|Semi-supervised methods for left atrial segmentation using 3D CNNs|
+| |[seg_semi_sup/AtriaSeg][ssl_atrial_link]|Semi-supervised methods for left atrial segmentation using 3D CNNs|
 |Weakly-supervised segmentation|[seg_weak_sup/ACDC][wsl_acdc_link]|Segmentation of heart structure with scrible annotations|
 |Noisy label learning|[seg_noisy_label/JSRT][nll_jsrt_link]|Comparing different NLL methods for learning from noisy labels|
 |Self-Supervised learning|[seg_self_sup/lung][self_lung_link]|Self-Supervised learning methods for pretraining a segmentation model|
