@@ -35,7 +35,7 @@ The dataset setting is similar to that in the `seg_ssl/ACDC` demo. Here we use a
 tensor_type    = float
 task_type      = seg
 supervise_type = fully_sup
-root_dir  = ../../PyMIC_data/ACDC/preprocess
+train_dir = ../../PyMIC_data/ACDC/preprocess
 train_csv = config/data/image_train.csv
 valid_csv = config/data/image_valid.csv
 test_csv  = config/data/image_test.csv
@@ -72,7 +72,7 @@ class_num     = 4
 in_chns       = 1
 feature_chns  = [16, 32, 64, 128, 256]
 dropout       = [0.0, 0.0, 0.0, 0.5, 0.5]
-bilinear      = True
+up_mode       = 2
 multiscale_pred = False
 ```
 
@@ -93,6 +93,7 @@ lr_scheduler  = ReduceLROnPlateau
 lr_gamma      = 0.5
 ReduceLROnPlateau_patience = 2000
 early_stop_patience = 8000
+
 ckpt_save_dir    = model/unet2d_baseline
 
 # start iter
@@ -129,7 +130,7 @@ tensor_type    = float
 task_type      = seg
 supervise_type = weak_sup
 
-root_dir  = ../../PyMIC_data/ACDC/preprocess
+train_dir = ../../PyMIC_data/ACDC/preprocess
 train_csv = config/data/image_train.csv
 valid_csv = config/data/image_valid.csv
 test_csv  = config/data/image_test.csv
@@ -240,8 +241,8 @@ Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the se
 metric_list = [dice, hd95]
 label_list = [1,2,3]
 organ_name = heart
-ground_truth_folder_root  = ../../PyMIC_data/ACDC/preprocess
-segmentation_folder_root  = ./result/unet2d_baseline
+ground_truth_folder  = ../../PyMIC_data/ACDC/preprocess
+segmentation_folder  = ./result/unet2d_baseline
 evaluation_image_pair     = ./config/data/image_test_gt_seg.csv
 ```
 
