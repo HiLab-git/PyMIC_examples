@@ -6,6 +6,8 @@
 
 2024.01 More 2D segmentation networks including SwinUNet and TransUNet have been added.
 
+2023.12 Semi-Supervised Method MCNet has been added to [seg_semi_sup/ACDC][ssl_acdc_link]. 
+
 ## Install PyMIC
 The released version of PyMIC (v0.4.0) is required for these examples, and it can be installed by:
 
