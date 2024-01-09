@@ -28,16 +28,66 @@ In this example, we use different 2D networks to segment the lung from X-Ray ima
 [jsrt_link]:http://db.jsrt.or.jp/eng.php
 
 ## Training
-1. Start to train by running:
+1. For training with UNet，run:
  
 ```bash
 pymic_train config/unet.cfg
 ```
 
+The configurations look like:
+```bash
+[dataset]
+# tensor type (float or double)
+tensor_type = float
+
+task_type = seg
+train_dir = ../../PyMIC_data/JSRT
+train_csv = config/jsrt_train.csv
+valid_csv = config/jsrt_valid.csv
+test_csv  = config/jsrt_test.csv
+
+train_batch_size = 4
+
+# data transforms
+train_transform = [NormalizeWithMeanStd, RandomCrop, LabelConvert, LabelToProbability]
+valid_transform = [NormalizeWithMeanStd, LabelConvert, LabelToProbability]
+test_transform  = [NormalizeWithMeanStd]
+
+NormalizeWithMeanStd_channels = [0]
+RandomCrop_output_size = [240, 240]
+
+LabelConvert_source_list = [0, 255]
+LabelConvert_target_list = [0, 1]
+
+[network]
+# type of network
+net_type = UNet2D
+
+# number of class, required for segmentation task
+class_num     = 2
+in_chns       = 1
+feature_chns  = [16, 32, 64, 128, 256]
+dropout       = [0,  0,  0.3, 0.4, 0.5]
+up_mode       = 2
+multiscale_pred = False
+```
+where we preprocessed the training images by normalization and random cropping. The original labels are 0 and 255, and they are converted to 0 and 1, respectively. 
+
 2. During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where red and blue curves are for training set and validation set respectively. We can observe some over-fitting on the training set. 
 
 ![avg_dice](./picture/jsrt_avg_dice.png)
 ![avg_loss](./picture/jsrt_avg_loss.png)
+
+
+3, Similarly, you can train with other networks by:
+```bash
+pymic_train config/canet.cfg
+pymic_train config/coplenet.cfg
+pymic_train config/transunet.cfg
+pymic_train config/swinunet.cfg
+```
+
+Read the corresponding configuration files for details of the hyper-parameter setting.
 
 ## Testing and evaluation
 1. Run the following command to obtain segmentation results of testing images. By default we use the latest checkpoint. You can set `ckpt_mode` to 1 in `config/unet.cfg` to use the best performing checkpoint based on the validation set.
@@ -46,10 +96,11 @@ pymic_train config/unet.cfg
 pymic_test config/unet.cfg
 ```
 
-2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder_root` as your `JSRT_root`, and run the following command to obtain quantitative evaluation results in terms of dice. 
+2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder` as your `JSRT_root`, and run the following command to obtain quantitative evaluation results in terms of dice. 
 
 ```bash
 pymic_eval_seg config/evaluation.cfg
 ```
 
+3. Similarly, you can inference with other networks and get the evaluation results by changing the cifig files.
 The obtained average Dice score by default setting should be close to 98.068%. If setting `ckpt_mode` to 1 during testing, the average Dice would be around 98.096%. 
