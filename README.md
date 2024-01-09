@@ -3,6 +3,7 @@
 
 ## News
 2024.01 Examples of Self-Supervised Learning have been added.
+
 2024.01 More 2D segmentation networks including SwinUNet and TransUNet have been added.
 
 ## Install PyMIC
