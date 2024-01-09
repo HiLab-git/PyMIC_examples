@@ -32,7 +32,7 @@ tensor_type    = float
 task_type      = seg
 supervise_type = fully_sup
 
-root_dir  = ../../PyMIC_data/AtriaSeg/TrainingSet_crop/
+train_dir = ../../PyMIC_data/AtriaSeg/TrainingSet_crop/
 train_csv = config/data/image_train_r10_lab.csv
 valid_csv = config/data/image_valid.csv
 test_csv  = config/data/image_test.csv
@@ -43,8 +43,8 @@ For data augmentation, we use random crop, random flip, gamma correction and gau
 
 ```bash
 train_transform = [RandomCrop, RandomFlip, NormalizeWithMeanStd, GammaCorrection, GaussianNoise, LabelToProbability]
-valid_transform       = [NormalizeWithMeanStd, LabelToProbability]
-test_transform        = [NormalizeWithMeanStd]
+valid_transform = [NormalizeWithMeanStd, LabelToProbability]
+test_transform  = [NormalizeWithMeanStd]
 
 RandomCrop_output_size = [72, 96, 112]
 RandomCrop_foreground_focus = False
@@ -75,7 +75,7 @@ class_num     = 2
 in_chns       = 1
 feature_chns  = [32, 64, 128, 256]
 dropout       = [0.0, 0.0, 0.5, 0.5]
-trilinear     = True
+up_mode       = 2
 multiscale_pred = False
 ```
 
@@ -126,7 +126,7 @@ tensor_type    = float
 task_type      = seg
 supervise_type = semi_sup
 
-root_dir  = ../../PyMIC_data/AtriaSeg/TrainingSet_crop/
+train_dir = ../../PyMIC_data/AtriaSeg/TrainingSet_crop/
 train_csv = config/data/image_train_r10_lab.csv
 train_csv_unlab = config/data/image_train_r10_unlab.csv
 valid_csv = config/data/image_valid.csv
@@ -183,8 +183,9 @@ class_num     = 2
 in_chns       = 1
 feature_chns  = [32, 64, 128, 256]
 dropout       = [0.0, 0.0, 0.5, 0.5]
-trilinear      = True
+up_mode       = 2
 multiscale_pred  = True
+
 [training]
 deep_supervise = True
 ```
@@ -230,7 +231,7 @@ Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the se
 metric = [dice, assd]
 label_list = [1]
 organ_name = atrial
-ground_truth_folder_root  = ../../PyMIC_data/AtriaSeg/TrainingSet_crop/
-segmentation_folder_root  = result/unet3d_r10_baseline
+ground_truth_folder  = ../../PyMIC_data/AtriaSeg/TrainingSet_crop/
+segmentation_folder  = result/unet3d_r10_baseline
 evaluation_image_pair     = config/data/image_test_gt_seg.csv
 ```
