@@ -53,3 +53,21 @@ Currently we provide the following examples in this repository:
 ## Useful links
 * PyMIC on Github: https://github.com/HiLab-git/PyMIC
 * Usage of PyMIC: https://pymic.readthedocs.io/en/latest/usage.html 
+
+## Citation
+* G. Wang, X. Luo, R. Gu, S. Yang, Y. Qu, S. Zhai, Q. Zhao, K. Li, S. Zhang. (2023). 
+[PyMIC: A deep learning toolkit for annotation-efficient medical image segmentation.][arxiv2022] Computer Methods and Programs in Biomedicine (CMPB). February 2023, 107398.
+
+[arxiv2022]:http://arxiv.org/abs/2208.09350
+
+BibTeX entry:
+
+    @article{Wang2022pymic,
+    author = {Guotai Wang and Xiangde Luo and Ran Gu and Shuojue Yang and Yijie Qu and Shuwei Zhai and Qianfei Zhao and Kang Li and Shaoting Zhang},
+    title = {{PyMIC: A deep learning toolkit for annotation-efficient medical image segmentation}},
+    year = {2023},
+    url = {https://doi.org/10.1016/j.cmpb.2023.107398},
+    journal = {Computer Methods and Programs in Biomedicine},
+    volume = {231},
+    pages = {107398},
+    }
