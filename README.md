@@ -1,6 +1,10 @@
 # PyMIC_examples
 [PyMIC][PyMIC_link] is a PyTorch-based toolkit for medical image computing with annotation-efficient deep learning. Here we provide a set of examples to show how it can be used for image classification and segmentation tasks. For annotation efficient learning, we show examples of Semi-Supervised Learning (SSL), Self-Supervised Learning (Self-SL), Weakly Supervised Learning (WSL) and Noisy Label Learning (NLL), respectively.  For beginners, you can follow the examples by just editting the configuration files for model training, testing and evaluation. For advanced users, you can easily develop your own modules, such as customized networks and loss functions.  
 
+## News
+2024.01 Examples of Self-Supervised Learning have been added.
+2024.01 More 2D segmentation networks including SwinUNet and TransUNet have been added.
+
 ## Install PyMIC
 The released version of PyMIC (v0.4.0) is required for these examples, and it can be installed by:
 
