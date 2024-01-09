@@ -3,7 +3,22 @@
 ![image_example](./picture/JPCLN002.png)
 ![label_example](./picture/JPCLN002_seg.png)
 
-In this example, we use different 2D networks to segment the lung from X-Ray images. First we edit the configuration file for training and testing. During training, we use tensorboard to observe the performance of the network at different iterations. We then apply the trained model to testing images and obtain quantitative evaluation results.
+In this example, we use different 2D networks to segment the lung from X-Ray images. First we edit the configuration file for training and testing. During training, we use tensorboard to observe the performance of the network at different iterations. We then apply the trained model to testing images and obtain quantitative evaluation results. The following networks are implemented in this example:
+
+|Method|Reference|Remarks|
+|---|---|---|
+|UNet2D|[Ronneberger et al., MICCAI 2015][unet_paper]| 2D Unet|
+|CANet| [Gu et al., IEEE TMI 2021][canet_paper]| Comprehensive Attentin Network|
+|COPLENet|[Wang et al., IEEE TMI 2022][coplenet_paper]| Originally for Covid-19 lesion segmentation|
+|TransUNet|[Chen et al., Arxiv 2021][transuent_paper] | UNet combined with Transformer |
+|SwinUNet|[Cao et al., ECCV 2022][swinunet_paper] |  UNet combined with Swin Transformer |
+
+
+[unet_paper]:https://link.springer.com/chapter/10.1007/978-3-319-24574-4_28
+[canet_paper]:https://doi.org/10.1109/tmi.2020.3035253
+[coplenet_paper]:https://ieeexplore.ieee.org/document/9109297
+[transuent_paper]:https://arxiv.org/abs/2102.04306
+[swinunet_paper]:https://link.springer.com/chapter/10.1007/978-3-031-25066-8_9
 
 ## Data and preprocessing
 1. The orginal dataset is available at the [JSRT website][jsrt_link]. It consists of 247 chest radiographs. We have preprocessed the images by resizing them to 256x256 and extracting the lung masks for the segmentation task. The images are available at `PyMIC_data/JSRT`. If interested, you can read `image_convert.py` for details of the preprocessing.  
