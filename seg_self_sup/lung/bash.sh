@@ -16,8 +16,8 @@
 # pymic_train config/lctsc_train/unet3d_scratch.cfg
 
 ### 5, Inference with testing images and do the evaluation. 
-# pymic_predict config/lctsc_train/unet3d_volumefusion.cfg
-# pymic_predict config/lctsc_train/unet3d_scratch.cfg
+# pymic_test config/lctsc_train/unet3d_volumefusion.cfg
+# pymic_test config/lctsc_train/unet3d_scratch.cfg
 # pymic_eval_seg -cfg config/evaluation.cfg
 
 ### 6, Pretraining with Model Genesis. The following three commens are used to create the validation images, 

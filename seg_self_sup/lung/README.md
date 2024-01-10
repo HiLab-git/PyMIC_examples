@@ -244,8 +244,8 @@ tensorboard --logdir=./lctsc_model
 
 Then we do the inference with the trained models respectively:
 ```bash
-pymic_predict config/lctsc_train/unet3d_volumefusion.cfg
-pymic_predict config/lctsc_train/unet3d_scratch.cfg
+pymic_test config/lctsc_train/unet3d_volumefusion.cfg
+pymic_test config/lctsc_train/unet3d_scratch.cfg
 ``` 
 
 The predictions are saved in `lctsc_result/unet3d_volumefusion` and `lctsc_result/unet3d_scratch`, respectively. To obtain the quantitative evaluaiton scores in terms of Dice, run:
