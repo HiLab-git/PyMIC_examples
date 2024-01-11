@@ -78,7 +78,7 @@ pymic_test config/unet_gce.cfg
 The CLSLSR method estimates errors in the original noisy label and obtains pixel-level weight maps based on an intial model, and then uses the weight maps to suppress noises in  a standard supervised learning procedure. Assume that the initial model is the baseline method, run the following command to obtain the weight maps:
 
 ```bash
-python clslsr_get_condience.py config/unet_ce.cfg
+python clslsr_get_confidence.py config/unet_ce.cfg
 ```
 
 The weight maps will be saved in `$root_dir/slsr_conf`. Then train the new model and do inference by:
@@ -91,14 +91,19 @@ pymic_test config/unet_clslsr.cfg
 Note that the weight maps for training images are specified in the configuration file `train_csv = config/data/jsrt_train_mix_clslsr.csv`.
 
 ### Co-Teaching
-The configuration file for Co-Teaching is `config/unet2d_cot.cfg`. Note that for the following methods, `supervise_type` should be set to  `noisy_label`.
+The configuration file for Co-Teaching is `config/unet2d_cot.cfg`. Note that for the following methods, `supervise_type` should be set to  `noisy_label`, and we use two instances of UNet2D for co-teaching.
 
 ```bash
 [dataset]
 ...
 supervise_type = noisy_label
 ...
-
+[network]
+# A MultiNet instance is created based on a list of networks
+net_type = [UNet2D, UNet2D]
+# taking average of the two networks for inference
+infer_mode = 1
+...
 [noisy_label_learning]
 method_name  = CoTeaching
 co_teaching_select_ratio  = 0.8  
@@ -113,14 +118,19 @@ pymic_test config/unet_cot.cfg
 ```
 
 ### TriNet
-The configuration file for TriNet is `config/unet_trinet.cfg`. The corresponding setting is:
+The configuration file for TriNet is `config/unet_trinet.cfg`. Note that we use three instances of UNet2D here.
 
 ```bash 
 [dataset]
 ...
 supervise_type = noisy_label
 ...
-
+[network]
+# A MultiNet instance is created based on a list of networks
+net_type = [UNet2D, UNet2D, UNet2D]
+# taking average of the three networks for inference
+infer_mode = 1
+...
 [noisy_label_learning]
 method_name  = TriNet
 trinet_select_ratio = 0.9
@@ -136,14 +146,17 @@ pymic_test config/unet_trinet.cfg
 ```
 
 ### DAST
-The configuration file for DAST is `config/unet_dast.cfg`. The corresponding setting is:
+The configuration file for DAST is `config/unet_dast.cfg`. It uses a dual-branch network for training.
 
 ```bash
 [dataset]
 ...
 supervise_type = noisy_label
 ...
-
+[network]
+# type of network
+net_type = UNet2D_DualBranch
+...
 [noisy_label_learning]
 method_name  = DAST
 dast_dbc_w   = 0.1
