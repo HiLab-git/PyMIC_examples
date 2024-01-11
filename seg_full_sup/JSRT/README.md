@@ -99,7 +99,7 @@ pymic_test config/unet.cfg
 2. Then edit `config/evaluation.cfg` by setting `ground_truth_folder` as your `JSRT_root`, and run the following command to obtain quantitative evaluation results in terms of dice. 
 
 ```bash
-pymic_eval_seg config/evaluation.cfg
+pymic_eval_seg -cfg config/evaluation.cfg
 ```
 
 3. Similarly, you can inference with other networks and get the evaluation results by changing the cofig files.

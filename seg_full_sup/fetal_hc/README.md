@@ -33,7 +33,7 @@ pymic_test config/unet.cfg
 2. Use the following command to obtain quantitative evaluation results in terms of Dice. 
 
 ```bash
-pymic_eval_seg config/evaluation.cfg
+pymic_eval_seg -cfg config/evaluation.cfg
 ```
 
 The obtained average Dice score by default setting should be close to 97.07%. The Average Symmetric Surface Distance (ASSD) is also calculated. 

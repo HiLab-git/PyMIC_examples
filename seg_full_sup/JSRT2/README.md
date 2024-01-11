@@ -30,8 +30,8 @@ python net_run_jsrt.py test config/mynet.cfg
 
 2. Use the following command to obtain quantitative evaluation results in terms of dice.
 
-```
-pymic_eval_seg config/evaluation.cfg
+```bash
+pymic_eval_seg -cfg config/evaluation.cfg
 ```
 
 The obtained dice score by default setting should be close to 97.999%. 
