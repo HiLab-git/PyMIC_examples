@@ -5,8 +5,8 @@ Currently, the following self-supervised methods are implemented:
 |Method name |PyMIC class |Reference|
 |---|---|---|
 |VolF |SelfSupVolumeFusion| [Wang et al., Arxiv 2023][vf_paper]|
-|Model Genesis |SelfSupModelGenesis| [Zhou et al., MIA 2021][mg_paper]|
-|Patch Swapping|SelfSupPatchSwapping| [Chen et al., MIA 2019][ps_paper]| 
+|ModelGenesis |SelfSupModelGenesis| [Zhou et al., MIA 2021][mg_paper]|
+|PatchSwapping|SelfSupPatchSwapping| [Chen et al., MIA 2019][ps_paper]| 
 |Vox2vec |SelfSupVox2Vec|  [Goncharov et al., MICCAI 2023][vox2vec_paper]|
 
 [vf_paper]:https://arxiv.org/abs/2306.16925
@@ -25,7 +25,7 @@ The LUNA dataset is used for self-supervised pretraining. It contains 888 CT vol
 [luna_link]:https://zenodo.org/records/3723295
 [lctsc_link]:https://wiki.cancerimagingarchive.net/pages/viewpage.action?pageId=24284539
 
-### 1.1 Preprocessing for LUNA dataset
+### 1.1. Preprocessing for LUNA dataset
 The LUNA dataset contrains 10 subfolders. We use folder 0-8 for training and 9 for validation during self-supervised learning.  As the orignal CT volumes have a large size, and to speedup the data loading process, we preprocess the LUNA dataset by cropping each volume to smaller subvolumes. In addition, the intensity is clipped to [-1000, 1000] and then normalized to [-1, 1]. Do the preprocessing by running:
 
 ```bash
@@ -63,7 +63,7 @@ where we generate 5 classes of voxels (including the background), and the block 
 
 ![fusion_example](./pictures/fusion_example.png)
 
-Then we use `SelfSupVolumeFusion` to pretrain a 3D UNet, run the following command:
+Then we use `VolumeFusion` to pretrain a 3D UNet, run the following command:
 
 ```bash
 pymic_train config/luna_pretrain/unet3d_volumefusion.cfg
@@ -283,7 +283,7 @@ pymic_preprocess config/luna_data/preprocess_genesis.cfg
 ```
 
 The generated validation set for model genesis is saved in `./pretrain_valid/genesis`.
-Then we use `SelfSupModelGenesis` to pretrain a 3D UNet, run the following command:
+Then we use `ModelGenesis` to pretrain a 3D UNet, run the following command:
 
 ```bash
 pymic_train config/luna_pretrain/unet3d_genesis.cfg
@@ -302,7 +302,7 @@ pymic_preprocess config/luna_data/preprocess_patchswap.cfg
 ```
 
 The generated validation set for patch swapping is saved in `./pretrain_valid/patchswap`.
-Then we use `SelfSupPatchSwap` to pretrain a 3D UNet, run the following command:
+Then we use `PatchSwapping` to pretrain a 3D UNet, run the following command:
 
 ```bash
 pymic_train config/luna_pretrain/unet3d_patchswap.cfg
