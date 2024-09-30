@@ -4,15 +4,17 @@ In this example, we show self-supervised training methods for segmentation imple
 Currently, the following self-supervised methods are implemented:
 |PyMIC Method|Reference|Remarks|
 |---|---|---|
-|SelfSupVolumeFusion| [Wang et al., Arxiv 2023][vf_paper]| Volume Fusion|
+|SelfSupVolumeFusion| [Wang et al., Arxiv 2023][vf_paper]| Volume Fusion (VolF)|
 |SelfSupModelGenesis| [Zhou et al., MIA 2021][mg_paper]| Model Genesis|
 |SelfSupPatchSwapping| [Chen et al., MIA 2019][ps_paper]| Patch Swapping|
+|SelfSupVox2Vec|  [Goncharov et al., MICCAI 2023][vox2vec_paper]| Vox2vec|
 
 [vf_paper]:https://arxiv.org/abs/2306.16925
 [mg_paper]:https://www.sciencedirect.com/science/article/pii/S1361841520302048
 [ps_paper]:https://www.sciencedirect.com/science/article/pii/S1361841518304699
+[vox2vec_paper]:https://link.springer.com/chapter/10.1007/978-3-031-43907-0_58
 
-The following figure shows a performance comparison between training from scratch and with Volume Fusion-bsed pretraining. It can be observed that the pretraining largely improves the convergence of the model and leads to a better final performance.
+The following figure shows a performance comparison between training from scratch and with Volume Fusion (VolF)-bsed pretraining. It can be observed that the pretraining largely improves the convergence of the model and leads to a better final performance.
 
 <img src="https://github.com/HiLab-git/PyMIC_examples/blob/dev/seg_self_sup/lung/pictures/valid_dice2.png" width="600">
 
@@ -39,8 +41,8 @@ python get_luna_csv.py
 Note that the path of folder containing the preprocessed LUNA dataset should be correctly set in the script. Then we obtain two csv files: `config/luna_data/luna_train.csv` and `config/luna_data/luna_valid.csv`, and they are for training and validaiton images, respectively.
 
 
-## Volume Fusion for pretraining
-For Volume Fusion, we need to  create a validation dataset that contains fused volumes and the ground truth for the pretext task, i.e., a pseudo-segmentation task. Do this by runing the following command:
+## VolF for pretraining
+For VolF, we need to  create a validation dataset that contains fused volumes and the ground truth for the pretext task, i.e., a pseudo-segmentation task. Do this by runing the following command:
 
 ```bash
 pymic_preprocess config/luna_data/preprocess_volumefusion.cfg
@@ -49,13 +51,15 @@ pymic_preprocess config/luna_data/preprocess_volumefusion.cfg
 The parameters for volume fusion are:
 
 ```bash
-VolumeFusion_cls_num  = 5 
-VolumeFusion_block_range = [10, 40]
-VolumeFusion_size_min = [8,  8, 8]
-VolumeFusion_size_max = [40, 80, 80]
+transform = [Crop4VolumeFusion, VolumeFusion]
+Crop4VolumeFusion_output_size = [64, 128, 128]
+VolumeFusion_cls_num = 5
+VolumeFusion_foreground_ratio = 0.7
+VolumeFusion_patchsize_min    = [5, 8, 8]
+VolumeFusion_patchsize_max    = [20, 32, 32]
 ```
 
-where we generate 5 classes of voxels (including the background), and the block number for fusion ranges from 10 to 40, and the block size ranges from [8, 8, 8] and [40, 80, 80]. The generated validation set for volume fusion is saved in `./pretrain_valid/volumefusion`. Blow is an example of the fused volume and the ground truth for the pseudo-segmentation task:
+where we generate 5 classes of voxels (including the background), and the block size ranges from [5, 8, 8] and [20, 32, 32]. The probability of a block being set as foreground is 0.7. The generated validation set for volume fusion is saved in `./pretrain_valid/volumefusion`. Blow is an example of the fused volume and the ground truth for the pseudo-segmentation task:
 
 ![fusion_example](./pictures/fusion_example.png)
 
@@ -68,12 +72,21 @@ pymic_train config/luna_pretrain/unet3d_volumefusion.cfg
 The pretraining is just an image segmentation task, and the configurations related to the training process is:
 
 ```bash
+[dataset]
+...
+train_transform = [Crop4VolumeFusion, VolumeFusion, LabelToProbability]
+valid_transform = [CenterCrop, LabelToProbability]
+test_transform  = None
+
+Crop4VolumeFusion_output_size = [64, 128, 128]
+VolumeFusion_cls_num = 5
+VolumeFusion_foreground_ratio = 0.7
+VolumeFusion_patchsize_min    = [5, 8, 8]
+VolumeFusion_patchsize_max    = [20, 32, 32]
+
 [self_supervised_learning]
 method_name = VolumeFusion
 
-VolumeFusion_block_range = [10, 40]
-VolumeFusion_size_min    = [8,  8, 8]
-VolumeFusion_size_max    = [40, 80, 80]
 
 [training]
 # list of gpus
@@ -92,12 +105,12 @@ weight_decay  = 1e-5
 # for lr schedular
 lr_scheduler = StepLR
 lr_gamma = 0.5
-lr_step  = 40000
+lr_step  = 20000
 early_stop_patience = 60000
-ckpt_save_dir       = pretrain_model/unet3d_volumefusion
+ckpt_save_dir       = pretrain_model/unet3d_volf
 
-iter_max   = 120000
-iter_valid = 500
+iter_max   = 80000
+iter_valid = 1000
 iter_save  = 40000
 ```
 
@@ -155,8 +168,8 @@ lr_scheduler = StepLR
 lr_gamma = 0.5
 lr_step  = 4000
 early_stop_patience = 6000
-ckpt_save_dir       = lctsc_model/unet3d_volumefusion
-ckpt_init_name      = ../../pretrain_model/unet3d_volumefusion/unet3d_volumefusion_best.pt
+ckpt_save_dir       = lctsc_model/unet3d_volf
+ckpt_init_name      = ../../pretrain_model/unet3d_volf/unet3d_volf_best.pt
 ckpt_init_mode      = 0
 ``` 
 
@@ -248,7 +261,7 @@ pymic_test config/lctsc_train/unet3d_volumefusion.cfg
 pymic_test config/lctsc_train/unet3d_scratch.cfg
 ``` 
 
-The predictions are saved in `lctsc_result/unet3d_volumefusion` and `lctsc_result/unet3d_scratch`, respectively. To obtain the quantitative evaluaiton scores in terms of Dice, run:
+The predictions are saved in `lctsc_result/unet3d_volf` and `lctsc_result/unet3d_scratch`, respectively. To obtain the quantitative evaluaiton scores in terms of Dice, run:
 
 ```bash
 pymic_eval_seg -cfg config/evaluation.cfg
@@ -258,12 +271,12 @@ Note that we do not use any post-processing methods. The average Dice (%) for ea
 |Method |Esophagus |Heart |Spinal cord |Lung |Average |
 |---|---|---|---|---|---|
 |From Scratch               | 68.89 | 89.86 | 85.50 | 97.23 | 85.37 |
-|Pretrain with Volume Fusion| 73.38 | 91.61 | 86.20 | 97.35 | 87.14 |
+|Pretrain with VolF| 73.38 | 91.61 | 86.20 | 97.35 | 87.14 |
 
 ## Using other self-supervised pretraining methods
-In addition to Volume Fusion, you can also try other self-supervised pretraining methods including Model Genesis and Patch Swapping.
+In addition to Volume Fusion, you can also try other self-supervised pretraining methods including Model Genesis, Patch Swapping and Vox2vec.
 ### Pretraining with Model Genesis
-Similarly to Volume Fusion, we need to  create a validation dataset that contains corrupted input images and the ground truth for the pretext task, i.e., image reconstruction task. Do this by runing the following command:
+Similarly to VolF, we need to  create a validation dataset that contains corrupted input images and the ground truth for the pretext task, i.e., image reconstruction task. Do this by runing the following command:
 
 ```bash
 pymic_preprocess config/luna_data/preprocess_genesis.cfg
@@ -298,4 +311,25 @@ pymic_train config/luna_pretrain/unet3d_patchswap.cfg
 Finally, we initialize 3D UNet with the pretrained weights for downstream segmentation:
 ```bash
 pymic_train config/lctsc_train/unet3d_patchswap.cfg
+``` 
+
+### Pretraining with Vox2vec
+See `luna_pretrain/unet3d_vox2vec.cfg` for detailed configuration of Vox2vec. Note that this method requires a pair of overlapped cropping for contrastive learning. The corresponding setting is:
+
+```bash
+train_transform = [Crop4Vox2Vec]
+Crop4Vox2Vec_output_size = [64, 128, 128]
+Crop4Vox2Vec_min_overlap = [48, 96, 96]
+```
+
+The following command is used for pretraining:
+
+```bash
+pymic_train config/luna_pretrain/unet3d_vox2vec.cfg
+```
+
+Then, initialize 3D UNet with the pretrained weights for downstream segmentation:
+
+```bash
+pymic_train config/lctsc_train/unet3d_vox2vec.cfg
 ``` 
