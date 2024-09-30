@@ -69,7 +69,7 @@ Then we use `VolumeFusion` to pretrain a 3D UNet, run the following command:
 pymic_train config/luna_pretrain/unet3d_volumefusion.cfg
 ```
 
-The pretraining is just an image segmentation task, and the configurations related to the training process is:
+The pretraining is just an image segmentation task, and the configurations related to the pretraining process is:
 
 ```bash
 [dataset]
@@ -117,7 +117,7 @@ iter_save  = 40000
 ### 2.2. Downstream segmentation with LCTSC2017 dataset
 Based on the pretrained model, we use it to intialize the 3D UNet for the downstream segmentation task on the LCTSC2017 dataset.
 
-First, make sure that you have downloaded  the preprocessed LCTSC2017 dataset and put it in `PyMIC_data/LCTSC2017`, as mentioned above. As the 60 CT volumes have 24 for testing, we randomly split the other 36 into 27 for training and 9 for validation. Run the following command to do the data split and writing the csv files:
+First, make sure that you have downloaded  the preprocessed LCTSC2017 dataset and put it in `PyMIC_examples/PyMIC_data/LCTSC2017`, as mentioned above. As the 60 CT volumes have 24 for testing, we randomly split the other 36 into 27 for training and 9 for validation. Run the following command to do the data split and writing the csv files:
 
 ```bash
 python write_csv.py
@@ -125,7 +125,7 @@ python write_csv.py
 
 Then run the following command to train the segmentation model with the pretrained weights:
 ```bash
-pymic_train config/lctsc_train/unet3d_volumefusion.cfg
+pymic_train config/lctsc_train/unet3d_volf.cfg
 ``` 
 
 The relevant configuration is:
@@ -257,11 +257,11 @@ tensorboard --logdir=./lctsc_model
 
 Then we do the inference with the trained models respectively:
 ```bash
-pymic_test config/lctsc_train/unet3d_volumefusion.cfg
+pymic_test config/lctsc_train/unet3d_volf.cfg
 pymic_test config/lctsc_train/unet3d_scratch.cfg
 ``` 
 
-The predictions are saved in `lctsc_result/unet3d_volf` and `lctsc_result/unet3d_scratch`, respectively. To obtain the quantitative evaluaiton scores in terms of Dice, run:
+The predictions are saved in `./lctsc_result/unet3d_volf` and `./lctsc_result/unet3d_scratch`, respectively. To obtain the quantitative evaluaiton scores in terms of Dice, run:
 
 ```bash
 pymic_eval_seg -cfg config/evaluation.cfg
@@ -274,7 +274,7 @@ Note that we do not use any post-processing methods. The average Dice (%) for ea
 |Pretrain with VolF| 73.38 | 91.61 | 86.20 | 97.35 | 87.14 |
 
 ## 3. Using other self-supervised pretraining methods
-In addition to Volume Fusion, you can also try other self-supervised pretraining methods including Model Genesis, Patch Swapping and Vox2vec.
+In addition to VolF, you can also try other self-supervised pretraining methods including ModelGenesis, PatchSwapping and Vox2vec.
 ### 3.1. Pretraining with Model Genesis
 Similarly to VolF, we need to  create a validation dataset that contains corrupted input images and the ground truth for the pretext task, i.e., image reconstruction task. Do this by runing the following command:
 
@@ -314,7 +314,7 @@ pymic_train config/lctsc_train/unet3d_patchswap.cfg
 ``` 
 
 ### 3.3 Pretraining with Vox2vec
-See `luna_pretrain/unet3d_vox2vec.cfg` for detailed configuration of Vox2vec. Note that this method requires a pair of overlapped cropping for contrastive learning. The corresponding setting is:
+See `./config/luna_pretrain/unet3d_vox2vec.cfg` for detailed configuration of Vox2vec. Note that this method requires a pair of overlapped cropping for contrastive learning. The corresponding setting is:
 
 ```bash
 train_transform = [Crop4Vox2Vec]
