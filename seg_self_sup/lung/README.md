@@ -18,14 +18,14 @@ The following figure shows a performance comparison between training from scratc
 
 <img src="https://github.com/HiLab-git/PyMIC_examples/blob/dev/seg_self_sup/lung/pictures/valid_dice2.png" width="600">
 
-## Data 
+## 1. Data 
 The LUNA dataset is used for self-supervised pretraining. It contains 888 CT volumes of patients with lung nodule. The [LCTSC2017][lctsc_link] dataset is used for downstream segmentation for four organs-at-risks: the esophagus, heart, spinal cord and lung. LCTSC2017 contains CT scans of 60 patients. Please downlaod the LUNA dataset from the [zenodo][luna_link] website. We have provided a preprocessed version of LCTSC2017 and it is available at 
-`PyMIC_data/LCTSC2017`. The preprocessing was based on cropping. 
+`PyMIC_examples/PyMIC_data/LCTSC2017`. The preprocessing was based on cropping. 
 
 [luna_link]:https://zenodo.org/records/3723295
 [lctsc_link]:https://wiki.cancerimagingarchive.net/pages/viewpage.action?pageId=24284539
 
-### Preprocessing for LUNA dataset
+### 1.1 Preprocessing for LUNA dataset
 The LUNA dataset contrains 10 subfolders. We use folder 0-8 for training and 9 for validation during self-supervised learning.  As the orignal CT volumes have a large size, and to speedup the data loading process, we preprocess the LUNA dataset by cropping each volume to smaller subvolumes. In addition, the intensity is clipped to [-1000, 1000] and then normalized to [-1, 1]. Do the preprocessing by running:
 
 ```bash
@@ -40,8 +40,8 @@ python get_luna_csv.py
 
 Note that the path of folder containing the preprocessed LUNA dataset should be correctly set in the script. Then we obtain two csv files: `config/luna_data/luna_train.csv` and `config/luna_data/luna_valid.csv`, and they are for training and validaiton images, respectively.
 
-
-## VolF for pretraining
+## 2. Pretraining with VolF
+### 2.1. Pretraining
 For VolF, we need to  create a validation dataset that contains fused volumes and the ground truth for the pretext task, i.e., a pseudo-segmentation task. Do this by runing the following command:
 
 ```bash
@@ -114,7 +114,7 @@ iter_valid = 1000
 iter_save  = 40000
 ```
 
-## Downstream segmentation with LCTSC2017 dataset
+### 2.2. Downstream segmentation with LCTSC2017 dataset
 Based on the pretrained model, we use it to intialize the 3D UNet for the downstream segmentation task on the LCTSC2017 dataset.
 
 First, make sure that you have downloaded  the preprocessed LCTSC2017 dataset and put it in `PyMIC_data/LCTSC2017`, as mentioned above. As the 60 CT volumes have 24 for testing, we randomly split the other 36 into 27 for training and 9 for validation. Run the following command to do the data split and writing the csv files:
@@ -209,7 +209,7 @@ valid loss 0.1217, avg foreground dice 0.7994 [0.9859 0.5184 0.8499 0.8627 0.966
 
 It can be observed that after 1000 iterations, the average foreground Dice on the validation set reaches 0.7994.
 
-## Comparison with training from scatch
+### 2.3 Comparison with training from scatch
 For comparison, we also train 3D UNet for the downstream segmentatin task from scratch, run the following command:
 
 ```bash
@@ -273,9 +273,9 @@ Note that we do not use any post-processing methods. The average Dice (%) for ea
 |From Scratch               | 68.89 | 89.86 | 85.50 | 97.23 | 85.37 |
 |Pretrain with VolF| 73.38 | 91.61 | 86.20 | 97.35 | 87.14 |
 
-## Using other self-supervised pretraining methods
+## 3. Using other self-supervised pretraining methods
 In addition to Volume Fusion, you can also try other self-supervised pretraining methods including Model Genesis, Patch Swapping and Vox2vec.
-### Pretraining with Model Genesis
+### 3.1. Pretraining with Model Genesis
 Similarly to VolF, we need to  create a validation dataset that contains corrupted input images and the ground truth for the pretext task, i.e., image reconstruction task. Do this by runing the following command:
 
 ```bash
@@ -294,7 +294,7 @@ Finally, we initialize 3D UNet with the pretrained weights for downstream segmen
 pymic_train config/lctsc_train/unet3d_genesis.cfg
 ``` 
 
-### Pretraining with Patch Swapping
+### 3.2 Pretraining with Patch Swapping
 Firstly, we also create a validation dataset that contains patch-swapped input images and the ground truth for the pretext task, i.e., image reconstruction task. Do this by runing the following command:
 
 ```bash
@@ -313,7 +313,7 @@ Finally, we initialize 3D UNet with the pretrained weights for downstream segmen
 pymic_train config/lctsc_train/unet3d_patchswap.cfg
 ``` 
 
-### Pretraining with Vox2vec
+### 3.3 Pretraining with Vox2vec
 See `luna_pretrain/unet3d_vox2vec.cfg` for detailed configuration of Vox2vec. Note that this method requires a pair of overlapped cropping for contrastive learning. The corresponding setting is:
 
 ```bash
