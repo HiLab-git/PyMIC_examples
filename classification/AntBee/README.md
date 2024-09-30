@@ -45,7 +45,7 @@ pymic_test config/train_test_ce1.cfg
 2. Then run the following command to obtain quantitative evaluation results in terms of accuracy. 
 
 ```bash
-pymic_eval_cls config/evaluation.cfg
+pymic_eval_cls -cfg config/evaluation.cfg
 ```
 
 The obtained accuracy by default setting should be around 0.9477, and the AUC will be around 0.9745.
