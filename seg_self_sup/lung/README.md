@@ -3,7 +3,7 @@
 In this example, we show self-supervised training methods for segmentation implemented in PyMIC.
 Currently, the following self-supervised methods are implemented:
 |Method name |PyMIC class |Reference|
-|---|---|---|---|
+|---|---|---|
 |VolF |SelfSupVolumeFusion| [Wang et al., Arxiv 2023][vf_paper]|
 |Model Genesis |SelfSupModelGenesis| [Zhou et al., MIA 2021][mg_paper]|
 |Patch Swapping|SelfSupPatchSwapping| [Chen et al., MIA 2019][ps_paper]| 
