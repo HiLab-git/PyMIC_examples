@@ -2,12 +2,12 @@
 
 In this example, we show self-supervised training methods for segmentation implemented in PyMIC.
 Currently, the following self-supervised methods are implemented:
-|PyMIC Method|Reference|Remarks|
-|---|---|---|
-|SelfSupVolumeFusion| [Wang et al., Arxiv 2023][vf_paper]| Volume Fusion (VolF)|
-|SelfSupModelGenesis| [Zhou et al., MIA 2021][mg_paper]| Model Genesis|
-|SelfSupPatchSwapping| [Chen et al., MIA 2019][ps_paper]| Patch Swapping|
-|SelfSupVox2Vec|  [Goncharov et al., MICCAI 2023][vox2vec_paper]| Vox2vec|
+|Method name |PyMIC class |Reference|
+|---|---|---|---|
+|VolF |SelfSupVolumeFusion| [Wang et al., Arxiv 2023][vf_paper]|
+|Model Genesis |SelfSupModelGenesis| [Zhou et al., MIA 2021][mg_paper]|
+|Patch Swapping|SelfSupPatchSwapping| [Chen et al., MIA 2019][ps_paper]| 
+|Vox2vec |SelfSupVox2Vec|  [Goncharov et al., MICCAI 2023][vox2vec_paper]|
 
 [vf_paper]:https://arxiv.org/abs/2306.16925
 [mg_paper]:https://www.sciencedirect.com/science/article/pii/S1361841520302048
