@@ -1,5 +1,5 @@
 # Heart Structure Segmentation using 2D Networks
-<img src="./picture/seg_example.png" width="796" height="682"/> 
+<img src="./picture/image.png"/> <img src="./picture/seg.png"/> 
 
 In this example, we show heart structure segmentaiton from the ACDC dataset using the following 2D networks:
 
@@ -84,8 +84,8 @@ pymic_train config/unet.cfg
 
 2. During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. 
 
-![avg_dice](./picture/train_avg_dice.png)
-![avg_loss](./picture/train_avg_loss.png)
+![avg_dice](./picture/training_dice.png)
+![avg_loss](./picture/training_loss.png)
 
 3. Run the following command to obtain segmentation results of testing images. By default we set `ckpt_mode` to 1, which means using the best performing checkpoint based on the validation set.
 
