@@ -22,17 +22,69 @@ In this example, we show heart structure segmentaiton from the ACDC dataset usin
 [swinunet]:https://link.springer.com/chapter/10.1007/978-3-031-25066-8_9
 
 
-## Data 
-1. We use the [Promise12][promise12_link] dataset for this example. The preprocessed images are available in `PyMIC_data/Promise12`. We have resampled the original images into a uniform resolution and cropped them to a smaller size. The code for preprocessing is in  `preprocess.py`.
-2. Run `python write_csv_files.py` to randomly split the dataset into our own training (35 images), validation (5 images) and testing (10 images) sets. The output csv files are saved in `config/data`.
+## 1. Data 
+The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). The images are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/data` for details).
 
-[promise12_link]:https://promise12.grand-challenge.org/
+[ACDC_link]:https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html
 
-## Training
-1. Start to train by running:
+## 2. Demo with 2D UNet
+### 2.1 Training
+1. The configuration file for training with  UNet looks like:
+
+```bash
+[dataset]
+...
+train_dir = ../../PyMIC_data/ACDC/preprocess/
+train_csv = config/data/image_train.csv
+valid_csv = config/data/image_valid.csv
+test_csv  = config/data/image_test.csv
+
+train_batch_size = 4
+train_transform = [NormalizeWithMeanStd, Pad, RandomFlip,  RandomCrop, LabelToProbability]
+valid_transform = [NormalizeWithMeanStd, Pad, LabelToProbability]
+test_transform  = [NormalizeWithMeanStd, Pad]
+...
+RandomCrop_output_size = [8, 224, 224]
+...
+
+[network]
+net_type = UNet2D
+
+class_num     = 4
+in_chns       = 1
+feature_chns  = [16, 32, 64, 128, 256]
+dropout       = [0.0, 0.0, 0.2, 0.2, 0.2]
+up_mode       = 2
+multiscale_pred = False
+
+[training]
+...
+loss_type     = DiceLoss
+optimizer     = Adam
+learning_rate = 1e-3
+momentum      = 0.9
+weight_decay  = 1e-5
+
+# for lr schedular (StepLR)
+lr_scheduler  = StepLR
+lr_gamma      = 0.5
+lr_step       = 5000
+early_stop_patience = 10000
+
+ckpt_dir    = model/unet2d
+
+# start iter
+iter_max   = 15000
+iter_valid = 250
+iter_save  = 15000
+...
+```
+
+where 
+Start to train by running:
  
 ```bash
-pymic_train config/unet3d.cfg
+pymic_train config/unet.cfg
 ```
 
 Note that we set `multiscale_pred = True`, `deep_supervise = True` and `loss_type = [DiceLoss, CrossEntropyLoss]` in the configure file. We also use Mixup for data
