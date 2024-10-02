@@ -28,8 +28,7 @@ The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in
 [ACDC_link]:https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html
 
 ## 2. Demo with 2D UNet
-### 2.1 Training
-1. The configuration file for training with  UNet looks like:
+1. The configuration file for training with  UNet is `config/unet.cfg`. It looks like:
 
 ```bash
 [dataset]
@@ -49,7 +48,6 @@ RandomCrop_output_size = [8, 224, 224]
 
 [network]
 net_type = UNet2D
-
 class_num     = 4
 in_chns       = 1
 feature_chns  = [16, 32, 64, 128, 256]
@@ -65,48 +63,46 @@ learning_rate = 1e-3
 momentum      = 0.9
 weight_decay  = 1e-5
 
-# for lr schedular (StepLR)
 lr_scheduler  = StepLR
 lr_gamma      = 0.5
 lr_step       = 5000
 early_stop_patience = 10000
 
 ckpt_dir    = model/unet2d
-
-# start iter
 iter_max   = 15000
 iter_valid = 250
 iter_save  = 15000
 ...
 ```
 
-where 
-Start to train by running:
+where  we use a patch size of 224x224. Each batch contains 4 subvolumes with 8 slices, i.e., the actual batch size for the 2D network is 32. The Dice loss is used for training, with an Adam optimizer and an initial learning rate of 0.001. The total iteration number is 15000, and the learning rate is decayed by 0.5 each 5000 iterations.  Start to train by running:
  
 ```bash
 pymic_train config/unet.cfg
 ```
 
-Note that we set `multiscale_pred = True`, `deep_supervise = True` and `loss_type = [DiceLoss, CrossEntropyLoss]` in the configure file. We also use Mixup for data
-augmentation by setting `mixup_probability=0.5`.
 
 2. During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. 
 
 ![avg_dice](./picture/train_avg_dice.png)
 ![avg_loss](./picture/train_avg_loss.png)
 
-## Testing and evaluation
-1. Run the following command to obtain segmentation results of testing images. By default we set `ckpt_mode` to 1, which means using the best performing checkpoint based on the validation set.
+3. Run the following command to obtain segmentation results of testing images. By default we set `ckpt_mode` to 1, which means using the best performing checkpoint based on the validation set.
 
 ```bash
-pymic_test config/unet3d.cfg
+pymic_test config/unet.cfg
 ```
 
-2. Run the following command to obtain quantitative evaluation results in terms of Dice. 
+4. Run the following command to obtain quantitative evaluation results in terms of Dice. 
 
 ```bash
 pymic_eval_seg -cfg config/evaluation.cfg
 ```
 
-The obtained average Dice score by default setting should be close to 88.04%, and the Average Symmetric Surface Distance (ASSD) is 1.41 mm. You can try your efforts to improve the performance with different networks or training strategies by changing the configuration file `config/unet3d.cfg`.
+The obtained average Dice score by default setting should be close to 91.00%. You can try your efforts to improve the performance with different hyper-parameters such as patch size, optimizer, learning rate, iter_max and lr_step by editing `config/unet.cfg`.
+
+
+## 3. Demo with other networks
+
+For the other networks, please replace `config/unet.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks.
 
