@@ -4,8 +4,8 @@
 In this example, we show heart structure segmentaiton from the ACDC dataset using 2D networks. The following is a list of networks and their performance measured by Dice (%) by default setting. 
 
 |Network  |Reference | RV| Myo | LV| Average|
-|---|---|---|---|---|
-|UNet2D | [Ronneberger et al., MICCAI 2015][unet_paper]| | | | | 
+|---|---|---|---|---|---|
+|UNet2D | [Ronneberger et al., MICCAI 2015][unet_paper]| 90.99| 89.63| 94.83| 91.82| 
 |UNet2D_scse |[Roy et al., TMI 2019][scse_paper]| | | | | 
 |CANet| [Gu et al., TMI 2021][canet_paper]|  | | | | 
 |COPLENet | [Wang et al., TMI 2020][coplenet]| | | | | 
