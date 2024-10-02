@@ -1,17 +1,17 @@
 # Heart Structure Segmentation using 2D Networks
 <img src="./picture/seg_example.png" width="796" height="682"/> 
 
-In this example, we show heart structure segmentaiton from the ACDC dataset using 2D networks. The following is a list of networks and their performance measured by Dice (%) by default setting. 
+In this example, we show heart structure segmentaiton from the ACDC dataset using the following 2D networks:
 
-|Network  |Reference | RV| Myo | LV| Average|
-|---|---|---|---|---|---|
-|UNet2D | [Ronneberger et al., MICCAI 2015][unet_paper]| 90.99| 89.63| 94.83| 91.82| 
-|UNet2D_scse |[Roy et al., TMI 2019][scse_paper]| | | | | 
-|CANet| [Gu et al., TMI 2021][canet_paper]|  | | | | 
-|COPLENet | [Wang et al., TMI 2020][coplenet]| | | | | 
-|UNet++ | [Zhou et al., MICCAI Workshop 2018][unet]| | | | | 
-|TransUNet | [Chen et al., Arxiv 2021][transunet]| | | | | 
-|SwinUNet|  [Cao et al., ECCV Workshop 2022][swinunet]| | | | | 
+|Network  |Reference |
+|---|---|
+|UNet2D | [Ronneberger et al., MICCAI 2015][unet_paper]| 
+|UNet2D_scse |[Roy et al., TMI 2019][scse_paper]|
+|CANet| [Gu et al., TMI 2021][canet_paper]|
+|COPLENet | [Wang et al., TMI 2020][coplenet]|
+|UNet++ | [Zhou et al., MICCAI Workshop 2018][unet++]|
+|TransUNet | [Chen et al., Arxiv 2021][transunet]| 
+|SwinUNet|  [Cao et al., ECCV Workshop 2022][swinunet]|
 
 [unet_paper]:https://link.springer.com/chapter/10.1007/978-3-319-24574-4_28
 [scse_paper]:https://ieeexplore.ieee.org/document/8447284
