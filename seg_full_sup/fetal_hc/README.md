@@ -84,4 +84,26 @@ where we use random rescale, random crop and flipping for data augmentation. Eac
 pymic_train config/unet.cfg
 ```
 
-During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images.  In the left one, the yellow and purple curves are for training and valida
+During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images.  In the left one, the yellow and purple curves are for training and validation Dice,  respectively.  In the right one, the cyan and red curves are for training and validation loss,  respectively. 
+
+![avg_dice](./picture/train_avg_dice.png)
+![avg_loss](./picture/train_avg_loss.png)
+
+2. Run the following command to obtain segmentation results of testing images based on the best-performing checkpoint on the validation set. By default we use sliding window inference to get better results. You can also edit the `testing` section of `config/unet.cfg` to use other inference strategies.
+
+```bash
+pymic_test config/unet.cfg
+```
+
+3. Use the following command to obtain quantitative evaluation results in terms of Dice. 
+
+```bash
+pymic_eval_seg -cfg config/evaluation.cfg
+```
+
+The obtained average Dice score by default setting should be close to 97.02%. The Average Symmetric Surface Distance (ASSD) is also calculated. 
+
+## 3, Using other networks
+
+For the other networks, please replace `config/unet.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as CANet, COPLENet, UNet++, TransUNet and SwinUNet.
+
