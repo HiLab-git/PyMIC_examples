@@ -3,15 +3,15 @@
 
 In this example, we show heart structure segmentaiton from the ACDC dataset using the following 2D networks:
 
-|Network  |Reference |
-|---|---|
-|UNet2D | [Ronneberger et al., MICCAI 2015][unet_paper]| 
-|UNet2D_scse |[Roy et al., TMI 2019][scse_paper]|
-|CANet| [Gu et al., TMI 2021][canet_paper]|
-|COPLENet | [Wang et al., TMI 2020][coplenet]|
-|UNet++ | [Zhou et al., MICCAI Workshop 2018][unet++]|
-|TransUNet | [Chen et al., Arxiv 2021][transunet]| 
-|SwinUNet|  [Cao et al., ECCV Workshop 2022][swinunet]|
+|Network  |Reference | Remarks|
+|---|---| ---|
+|UNet2D | [Ronneberger et al., MICCAI 2015][unet_paper]|  2D Unet|
+|UNet2D_scse |[Roy et al., TMI 2019][scse_paper]| 2D UNe with spatial and channel attention |
+|CANet| [Gu et al., TMI 2021][canet_paper]| Comprehensive Attentin Network|
+|COPLENet | [Wang et al., TMI 2020][coplenet]| Originally for Covid-19 lesion segmentation|
+|UNet++ | [Zhou et al., MICCAI Workshop 2018][unet++]| Nested 2D UNet |
+|TransUNet | [Chen et al., Arxiv 2021][transunet]|  UNet combined with Transformer |
+|SwinUNet|  [Cao et al., ECCV Workshop 2022][swinunet]| UNet combined with Swin Transformer |
 
 [unet_paper]:https://link.springer.com/chapter/10.1007/978-3-319-24574-4_28
 [scse_paper]:https://ieeexplore.ieee.org/document/8447284

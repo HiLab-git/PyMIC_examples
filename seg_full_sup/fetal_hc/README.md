@@ -2,8 +2,25 @@
 
 <img src="./picture/001_HC.png" width="256" height="256"/> <img src="./picture/001_HC_seg.png" width="256" height="256"/>
 
-In this example, we use 2D neural networks to segment the fetal brain from ultrasound images. During training, we use tensorboard to observe the performance of the network at different iterations. We then apply the trained model to testing images and obtain quantitative evaluation results.
+In this example, we use 2D neural networks to segment the fetal brain from ultrasound images. During training, we use tensorboard to observe the performance of the network at different iterations. We then apply the trained model to testing images and obtain quantitative evaluation results. The following networks are implemented in this example:
 
+|Network  |Reference | Remarks|
+|---|---| ---|
+|UNet2D | [Ronneberger et al., MICCAI 2015][unet_paper]|  2D Unet|
+|UNet2D_scse |[Roy et al., TMI 2019][scse_paper]| 2D UNe with spatial and channel attention |
+|CANet| [Gu et al., TMI 2021][canet_paper]| Comprehensive Attentin Network|
+|COPLENet | [Wang et al., TMI 2020][coplenet]| Originally for Covid-19 lesion segmentation|
+|UNet++ | [Zhou et al., MICCAI Workshop 2018][unet++]| Nested 2D UNet |
+|TransUNet | [Chen et al., Arxiv 2021][transunet]|  UNet combined with Transformer |
+|SwinUNet|  [Cao et al., ECCV Workshop 2022][swinunet]| UNet combined with Swin Transformer |
+
+[unet_paper]:https://link.springer.com/chapter/10.1007/978-3-319-24574-4_28
+[scse_paper]:https://ieeexplore.ieee.org/document/8447284
+[canet_paper]:https://ieeexplore.ieee.org/abstract/document/9246575
+[coplenet]:https://ieeexplore.ieee.org/document/9109297
+[unet++]:https://link.springer.com/chapter/10.1007/978-3-030-00889-5_1
+[transunet]:https://arxiv.org/abs/2102.04306
+[swinunet]:https://link.springer.com/chapter/10.1007/978-3-031-25066-8_9
 
 ## 1, Data and preprocessing
 1. We use the [HC18][hc18_link] dataset for this example. The images are ready to use in `PyMIC_data/Fetal_HC`. There are 999 2D ultrasound images and their annotations in the training set.  The original annotations are contours, and we have converted them into binary masks for segmentation. (The conversion code is in `get_ground_truth.py`)
@@ -67,26 +84,4 @@ where we use random rescale, random crop and flipping for data augmentation. Eac
 pymic_train config/unet.cfg
 ```
 
-During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images.  In the left one, the yellow and purple curves are for training and validation Dice,  respectively.  In the right one, the cyan and red curves are for training and validation loss,  respectively. 
-
-![avg_dice](./picture/train_avg_dice.png)
-![avg_loss](./picture/train_avg_loss.png)
-
-2. Run the following command to obtain segmentation results of testing images based on the best-performing checkpoint on the validation set. By default we use sliding window inference to get better results. You can also edit the `testing` section of `config/unet.cfg` to use other inference strategies.
-
-```bash
-pymic_test config/unet.cfg
-```
-
-3. Use the following command to obtain quantitative evaluation results in terms of Dice. 
-
-```bash
-pymic_eval_seg -cfg config/evaluation.cfg
-```
-
-The obtained average Dice score by default setting should be close to 97.02%. The Average Symmetric Surface Distance (ASSD) is also calculated. 
-
-## 3, Using other networks
-
-For the other networks, please replace `config/unet.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as CANet, COPLENet, UNet++, TransUNet and SwinUNet.
-
+During training or after training, run `tensorboard --logdir model/unet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images.  In the left one, the yellow and purple curves are for training and valida
