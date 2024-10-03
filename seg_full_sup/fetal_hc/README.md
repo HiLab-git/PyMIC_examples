@@ -66,7 +66,7 @@ learning_rate = 1e-3
 momentum      = 0.9
 weight_decay  = 1e-5
 
-# for lr schedular  
+# for lr scheduler  
 lr_scheduler = PolynomialLR
 lr_power     = 0.8
 early_stop_patience = 5000
@@ -78,7 +78,7 @@ iter_save  = 10000
 ...
 ```
 
-where we use random rescale, random crop and flipping for data augmentation. Each batch contains 4 images, with a patch size of 224x320. The DiceLoss and CrossEntropyLoss are used for training, with an Adam optimizer and an initial learning rate of 0.001. The total iteration number is 10000, and the Polynomial learning rate schedular is used.  Start to train by running:
+where we use random rescale, random crop and flipping for data augmentation. Each batch contains 4 images, with a patch size of 224x320. The DiceLoss and CrossEntropyLoss are used for training, with an Adam optimizer and an initial learning rate of 0.001. The total iteration number is 10000, and the Polynomial learning rate scheduler is used.  Start to train by running:
  
 ```bash
 pymic_train config/unet.cfg

@@ -78,7 +78,7 @@ iter_valid = 250
 iter_save  = 6000
 ```
 
-where we use random crop for data augmentation. The original labels are 0 and 255, and they are converted to 0 and 1, respectively.  Each batch contains 4 images, with a patch size of 224x224. The DiceLoss is used for training, with an Adam optimizer and an initial learning rate of 0.001. The total iteration number is 6000, and the MultiStep learning rate schedular is used.  Start to train by running:
+where we use random crop for data augmentation. The original labels are 0 and 255, and they are converted to 0 and 1, respectively.  Each batch contains 4 images, with a patch size of 224x224. The DiceLoss is used for training, with an Adam optimizer and an initial learning rate of 0.001. The total iteration number is 6000, and the MultiStep learning rate scheduler is used.  Start to train by running:
 
  
 ```bash
