@@ -61,7 +61,7 @@ iter_save  = 10000
 ...
 ```
 
-where we use random rescale, random crop and flipping for data augmentation. The patch size of 224x320. Each batch contains 4 images. The DiceLoss and CrossEntropyLoss are used for training, with an Adam optimizer and an initial learning rate of 0.001. The total iteration number is 10000, and the Polynomial learning rate schedular is used.  Start to train by running:
+where we use random rescale, random crop and flipping for data augmentation. Each batch contains 4 images, with a patch size of 224x320. The DiceLoss and CrossEntropyLoss are used for training, with an Adam optimizer and an initial learning rate of 0.001. The total iteration number is 10000, and the Polynomial learning rate schedular is used.  Start to train by running:
  
 ```bash
 pymic_train config/unet.cfg
@@ -85,9 +85,6 @@ pymic_eval_seg -cfg config/evaluation.cfg
 ```
 
 The obtained average Dice score by default setting should be close to 97.02%. The Average Symmetric Surface Distance (ASSD) is also calculated. 
-
-4. Set `tta_mode = 1` in `config/unet.cfg` to enable test time augmentation, and run the testing and evaluation code again, we find that the average Dice will be increased to around 97.22%.
-
 
 ## 3, Using other networks
 
