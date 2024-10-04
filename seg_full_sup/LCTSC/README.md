@@ -1,5 +1,5 @@
 # Chest organ segmentation from 3D CTT
-<img src="./picture/seg_example.png" width="796" height="682"/> 
+<img src="./picture/seg_example.png" width="400" height="400"/> 
 
 In this example, we use 3D neural networks to segment chest organs from 3D CT volumes. 
 The following networks are considered:
@@ -81,7 +81,7 @@ where we use random crop and flipping for data augmentation. Each batch contains
 pymic_train config/unet3d.cfg
 ```
 
-During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. 
+During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images. In the left one, the yellow and purple curves are for training and validation Dice,  respectively.  In the right one, the cyan and red curves are for training and validation loss,  respectively. 
 
 ![avg_dice](./picture/avg_dice.png)
 ![avg_loss](./picture/avg_loss.png)
