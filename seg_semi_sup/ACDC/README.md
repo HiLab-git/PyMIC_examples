@@ -21,17 +21,17 @@ Currently, the following semi-supervised methods are implemented:
 [mcnet_paper]:https://link.springer.com/chapter/10.1007/978-3-030-87196-3_28
 
 
-## Data 
+## 1. Data 
 The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). The images are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/data` for details).
 
 In the training set, we have randomly selected 14 images of 7 patients as annotated images and the other 126 images as unannotated images. See `random_split_train.py`. 
 
 [ACDC_link]:https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html
 
-## Training
+## 2. Training
 In this demo, we experiment with six methods: EM, UAMT, UPRC, CCT, CPS and MCNet, and they are compared with the baseline of learning from annotated images. All these methods use UNet2D as the backbone network.
 
-### Baseline Method
+### 2.1 Baseline Method
 The baseline method uses the 14 annotated cases for training. The batch size is 4, and the patch size is 6x192x192. Therefore, indeed there are 16 2D slices in each batch. See `config/unet2d_baseline.cfg` for details about the configuration. The dataset configuration is:
 
 ```bash
@@ -109,7 +109,7 @@ lr_gamma      = 0.5
 ReduceLROnPlateau_patience = 4000
 early_stop_patience = 10000
 
-ckpt_save_dir    = model/unet2d_baseline
+ckpt_dir    = model/unet2d_baseline
 
 iter_start = 0
 iter_max   = 30000
@@ -136,7 +136,7 @@ pymic_train config/unet2d_baseline.cfg
 pymic_test  config/unet2d_baseline.cfg
 ```
 
-### Data configuration for semi-supervised learning
+### 2.2 Data configuration for semi-supervised learning
 For semi-supervised learning, we set the batch size as 8, where 4 are annotated images and the other 4 are unannotated images. 
 
 ```bash
@@ -154,7 +154,7 @@ train_batch_size = 4
 train_batch_size_unlab = 4
 ```
 
-### Entropy Minimization
+### 2.3 Entropy Minimization
 The configuration file for Entropy Minimization is `config/unet2d_em.cfg`.  The data configuration has been described above, and the settings for data augmentation, network, optmizer, learning rate scheduler and inference are the same as those in the baseline method. Specific setting for Entropy Minimization is:
 
 ```bash
@@ -173,7 +173,7 @@ pymic_train config/unet2d_em.cfg
 pymic_test config/unet2d_em.cfg
 ```
 
-### UAMT
+### 2.4 UAMT
 The configuration file for UAMT is `config/unet2d_uamt.cfg`. The corresponding setting is:
 
 ```bash
@@ -191,7 +191,7 @@ pymic_train config/unet2d_uamt.cfg
 pymic_test config/unet2d_uamt.cfg
 ```
 
-### UPRC
+### 2.5 UPRC
 The configuration file for UPRC is `config/unet2d_urpc.cfg`. This method requires deep supervision and pyramid prediction of a network. The network setting is:
 
 ```bash 
@@ -223,7 +223,7 @@ pymic_train config/unet2d_urpc.cfg
 pymic_test config/unet2d_urpc.cfg
 ```
 
-### CCT
+### 2.6 CCT
 The orginal [CCT][cct_paper] uses multiple auxiliary deocders in the network. Due to the memory constraint and efficiency consideration, we only use 4 auxiliary decoders based on DropOut, FeatureDrop, FeatureNoise and VAT, respectively. The configuration file of CCT is `config/unet2d_cct.cfg`, and the network setting is:
 
 ```bash 
@@ -259,7 +259,7 @@ pymic_train config/unet2d_cct.cfg
 pymic_test config/unet2d_cct.cfg
 ```
 
-### CPS
+### 2.7 CPS
 The configuration file for CPS is `config/unet2d_cps.cfg`, and the corresponding setting is:
 
 ```bash 
@@ -277,7 +277,7 @@ pymic_train config/unet2d_cps.cfg
 pymic_test config/unet2d_cps.cfg
 ```
 
-### MCNet
+### 2.8 MCNet
 The configuration file for MCNet is `config/unet2d_mcnet.cfg`, and the corresponding setting is:
 
 ```bash 
@@ -295,8 +295,8 @@ pymic_train config/unet2d_mcnet.cfg
 pymic_test config/unet2d_mcnet.cfg
 ```
 
-## Evaluation
-Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
+## 3. Evaluation
+Use `pymic_eval_seg -cfg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
 
 ```bash
 metric_list = [dice, hd95]
