@@ -19,16 +19,16 @@ Currently, the following methods are available in PyMIC:
 [dmpls_paper]:https://arxiv.org/abs/2203.02106 
 
 
-## Data 
+## 1. Data 
 The [ACDC][ACDC_link] (Automatic Cardiac Diagnosis Challenge) dataset is used in this demo. It contains 200 short-axis cardiac cine MR images of 100 patients, and the classes for segmentation are: Right Ventricle (RV), Myocardiym (Myo) and Left Ventricle (LV). [Valvano et al.][scribble_link] provided scribble annotations of this dataset. The images and scribble annotations are available in `PyMIC_data/ACDC/preprocess`, where we have normalized the intensity to [0, 1]. The images are split at patient level into 70%, 10% and 20% for training, validation  and testing, respectively (see `config/data` for details).
 
 [ACDC_link]:https://www.creatis.insa-lyon.fr/Challenge/acdc/databases.html
 [scribble_link]:https://gvalvano.github.io/wss-multiscale-adversarial-attention-gates/data
 
-## Training
+## 2. Training
 In this demo, we experiment with five methods: EM, TV, GatedCRF, USTM and DMPLS, and they are compared with the baseline of learning from annotated pixels with partial CE loss. All these methods use UNet2D as the backbone network.
 
-### Baseline Method
+### 2.1 Baseline Method
 The dataset setting is similar to that in the `seg_ssl/ACDC` demo. Here we use a slightly different setting of data transform:
 
 ```bash
@@ -94,10 +94,9 @@ lr_gamma      = 0.5
 ReduceLROnPlateau_patience = 2000
 early_stop_patience = 8000
 
-ckpt_save_dir    = model/unet2d_baseline
+ckpt_dir    = model/unet2d_baseline
 
 # start iter
-iter_start = 0
 iter_max   = 20000
 iter_valid = 100
 iter_save  = [2000, 20000]
@@ -122,7 +121,7 @@ pymic_train config/unet2d_baseline.cfg
 pymic_test config/unet2d_baseline.cfg
 ```
 
-### Data configuration for other weakly supervised learning
+### 2.2 Data configuration for other weakly supervised learning
 For other weakly supervised learning methods, please set `supervise_type = weak_sup` in the configuration.
 
 ```bash
@@ -137,7 +136,7 @@ test_csv  = config/data/image_test.csv
 ...
 ```
 
-### Entropy Minimization
+### 2.3 Entropy Minimization
 The configuration file for Entropy Minimization is `config/unet2d_em.cfg`.  The data configuration has been described above, and the settings for data augmentation, network, optmizer, learning rate scheduler and inference are the same as those in the baseline method. Specific setting for Entropy Minimization is:
 
 ```bash
@@ -157,7 +156,7 @@ pymic_train config/unet2d_em.cfg
 pymic_test config/unet2d_em.cfg
 ```
 
-### TV
+### 2.4 TV
 The configuration file for TV is `config/unet2d_tv.cfg`. The corresponding setting is:
 
 ```bash
@@ -174,7 +173,7 @@ pymic_train config/unet2d_tv.cfg
 pymic_test config/unet2d_tv.cfg
 ```
 
-### Gated CRF
+### 2.5 Gated CRF
 The configuration file for Gated CRF is `config/unet2d_gcrf.cfg`. The corresponding setting is:
 
 ```bash 
@@ -198,7 +197,7 @@ pymic_train config/unet2d_gcrf.cfg
 pymic_test config/unet2d_gcrf.cfg
 ```
 
-### USTM
+### 2.6 USTM
 The configuration file for USTM is `config/unet2d_ustm.cfg`. The corresponding setting is:
 
 ```bash
@@ -216,7 +215,7 @@ pymic_train config/unet2d_ustm.cfg
 pymic_test config/unet2d_ustm.cfg
 ```
 
-### DMPLS
+### 2.7 DMPLS
 The configuration file for DMPLS is `config/unet2d_dmpls.cfg`, and the corresponding setting is:
 
 ```bash 
@@ -234,8 +233,8 @@ pymic_train config/unet2d_dmpls.cfg
 pymic_test config/unet2d_dmpls.cfg
 ```
 
-## Evaluation
-Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
+## 3. Evaluation
+Use `pymic_eval_seg -cfg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
 
 ```bash
 metric_list = [dice, hd95]
