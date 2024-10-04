@@ -19,12 +19,12 @@ For a full list of available semi-supervised methods, see the [document][all_ssl
 [all_ssl_link]:https://pymic.readthedocs.io/en/latest/usage.ssl.html
 
 
-## Data 
+## 1. Data 
 The [Left Atrial][atrial_link] dataset is used in this demo, which is from the 2018 Atrial Segmentation Challenge. The original dataset contains 100 cases for training and 54 cases for testing.  As the official testing data are not publicly available, here we split the other 100 cases into 72 for training, 8 for validation and 20 for testing. The images are available in `PyMIC_data/AtriaSeg`. We have preprocessed the images by cropping the volume with an output size of  88 x 160 x 256. For semi-supervised learning, we set the annotation ratio to 10%, i.e., 7 images are annotated  and the other 65 images are unannotated in the training set. 
 
 [atrial_link]:http://atriaseg2018.cardiacatlas.org/
 
-### Baseline Method
+## 2. Baseline Method
 The baseline method uses the 7 annotated cases for training. The batch size is 2, and the patch size is 72x96x112. See `config/unet3d_r10_baseline.cfg` for details about the configuration. The dataset configuration is:
 
 ```bash
@@ -95,7 +95,7 @@ lr_gamma      = 0.5
 ReduceLROnPlateau_patience = 3000
 early_stop_patience = 5000
 
-ckpt_save_dir    = model/unet3d_baseline
+ckpt_dir    = model/unet3d_baseline
 
 iter_max   = 20000
 iter_valid = 100
@@ -118,7 +118,7 @@ pymic_train config/unet3d_r10_baseline.cfg
 pymic_test config/unet3d_r10_baseline.cfg
 ```
 
-### Data configuration for semi-supervised learning
+## 3. Data configuration for semi-supervised learning
 For semi-supervised learning, we set the batch size as 4, where 2 are annotated images and the other 2 are unannotated images. 
 
 ```bash
@@ -136,7 +136,7 @@ train_batch_size = 2
 train_batch_size_unlab = 2
 ```
 
-### Entropy Minimization
+### 3.1 Entropy Minimization
 The configuration file for Entropy Minimization is `config/unet3d_r10_em.cfg`.  The data configuration has been described above, and the settings for data augmentation, network, optmizer, learning rate scheduler and inference are the same as those in the baseline method. Specific setting for Entropy Minimization is:
 
 ```bash
@@ -155,7 +155,7 @@ pymic_train config/unet3d_r10_em.cfg
 pymic_test config/unet3d_r10_em.cfg
 ```
 
-### UAMT
+### 3.2 UAMT
 The configuration file for UAMT is `config/unet3d_r10_uamt.cfg`. The corresponding setting is:
 
 ```bash
@@ -173,7 +173,7 @@ pymic_train config/unet3d_r10_uamt.cfg
 pymic_test config/unet3d_r10_uamt.cfg
 ```
 
-### UPRC
+### 3.3 UPRC
 The configuration file for UPRC is `config/unet3d_r10_urpc.cfg`. This method requires deep supervision and pyramid prediction of a network. The network setting is:
 
 ```bash 
@@ -206,7 +206,7 @@ pymic_train config/unet3d_r10_urpc.cfg
 pymic_test config/unet3d_r10_urpc.cfg
 ```
 
-### CPS
+### 3.4 CPS
 The configuration file for CPS is `config/unet3d_r10_cps.cfg`, and the corresponding setting is:
 
 ```bash 
@@ -224,8 +224,8 @@ pymic_train config/unet3d_r10_cps.cfg
 pymic_test config/unet3d_r10_cps.cfg
 ```
 
-## Evaluation
-Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
+## 4. Evaluation
+Use `pymic_eval_seg -cfg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
 
 ```bash
 metric = [dice, assd]
