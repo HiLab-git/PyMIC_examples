@@ -17,39 +17,105 @@ The following networks are considered:
 [lcovnet_paper]:https://ieeexplore.ieee.org/document/10083150/
 
 
-## Data 
-1. We use the [Promise12][promise12_link] dataset for this example. The preprocessed images are available in `PyMIC_data/Promise12`. We have resampled the original images into a uniform resolution and cropped them to a smaller size. The code for preprocessing is in  `preprocess.py`.
-2. Run `python write_csv_files.py` to randomly split the dataset into our own training (35 images), validation (5 images) and testing (10 images) sets. The output csv files are saved in `config/data`.
+## 1. Data 
+The [LCTSC2017][lctsc_link] dataset is used for segmentation for four organs-at-risks: the esophagus, heart, spinal cord and lung. It contains CT scans of 60 patients. We have provided a preprocessed version of LCTSC2017 and it is available at 
+`PyMIC_examples/PyMIC_data/LCTSC2017`. The preprocessing was based on cropping. 
 
-[promise12_link]:https://promise12.grand-challenge.org/
+[lctsc_link]:https://wiki.cancerimagingarchive.net/pages/viewpage.action?pageId=24284539
 
-## Training
-1. Start to train by running:
+we randomly split the dataet into  36, 9 and 27 and  for training, validation and testing, respectively. They are saved in `image_train.csv`, `image_valid.csv` and `image_test.csv` under the folder of `config`, respectively. The script for data split is `write_csv.py`.
+
+
+## 2. Segmentation with UNet3D
+### 2.1 Training
+We first use the UNet3D for the segmentation task. The configuration file is `config/unet3d.cfg`. Some key configurations are like the following:
+
+```bash
+[dataset]
+...
+train_dir = ../../PyMIC_data/LCTSC2017
+train_csv = config/image_train.csv
+valid_csv = config/image_valid.csv
+test_csv  = config/image_test.csv
+
+...
+train_batch_size = 2
+patch_size       = [96, 96, 96]
+train_transform  = [Pad, RandomCrop, NormalizeWithMinMax, RandomFlip, LabelToProbability]
+valid_transform  = [Pad, NormalizeWithMinMax, LabelToProbability]
+test_transform   = [Pad, NormalizeWithMinMax]
+
+NormalizeWithMinMax_channels        = [0]
+NormalizeWithMinMax_threshold_lower = [-1000]
+NormalizeWithMinMax_threshold_upper = [1000]
+...
+[network]
+net_type     = UNet3D
+class_num    = 5
+in_chns      = 1
+feature_chns = [32, 64, 128, 256, 512]
+dropout      = [0, 0, 0.2, 0.2, 0.2]
+
+[training]
+...
+loss_type     = DiceLoss
+optimizer     = Adam
+learning_rate = 1e-3
+momentum      = 0.9
+weight_decay  = 1e-5
+
+lr_scheduler = StepLR
+lr_gamma = 0.5
+lr_step  = 4000
+early_stop_patience = 6000
+ckpt_dir            = model/unet3d
+
+iter_max   = 10000
+iter_valid = 250
+iter_save  = 10000
+```
+
+where we use random crop and flipping for data augmentation. Each batch contains 2 images, with a patch size of 96x96x96. The DiceLoss is used for training, with an Adam optimizer and an initial learning rate of 0.001. The total iteration number is 10000, and the Step learning rate scheduler is used.  Start to train by running:
  
 ```bash
 pymic_train config/unet3d.cfg
 ```
 
-Note that we set `multiscale_pred = True`, `deep_supervise = True` and `loss_type = [DiceLoss, CrossEntropyLoss]` in the configure file. We also use Mixup for data
-augmentation by setting `mixup_probability=0.5`.
+During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. 
 
-2. During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. 
+![avg_dice](./picture/avg_dice.png)
+![avg_loss](./picture/avg_loss.png)
 
-![avg_dice](./picture/train_avg_dice.png)
-![avg_loss](./picture/train_avg_loss.png)
+### 2.2 Testing
+The configuration for testing is in `[testing]` section of `config/unet3d.cfg`:
 
-## Testing and evaluation
-1. Run the following command to obtain segmentation results of testing images. By default we set `ckpt_mode` to 1, which means using the best performing checkpoint based on the validation set.
+```bash
+[testing]
+gpus       = [0]
+
+ckpt_mode         = 1
+output_dir        = result/unet3d
+sliding_window_enable = True
+sliding_window_batch  = 4
+sliding_window_size   = [96, 96, 96]
+sliding_window_stride = [48, 48, 48]
+```
+
+where we use a sliding window of 96x96x96 for inference. By default we use the best validation checkpoint for inference. Run the following command for testing:
 
 ```bash
 pymic_test config/unet3d.cfg
 ```
 
+### 2.3 Evaluation
 2. Run the following command to obtain quantitative evaluation results in terms of Dice. 
 
 ```bash
 pymic_eval_seg -cfg config/evaluation.cfg
 ```
 
-The obtained average Dice score by default setting should be close to 88.04%, and the Average Symmetric Surface Distance (ASSD) is 1.41 mm. You can try your efforts to improve the performance with different networks or training strategies by changing the configuration file `config/unet3d.cfg`.
+The obtained average Dice score by default setting should be close to 85%.
 
+## 3. Segmentation with other networks
+
+For the other networks, please replace `config/unet3d.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as UNet2D5, UNet3D_scse and LCOVNet.
