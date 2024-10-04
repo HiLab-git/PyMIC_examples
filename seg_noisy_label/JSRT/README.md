@@ -6,7 +6,6 @@ Currently, the following methods are available in PyMIC:
 |---|---|---|
 |GCELoss|[Zhang et al.][gce_paper], NeurIPS 2018| Train with SegmentationAgent|
 |NRDiceLoss| [Wang et al.][nrdice_paper], TMI 2020| Train with SegmentationAgent|
-|MAELoss| [Kim et al.][mae_paper], AAAI 2017| Train with SegmentationAgent|
 |NLLCoTeaching| [Han et al.][cot_paper], NeurIPS 2018| Co-teaching between two networks|
 |NLLCLSLSR| [Zhang et al.][cl_paper], MICCAI 2020| Confident learning with spatial label smoothing|
 |NLLTriNet| [Zhang et al.][trinet_paper], MICCAI 2020| Tri-network combined with sample selection|
@@ -14,14 +13,13 @@ Currently, the following methods are available in PyMIC:
 
 [gce_paper]:https://arxiv.org/abs/1805.07836
 [nrdice_paper]:https://ieeexplore.ieee.org/document/9109297
-[mae_paper]:https://arxiv.org/abs/1712.09482v1  
 [cot_paper]:https://arxiv.org/abs/1804.06872
 [cl_paper]:https://link.springer.com/chapter/10.1007/978-3-030-59710-8_70 
 [trinet_paper]:https://link.springer.com/chapter/10.1007/978-3-030-59719-1_25 
 [dast_paper]:https://ieeexplore.ieee.org/document/9770406 
 
 
-## Data 
+## 1. Data 
 The [JSRT][jsrt_link] dataset is used in this demo. It consists of 247 chest radiographs. We have preprocessed the images by resizing them to 256x256 and extracting the lung masks for the segmentation task. The images are available at `PyMIC_data/JSRT`. The images are split into 180, 20 and 47 for training, validation and testing, respectively. 
 
 [jsrt_link]:http://db.jsrt.or.jp/eng.php
@@ -31,10 +29,10 @@ For training images, we simulate noisy labels for 171 images (95%) and keep the 
 ![noisy_label](./picture/noisy_label.png)
 
 
-## Training
+## 2. Training
 In this demo, we experiment with five methods: GCE loss, co-teaching, Trinet and DAST, and the baseline of learning with a cross entropy loss. All these methods use UNet2D as the backbone network.
 
-### Baseline Method
+### 2.1 Baseline Method
 The dataset setting is similar to that in the `segmentation/JSRT` demo. See `config/unet2d_ce.cfg` for details. Here we use a slightly different setting of data and loss function:
 
 ```bash
@@ -58,7 +56,7 @@ pymic_train config/unet_ce.cfg
 pymic_test config/unet_ce.cfg
 ```
 
-### GCE Loss
+### 2.2 GCE Loss
 The configuration file for using GCE loss is `config/unet2d_gce.cfg`.  The  configuration is the same as that in the baseline except for the loss function:
 
 ```bash
@@ -74,11 +72,27 @@ pymic_train config/unet_gce.cfg
 pymic_test config/unet_gce.cfg
 ```
 
-### CLSLSR
+### 2.3 NRDiceLoss
+The configuration file for using NRDiceLoss is `config/unet2d_nrdice.cfg`.  The  configuration is the same as that in the baseline except for the loss function:
+
+```bash
+...
+loss_type     = NRDiceLoss
+...
+```
+
+The following commands are used for training and inference with this method, respectively:
+
+```bash
+pymic_train config/unet_nrdice.cfg
+pymic_test config/unet_nrdice.cfg
+```
+
+### 2.4 CLSLSR
 The CLSLSR method estimates errors in the original noisy label and obtains pixel-level weight maps based on an intial model, and then uses the weight maps to suppress noises in  a standard supervised learning procedure. Assume that the initial model is the baseline method, run the following command to obtain the weight maps:
 
 ```bash
-python clslsr_get_confidence.py config/unet_ce.cfg
+python clslsr_get_condience.py config/unet_ce.cfg
 ```
 
 The weight maps will be saved in `$root_dir/slsr_conf`. Then train the new model and do inference by:
@@ -90,20 +104,15 @@ pymic_test config/unet_clslsr.cfg
 
 Note that the weight maps for training images are specified in the configuration file `train_csv = config/data/jsrt_train_mix_clslsr.csv`.
 
-### Co-Teaching
-The configuration file for Co-Teaching is `config/unet2d_cot.cfg`. Note that for the following methods, `supervise_type` should be set to  `noisy_label`, and we use two instances of UNet2D for co-teaching.
+### 2.5 Co-Teaching
+The configuration file for Co-Teaching is `config/unet2d_cot.cfg`. Note that for the following methods, `supervise_type` should be set to  `noisy_label`.
 
 ```bash
 [dataset]
 ...
 supervise_type = noisy_label
 ...
-[network]
-# A MultiNet instance is created based on a list of networks
-net_type = [UNet2D, UNet2D]
-# taking average of the two networks for inference
-infer_mode = 1
-...
+
 [noisy_label_learning]
 method_name  = CoTeaching
 co_teaching_select_ratio  = 0.8  
@@ -117,20 +126,15 @@ pymic_train config/unet_cot.cfg
 pymic_test config/unet_cot.cfg
 ```
 
-### TriNet
-The configuration file for TriNet is `config/unet_trinet.cfg`. Note that we use three instances of UNet2D here.
+### 2.6 TriNet
+The configuration file for TriNet is `config/unet_trinet.cfg`. The corresponding setting is:
 
 ```bash 
 [dataset]
 ...
 supervise_type = noisy_label
 ...
-[network]
-# A MultiNet instance is created based on a list of networks
-net_type = [UNet2D, UNet2D, UNet2D]
-# taking average of the three networks for inference
-infer_mode = 1
-...
+
 [noisy_label_learning]
 method_name  = TriNet
 trinet_select_ratio = 0.9
@@ -145,18 +149,15 @@ pymic_train config/unet_trinet.cfg
 pymic_test config/unet_trinet.cfg
 ```
 
-### DAST
-The configuration file for DAST is `config/unet_dast.cfg`. It uses a dual-branch network for training.
+### 2.7 DAST
+The configuration file for DAST is `config/unet_dast.cfg`. The corresponding setting is:
 
 ```bash
 [dataset]
 ...
 supervise_type = noisy_label
 ...
-[network]
-# type of network
-net_type = UNet2D_DualBranch
-...
+
 [noisy_label_learning]
 method_name  = DAST
 dast_dbc_w   = 0.1
@@ -174,7 +175,7 @@ pymic_train config/unet_dast.cfg
 pymic_test config/unet_dast.cfg
 ```
 
-## Evaluation
+## 3. Evaluation
 Use `pymic_eval_seg config/evaluation.cfg` for quantitative evaluation of the segmentation results. You need to edit `config/evaluation.cfg` first, for example:
 
 ```bash
