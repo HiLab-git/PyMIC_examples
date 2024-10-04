@@ -6,7 +6,7 @@ In this example, we show heart structure segmentaiton from the ACDC dataset usin
 |Network  |Reference | Remarks|
 |---|---| ---|
 |UNet2D | [Ronneberger et al., MICCAI 2015][unet_paper]|  2D Unet|
-|UNet2D_scse |[Roy et al., TMI 2019][scse_paper]| 2D UNe with spatial and channel attention |
+|UNet3D_ScSE |[Roy et al., TMI 2019][scse_paper]| 2D UNe with spatial and channel attention |
 |CANet| [Gu et al., TMI 2021][canet_paper]| Comprehensive Attentin Network|
 |COPLENet | [Wang et al., TMI 2020][coplenet]| Originally for Covid-19 lesion segmentation|
 |UNet++ | [Zhou et al., MICCAI Workshop 2018][unet++]| Nested 2D UNet |

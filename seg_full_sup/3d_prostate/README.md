@@ -1,5 +1,5 @@
 # Prostate segmentation from 3D MRI
-<img src="./picture/seg_example.png" width="796" height="682"/> 
+<img src="./picture/seg_example.png" width="400" height="350"/> 
 
 In this example, we use 3D neural networks to to segment the prostate from 3D MRI. 
 The following networks are considered:
@@ -8,7 +8,7 @@ The following networks are considered:
 |---|---| ---|
 |UNet2D5 | [Wang et al., MICCAI 2019][unet2d5_paper]|  A 2.5D UNet combining 2D and 3D convolutions|
 |UNet3D |[Çiçek et al., MICCAI 2016][unet3d_paper]| 3D UNet|
-|UNet3D_scse |[Roy et al., TMI 2019][scse_paper]| 3D UNe with spatial and channel attention |
+|UNet3D_ScSE |[Roy et al., TMI 2019][scse_paper]| 3D UNe with spatial and channel attention |
 |LCOVNet| [Zhao et al., TMI 2023][lcovnet_paper]| A lightweight 3D CNN|
 
 [unet2d5_paper]:https://link.springer.com/chapter/10.1007/978-3-030-32245-8_30
@@ -105,7 +105,7 @@ pymic_test config/unet3d.cfg
 ```
 
 ### 2.3 Evaluation
-2. Run the following command to obtain quantitative evaluation results in terms of Dice. 
+Run the following command to obtain quantitative evaluation results in terms of Dice. 
 
 ```bash
 pymic_eval_seg -cfg config/evaluation.cfg
@@ -113,3 +113,6 @@ pymic_eval_seg -cfg config/evaluation.cfg
 
 The obtained average Dice score by default setting should be close to 88.04%, and the Average Symmetric Surface Distance (ASSD) is 1.41 mm. You can try your efforts to improve the performance with different networks or training strategies by changing the configuration file `config/unet3d.cfg`.
 
+## 3. Segmentation with other networks
+
+For the other networks, please replace `config/unet3d.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as UNet2D5, UNet3D_ScSE and LCOVNet.

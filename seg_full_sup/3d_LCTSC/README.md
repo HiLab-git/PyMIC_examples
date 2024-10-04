@@ -8,7 +8,7 @@ The following networks are considered:
 |---|---| ---|
 |UNet2D5 | [Wang et al., MICCAI 2019][unet2d5_paper]|  A 2.5D UNet combining 2D and 3D convolutions|
 |UNet3D |[Çiçek et al., MICCAI 2016][unet3d_paper]| 3D UNet|
-|UNet3D_scse |[Roy et al., TMI 2019][scse_paper]| 3D UNe with spatial and channel attention |
+|UNet3D_ScSE |[Roy et al., TMI 2019][scse_paper]| 3D UNe with spatial and channel attention |
 |LCOVNet| [Zhao et al., TMI 2023][lcovnet_paper]| A lightweight 3D CNN|
 
 [unet2d5_paper]:https://link.springer.com/chapter/10.1007/978-3-030-32245-8_30
@@ -118,4 +118,4 @@ The obtained average Dice score by default setting should be close to 85%.
 
 ## 3. Segmentation with other networks
 
-For the other networks, please replace `config/unet3d.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as UNet2D5, UNet3D_scse and LCOVNet.
+For the other networks, please replace `config/unet3d.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as UNet2D5, UNet3D_ScSE and LCOVNet.
