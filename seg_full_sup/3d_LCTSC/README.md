@@ -108,7 +108,7 @@ pymic_test config/unet3d.cfg
 ```
 
 ### 2.3 Evaluation
-2. Run the following command to obtain quantitative evaluation results in terms of Dice. 
+Run the following command to obtain quantitative evaluation results in terms of Dice. 
 
 ```bash
 pymic_eval_seg -cfg config/evaluation.cfg
