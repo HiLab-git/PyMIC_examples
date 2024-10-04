@@ -41,21 +41,13 @@ class DownBlock(nn.Module):
         return self.maxpool_conv(x)
 
 class UpBlock(nn.Module):
-    """Upssampling followed by ConvBlock"""
-    def __init__(self, in_channels1, in_channels2, out_channels, dropout_p,
-                 bilinear=True):
+    """Upsampling based on transposed convlution followed by ConvBlock"""
+    def __init__(self, in_channels1, in_channels2, out_channels, dropout_p):
         super(UpBlock, self).__init__()
-        self.bilinear = bilinear
-        if bilinear:
-            self.conv1x1 = nn.Conv2d(in_channels1, in_channels2, kernel_size = 1)
-            self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
-        else:
-            self.up = nn.ConvTranspose2d(in_channels1, in_channels2, kernel_size=2, stride=2)
+        self.up = nn.ConvTranspose2d(in_channels1, in_channels2, kernel_size=2, stride=2)
         self.conv = MyConvBlock(in_channels2 * 2, out_channels, dropout_p)
 
     def forward(self, x1, x2):
-        if self.bilinear:
-            x1 = self.conv1x1(x1)
         x1 = self.up(x1)
         x = torch.cat([x2, x1], dim=1)
         return self.conv(x)
@@ -65,9 +57,8 @@ class MyUNet2D(nn.Module):
         super(MyUNet2D, self).__init__()
         self.params    = params
         self.in_chns   = self.params['in_chns']
-        self.ft_chns   = self.params['feature_chns']
         self.n_class   = self.params['class_num']
-        self.bilinear  = self.params['bilinear']
+        self.ft_chns   = self.params['feature_chns']
         self.dropout   = self.params['dropout']
         assert(len(self.ft_chns) == 5)
 
@@ -114,14 +105,13 @@ if __name__ == "__main__":
     params = {'in_chns':4,
               'feature_chns':[2, 8, 32, 48, 64],
               'dropout':  [0, 0, 0.3, 0.4, 0.5],
-              'class_num': 2,
-              'bilinear': True}
+              'class_num': 2}
     Net = MyUNet2D(params)
     Net = Net.double()
 
     x  = np.random.rand(4, 4, 10, 96, 96)
     xt = torch.from_numpy(x)
-    xt = torch.tensor(xt)
+    xt = xt.clone().detach()
     
     y = Net(xt)
     print(len(y.size()))

@@ -78,7 +78,7 @@ iter_save  = 6000
 where we use random crop, flipping, GammaCorrection and GaussianNoise for data augmentation. Each batch contains 4 images, with a patch size of 96x96x96. The DiceLoss and CrossEntropyLoss are used for training. The network has prdictions at multiple resolution levels due to `multiscale_pred = True`, and deep supervision is used by setting `deep_supervise = True`. The Adam optimizer is used for training, with an initial learning rate of 0.001. The total iteration number is 6000, and the Step learning rate scheduler is used.  Start to train by running:
  
 
-During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images, where blue and red curves are for training set and validation set respectively. 
+During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images. In the left one, the yellow and purple curves are for training and validation Dice,  respectively.  In the right one, the cyan and red curves are for training and validation loss,  respectively.
 
 ![avg_dice](./picture/train_avg_dice.png)
 ![avg_loss](./picture/train_avg_loss.png)
