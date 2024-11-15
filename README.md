@@ -9,10 +9,10 @@
 2023.12 Semi-Supervised Method MCNet has been added to [seg_semi_sup/ACDC][ssl_acdc_link]. 
 
 ## Install PyMIC
-The released version of PyMIC (v0.4.0) is required for these examples, and it can be installed by:
+The released version of PyMIC (v0.5.0) is required for these examples, and it can be installed by:
 
 ```bash
-pip install PYMIC==0.4.0
+pip install PYMIC==0.5.0
 ```
 
 To use the latest development version, you can download the source code [here][PyMIC_link], and install it by:
