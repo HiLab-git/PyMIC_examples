@@ -3,7 +3,7 @@
 ![normal_example](./picture/CHNCXR_0053_0.png)
 ![tuberc_example](./picture/CHNCXR_0327_1.png)
 
-In this example, we finetune a pretrained resnet18 and vgg16 for classification of X-Ray images with two categries: normal and tuberculosis. 
+In this example, we finetune pretrained resnet18, vgg16 and vitb16 for classification of X-Ray images with two categries: normal and tuberculosis. 
 
 ## Data and preprocessing
 1. We use the Shenzhen Hospital X-ray Set for this experiment. This [dataset] contains images in JPEG format. There are 326 normal x-rays and 336 abnormal x-rays showing various manifestations of tuberculosis. The images are available in `PyMIC_data/CHNCXR`.
@@ -45,7 +45,7 @@ pymic_test config/net_resnet18.cfg
 2. Then run the following command to obtain quantitative evaluation results in terms of accuracy. 
 
 ```bash
-pymic_eval_cls config/evaluation.cfg
+pymic_eval_cls -cfg config/evaluation.cfg
 ```
 
 The obtained accuracy by default setting should be around 0.8271, and the AUC is 0.9343.
@@ -55,5 +55,9 @@ The obtained accuracy by default setting should be around 0.8271, and the AUC is
 ![roc](./picture/roc.png)
 
 
-## Finetuning vgg16
-Similarly to the above example, we further try to finetune vgg16 for the same classification task. Use a different configure file `config/net_vg16.cfg` for training and testing. Edit `config/evaluation.cfg` accordinly for evaluation. The accuracy and AUC would be around 0.8571 and 0.9271, respectively. 
+## Finetuning VGG16
+Similarly to the above example, we further try to finetune vgg16 for the same classification task. Use a different configure file `config/net_vgg16.cfg` for training and testing. Edit `config/evaluation.cfg` accordinly for evaluation. The accuracy and AUC would be around 0.8571 and 0.9271, respectively. 
+
+## Finetuning ViTB16
+Just follow the above steps with the configuration file `config/net_vitb16.cfg` for training and testing.
+

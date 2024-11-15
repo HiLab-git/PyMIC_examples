@@ -1,0 +1,10 @@
+image,label
+image/LCTSC-Train-S1-003.nii.gz,label/LCTSC-Train-S1-003.nii.gz
+image/LCTSC-Train-S1-007.nii.gz,label/LCTSC-Train-S1-007.nii.gz
+image/LCTSC-Train-S1-009.nii.gz,label/LCTSC-Train-S1-009.nii.gz
+image/LCTSC-Train-S1-012.nii.gz,label/LCTSC-Train-S1-012.nii.gz
+image/LCTSC-Train-S2-002.nii.gz,label/LCTSC-Train-S2-002.nii.gz
+image/LCTSC-Train-S2-007.nii.gz,label/LCTSC-Train-S2-007.nii.gz
+image/LCTSC-Train-S2-011.nii.gz,label/LCTSC-Train-S2-011.nii.gz
+image/LCTSC-Train-S3-001.nii.gz,label/LCTSC-Train-S3-001.nii.gz
+image/LCTSC-Train-S3-004.nii.gz,label/LCTSC-Train-S3-004.nii.gz
