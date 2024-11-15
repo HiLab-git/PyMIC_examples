@@ -55,9 +55,9 @@ The obtained accuracy by default setting should be around 0.8271, and the AUC is
 ![roc](./picture/roc.png)
 
 
-## Finetuning vgg16
+## Finetuning VGG16
 Similarly to the above example, we further try to finetune vgg16 for the same classification task. Use a different configure file `config/net_vgg16.cfg` for training and testing. Edit `config/evaluation.cfg` accordinly for evaluation. The accuracy and AUC would be around 0.8571 and 0.9271, respectively. 
 
-## Finetuning vitb16
+## Finetuning ViTB16
 Just follow the above steps with the configuration file `config/net_vitb16.cfg` for training and testing.
 
