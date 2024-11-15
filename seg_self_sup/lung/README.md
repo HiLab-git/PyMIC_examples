@@ -1,4 +1,4 @@
-# Self-supervised segmentation using PyMIC
+# Self-supervised learning for segmentation using PyMIC
 
 In this example, we show self-supervised training methods for segmentation implemented in PyMIC.
 Currently, the following self-supervised methods are implemented:
@@ -19,7 +19,7 @@ The following figure shows a performance comparison between training from scratc
 <img src="https://github.com/HiLab-git/PyMIC_examples/blob/dev/seg_self_sup/lung/pictures/valid_dice2.png" width="600">
 
 ## 1. Data 
-The LUNA dataset is used for self-supervised pretraining. It contains 888 CT volumes of patients with lung nodule. The [LCTSC2017][lctsc_link] dataset is used for downstream segmentation for four organs-at-risks: the esophagus, heart, spinal cord and lung. LCTSC2017 contains CT scans of 60 patients. Please downlaod the LUNA dataset from the [zenodo][luna_link] website. We have provided a preprocessed version of LCTSC2017 and it is available at 
+In this demo, the LUNA dataset is used for self-supervised pretraining. It contains 888 CT volumes of patients with lung nodule. The [LCTSC2017][lctsc_link] dataset is used for downstream segmentation for four organs-at-risks: the esophagus, heart, spinal cord and lung. LCTSC2017 contains CT scans of 60 patients. Please downlaod the LUNA dataset from the [zenodo][luna_link] website. We have provided a preprocessed version of LCTSC2017 and it is available at 
 `PyMIC_examples/PyMIC_data/LCTSC2017`. The preprocessing was based on cropping. 
 
 [luna_link]:https://zenodo.org/records/3723295
