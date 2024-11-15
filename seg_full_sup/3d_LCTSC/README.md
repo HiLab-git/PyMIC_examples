@@ -27,7 +27,7 @@ The [LCTSC2017][lctsc_link] dataset is used for segmentation for four organs-at-
 we randomly split the dataet into  36, 9 and 27 and  for training, validation and testing, respectively. They are saved in `image_train.csv`, `image_valid.csv` and `image_test.csv` under the folder of `config`, respectively. The script for data split is `write_csv.py`.
 
 
-## 2. Segmentation with UNet3D
+## 2. Segmentation with LCOVNet
 ### 2.1 Training
 We first use the LCOVNet for the segmentation task. The configuration file is `config/lcovnet.cfg`. Some key configurations are like the following:
 
@@ -87,14 +87,14 @@ During training or after training, run `tensorboard --logdir model/lcovnet` and 
 ![avg_loss](./picture/avg_loss.png)
 
 ### 2.2 Testing
-The configuration for testing is in `[testing]` section of `config/unet3d.cfg`:
+The configuration for testing is in `[testing]` section of `config/lcovnet.cfg`:
 
 ```bash
 [testing]
 gpus       = [0]
 
 ckpt_mode         = 1
-output_dir        = result/unet3d
+output_dir        = result/lcovnet
 sliding_window_enable = True
 sliding_window_batch  = 4
 sliding_window_size   = [96, 96, 96]
@@ -104,7 +104,7 @@ sliding_window_stride = [48, 48, 48]
 where we use a sliding window of 96x96x96 for inference. By default we use the best validation checkpoint for inference. Run the following command for testing:
 
 ```bash
-pymic_test config/unet3d.cfg
+pymic_test config/lcovnet.cfg
 ```
 
 ### 2.3 Evaluation
@@ -114,8 +114,8 @@ Run the following command to obtain quantitative evaluation results in terms of 
 pymic_eval_seg -cfg config/evaluation.cfg
 ```
 
-The obtained average Dice score by default setting should be close to 85%.
+The obtained average Dice score by default setting should be close to 83.4%.
 
 ## 3. Segmentation with other networks
 
-For the other networks, please replace `config/unet3d.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as UNet2D5, UNet3D_ScSE and LCOVNet.
+For the other networks, please replace `config/lcovnet.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as UNet2D5, UNet3D_ScSE and UNet3D.
