@@ -1,4 +1,4 @@
-# Chest organ segmentation from 3D CTT
+# Chest organ segmentation from 3D CT Images
 <img src="./picture/seg_example.png" width="400" height="400"/> 
 
 In this example, we use 3D neural networks to segment chest organs from 3D CT volumes. 
@@ -6,10 +6,11 @@ The following networks are considered:
 
 |Network  |Reference | Remarks|
 |---|---| ---|
+|LCOVNet| [Zhao et al., TMI 2023][lcovnet_paper]| A lightweight 3D CNN|
 |UNet2D5 | [Wang et al., MICCAI 2019][unet2d5_paper]|  A 2.5D UNet combining 2D and 3D convolutions|
 |UNet3D |[Çiçek et al., MICCAI 2016][unet3d_paper]| 3D UNet|
 |UNet3D_ScSE |[Roy et al., TMI 2019][scse_paper]| 3D UNe with spatial and channel attention |
-|LCOVNet| [Zhao et al., TMI 2023][lcovnet_paper]| A lightweight 3D CNN|
+
 
 [unet2d5_paper]:https://link.springer.com/chapter/10.1007/978-3-030-32245-8_30
 [unet3d_paper]:https://link.springer.com/chapter/10.1007/978-3-319-46723-8_49
@@ -28,7 +29,7 @@ we randomly split the dataet into  36, 9 and 27 and  for training, validation an
 
 ## 2. Segmentation with UNet3D
 ### 2.1 Training
-We first use the UNet3D for the segmentation task. The configuration file is `config/unet3d.cfg`. Some key configurations are like the following:
+We first use the LCOVNet for the segmentation task. The configuration file is `config/lcovnet.cfg`. Some key configurations are like the following:
 
 ```bash
 [dataset]
@@ -50,11 +51,10 @@ NormalizeWithMinMax_threshold_lower = [-1000]
 NormalizeWithMinMax_threshold_upper = [1000]
 ...
 [network]
-net_type     = UNet3D
-class_num    = 5
-in_chns      = 1
-feature_chns = [32, 64, 128, 256, 512]
-dropout      = [0, 0, 0.2, 0.2, 0.2]
+net_type      = LCOVNet
+class_num     = 5
+in_chns       = 1
+feature_chns  = [32, 64, 128, 256, 512]
 
 [training]
 ...
@@ -68,7 +68,7 @@ lr_scheduler = StepLR
 lr_gamma = 0.5
 lr_step  = 4000
 early_stop_patience = 6000
-ckpt_dir            = model/unet3d
+ckpt_dir            = model/lcovnet
 
 iter_max   = 10000
 iter_valid = 250
@@ -78,10 +78,10 @@ iter_save  = 10000
 where we use random crop and flipping for data augmentation. Each batch contains 2 images, with a patch size of 96x96x96. The DiceLoss is used for training, with an Adam optimizer and an initial learning rate of 0.001. The total iteration number is 10000, and the Step learning rate scheduler is used.  Start to train by running:
  
 ```bash
-pymic_train config/unet3d.cfg
+pymic_train config/lcovnet.cfg
 ```
 
-During training or after training, run `tensorboard --logdir model/unet3d` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images. In the left one, the yellow and purple curves are for training and validation Dice,  respectively.  In the right one, the cyan and red curves are for training and validation loss,  respectively. 
+During training or after training, run `tensorboard --logdir model/lcovnet` and you will see a link in the output, such as `http://your-computer:6006`. Open the link in the browser and you can observe the average Dice score and loss during the training stage, such as shown in the following images. In the left one, the yellow and purple curves are for training and validation Dice,  respectively.  In the right one, the cyan and red curves are for training and validation loss,  respectively. 
 
 ![avg_dice](./picture/avg_dice.png)
 ![avg_loss](./picture/avg_loss.png)
