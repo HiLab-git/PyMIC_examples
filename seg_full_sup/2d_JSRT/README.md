@@ -7,8 +7,9 @@ In this example, we use different 2D networks to segment the lung from X-Ray ima
 
 |Network  |Reference | Remarks|
 |---|---| ---|
-|UNet2D | [Ronneberger et al., MICCAI 2015][unet_paper]|  2D Unet|
-|UNet2D_ScSE |[Roy et al., TMI 2019][scse_paper]| 2D UNe with spatial and channel attention |
+|UNet | [Ronneberger et al., MICCAI 2015][unet_paper]|  2D Unet|
+|UNet_ScSE |[Roy et al., TMI 2019][scse_paper]| 2D UNet with spatial and channel attention |
+|AttentionUNet |[Oktay et al., MIDL 2018][attunet_paper]| Attention UNet with spatial attention |
 |CANet| [Gu et al., TMI 2021][canet_paper]| Comprehensive Attentin Network|
 |COPLENet | [Wang et al., TMI 2020][coplenet]| Originally for Covid-19 lesion segmentation|
 |UNet++ | [Zhou et al., MICCAI Workshop 2018][unet++]| Nested 2D UNet |
@@ -17,6 +18,7 @@ In this example, we use different 2D networks to segment the lung from X-Ray ima
 
 [unet_paper]:https://link.springer.com/chapter/10.1007/978-3-319-24574-4_28
 [scse_paper]:https://ieeexplore.ieee.org/document/8447284
+[attunet_paper]:https://arxiv.org/abs/1804.03999
 [canet_paper]:https://ieeexplore.ieee.org/abstract/document/9246575
 [coplenet]:https://ieeexplore.ieee.org/document/9109297
 [unet++]:https://link.springer.com/chapter/10.1007/978-3-030-00889-5_1
@@ -119,7 +121,7 @@ pymic_test config/coplenet.cfg
 3. Use the following command to obtain quantitative evaluation results in terms of Dice. 
 
 ```bash
-pymic_eval_seg -cfg config/evaluation.cfg
+pymic_eval_seg --cfg config/evaluation.cfg
 ```
 
 The obtained average Dice score by default setting should be close to 98.04%. The Average Symmetric Surface Distance (ASSD) is also calculated. 
@@ -127,5 +129,5 @@ The obtained average Dice score by default setting should be close to 98.04%. Th
 
 ## 3. Training and testing with other networks
 
-For the other networks, please replace `config/coplenet.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as UNet, CANet, UNet++, TransUNet and SwinUNet.
+For the other networks, please replace `config/coplenet.cfg` by the corresponding configuration files during the training and prediction stages. See `config/***.cfg` for examples of other networks, such as UNet, CANet, AttentionUNet, UNet++, TransUNet and SwinUNet.
 
